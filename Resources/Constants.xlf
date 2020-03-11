@@ -1,0 +1,51 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<xliff 
+	version="1.0" 
+	xmlns:d4="http://www.4d.com/d4-ns">
+	
+	<file 
+		datatype="x-4DK#" 
+		original="undefined" 
+		source-language="en-US" 
+		target-language="en-US"
+		product-version="v18">
+		
+		<header>
+			<note>
+			
+			This file adds custom constants to the standard 4D language.
+			Version 13 or later is required.
+			Place the file in one of the following locations:
+			
+			- {Database Folder}/Resources
+			- {Component Database Folder}/Resources
+			- {Application Folder}/Resources
+			- {Plugin}.bundle/Contents/Resources
+			
+			Note that you need not place it inside an lproj folder (though you can do that too).
+			
+			</note>
+		</header>
+				
+		<body>
+
+			<group restype="x-4DK#" d4:groupID="HttpServerResultCodes">
+				<trans-unit id="HttpServerResultCodes">
+				   <source>HTTPServer Result Codes</source>
+				   <target>HTTPServer Result Codes</target>
+				</trans-unit>			
+				<trans-unit id="HTTPServer_already_running" d4:value="-15000:L">
+				   <source>HTTPServer_already_running</source>
+				   <note>HTTP server is already running.</note>
+				</trans-unit>				
+				<trans-unit id="HTTPServer_is_not_running" d4:value="-15001:L">
+				   <source>HTTPServer_is_not_running</source>
+				   <note>HTTP server is not running.</note>
+				</trans-unit>				
+			 </group>
+			 
+		</body>	
+	
+	</file>
+	
+</xliff>
