@@ -9,7 +9,8 @@ Use (Storage:C1525)
 			"listenIP";"0.0.0.0";\
 			"listenPort";80;\
 			"listenSSLPort";443;\
-			"start";Formula:C1597(HS_start ))
+			"start";Formula:C1597(HS_start );\
+			"stop";Formula:C1597(HS_stop ))
 		
 	End if 
 	
