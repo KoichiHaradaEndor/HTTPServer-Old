@@ -1,12 +1,13 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
-C_TEXT:C284($0;$stdout_t)
+C_LONGINT:C283($0;$resultCode_l)
 
 C_TEXT:C284($listenIP_t)
 C_LONGINT:C283($listenPort_l;$listenSSLPort_l;$applicationType_l)
 
+$resultCode_l:=0
 If (WEB Is server running:C1313)
 	
-	$stdout_t:="HTTP server is already running."
+	$resultCode_l:=HTTPServer_already_running:K0:1
 	
 Else 
 	
@@ -35,4 +36,4 @@ Else
 	
 End if 
 
-$0:=$stdout_t
+$0:=$resultCode_l
