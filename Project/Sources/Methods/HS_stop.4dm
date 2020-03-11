@@ -1,5 +1,5 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
-C_TEXT:C284($0;$stdout_t)
+C_LONGINT:C283($0;$resultCode_l)
 
 If (WEB Is server running:C1313)
 	
@@ -7,8 +7,8 @@ If (WEB Is server running:C1313)
 	
 Else 
 	
-	$stdout_t:="HTTP server is not running."
+	$resultCode_l:=HTTPServer_is_not_running:K0:2
 	
 End if 
 
-$0:=$stdout_t
+$0:=$resultCode_l
