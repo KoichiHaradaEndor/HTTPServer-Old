@@ -6,7 +6,7 @@ C_LONGINT:C283($listenPort_l;$listenSSLPort_l;$applicationType_l)
 
 If (WEB Is server running:C1313)
 	
-	$stdout_t:="Web server is already running."
+	$stdout_t:="HTTP server is already running."
 	
 Else 
 	
