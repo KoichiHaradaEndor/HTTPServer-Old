@@ -7,7 +7,7 @@ If (WEB Is server running:C1313)
 	
 Else 
 	
-	$resultCode_l:=HTTPServer_is_not_running:K0:2
+	$resultCode_l:=HTTPServer_is_not_running
 	
 End if 
 
