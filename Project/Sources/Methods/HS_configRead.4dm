@@ -11,12 +11,19 @@ C_OBJECT:C1216($1;$config_o)
 C_LONGINT:C283($0;$resultCode_l)
 
 C_TEXT:C284($configPath_t;$config_t;$aLine_t;$configName_t;$configValue_t)
-C_TEXT:C284($databaseFolderPath_t)
+C_TEXT:C284($databaseFolderPath_t;$propertyName_t)
 C_LONGINT:C283($position_l)
 C_COLLECTION:C1488($configLines_c)
 
 $config_o:=$1
 $resultCode_l:=0
+
+  // Empties config object
+For each ($propertyName_t;$config_o)
+	
+	OB REMOVE:C1226($config_o;$propertyName_t)
+	
+End for each 
 
 $configPath_t:=Get 4D folder:C485(Database folder:K5:14)+"httpServer.conf"
 
