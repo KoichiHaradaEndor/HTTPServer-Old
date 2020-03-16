@@ -7,7 +7,7 @@ C_LONGINT:C283($listenPort_l;$listenSSLPort_l;$applicationType_l)
 $resultCode_l:=0
 If (WEB Is server running:C1313)
 	
-	$resultCode_l:=HTTPServer_already_running:K0:1
+	$resultCode_l:=HTTPServer_already_running
 	
 Else 
 	
