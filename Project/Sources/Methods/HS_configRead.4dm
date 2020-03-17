@@ -67,8 +67,7 @@ Else
 						
 						If (Position:C15("{Database folder}";$configValue_t)>0)
 							
-							$databaseFolderPath_t:=Get 4D folder:C485(Database folder:K5:14)
-							$databaseFolderPath_t:=Convert path system to POSIX:C1106($databaseFolderPath_t)
+							$databaseFolderPath_t:=Get 4D folder:C485(Database folder UNIX syntax:K5:15)
 							If ($databaseFolderPath_t="@/")
 								
 								  // Removes last slash ("/")
