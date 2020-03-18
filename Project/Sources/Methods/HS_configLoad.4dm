@@ -5,8 +5,10 @@
   //* @author: HARADA Koichi
   //*/
 
+C_LONGINT:C283($0;$resultCode_l)
+
 C_OBJECT:C1216($config_o)
-C_LONGINT:C283($resultCode_l;$platform_l;$value_l)
+C_LONGINT:C283($platform_l;$value_l)
 C_TEXT:C284($value_t)
 C_REAL:C285($value_r)
 
@@ -244,3 +246,5 @@ Case of
 		End if 
 		
 End case 
+
+$0:=$resultCode_l
