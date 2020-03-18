@@ -61,8 +61,12 @@ Case of
 		  //###
 		If (OB Is defined:C1231($config_o;"ListenPort"))
 			
-			$value_r:=$config_o["ListenPort"]
-			WEB SET OPTION:C1210(Web Port ID:K73:14;$value_r)
+			$value_l:=Trunc:C95($config_o["ListenPort"];0)
+			If ($value_l#0)
+				
+				WEB SET OPTION:C1210(Web Port ID:K73:14;$value_l)
+				
+			End if 
 			
 		End if 
 		
@@ -71,8 +75,12 @@ Case of
 		  //###
 		If (OB Is defined:C1231($config_o;"ListenSSLPort"))
 			
-			$value_r:=$config_o["ListenSSLPort"]
-			WEB SET OPTION:C1210(Web HTTPS port ID:K73:10;$value_r)
+			$value_l:=Trunc:C95($config_o["ListenSSLPort"];0)
+			If ($value_l#0)
+				
+				WEB SET OPTION:C1210(Web HTTPS port ID:K73:10;$value_l)
+				
+			End if 
 			
 		End if 
 		
@@ -82,7 +90,11 @@ Case of
 		If (OB Is defined:C1231($config_o;"CharacterSet"))
 			
 			$value_t:=$config_o["CharacterSet"]
-			WEB SET OPTION:C1210(Web character set:K73:6;$value_t)
+			If ($value_t#"")
+				
+				WEB SET OPTION:C1210(Web character set:K73:6;$value_t)
+				
+			End if 
 			
 		End if 
 		
@@ -126,114 +138,109 @@ Case of
 		  //###
 		  //# MaxConcurrentProcess
 		  //###
-		$value_r:=$config_o["MaxConcurrentProcess"]
-		Case of 
-			: (OB Is defined:C1231($config_o;"MaxConcurrentProcess")=False:C215)
-			: ($value_r>=10) & ($value_r<=32000)
-			Else 
-				
-				$result_t:=$result_t+"MaxConcurrentProcess\tERROR\tThe value must between 10 ~ 32,000.\n"
-				
-		End case 
+		If (OB Is defined:C1231($config_o;"MaxConcurrentProcess"))
+			
+			$value_r:=$config_o["MaxConcurrentProcess"]
+			WEB SET OPTION:C1210(Web max concurrent processes:K73:7;$value_r)
+			
+		End if 
 		
 		  //###
 		  //# AutoSessionManagement
 		  //###
-		$value_t:=$config_o["AutoSessionManagement"]
-		Case of 
-			: (OB Is defined:C1231($config_o;"AutoSessionManagement")=False:C215)
-			: ($value_t="") | ($value_t="on") | ($value_t="off")
-			Else 
-				
-				$result_t:=$result_t+"AutoSessionManagement\tERROR\tThe given value is not supported.\n"
-				
-		End case 
+		If (OB Is defined:C1231($config_o;"AutoSessionManagement"))
+			
+			$value_t:=$config_o["AutoSessionManagement"]
+			Case of 
+				: ($value_t="on")
+					WEB SET OPTION:C1210(Web keep session:K73:1;1)
+					
+				: ($value_t="off")
+					WEB SET OPTION:C1210(Web keep session:K73:1;0)
+					
+			End case 
+			
+		End if 
 		
 		  //###
 		  //# SessionProcessTimeout
 		  //###
-		$value_r:=$config_o["SessionProcessTimeout"]
-		Case of 
-			: (OB Is defined:C1231($config_o;"SessionProcessTimeout")=False:C215)
-				
-			Else 
-				
-		End case 
+		If (OB Is defined:C1231($config_o;"SessionProcessTimeout"))
+			
+			$value_r:=$config_o["SessionProcessTimeout"]
+			WEB SET OPTION:C1210(Web inactive process timeout:K73:13;$value_r)
+			
+		End if 
 		
 		  //###
 		  //# SessionCookieTimeout
 		  //###
-		$value_r:=$config_o["SessionCookieTimeout"]
-		Case of 
-			: (OB Is defined:C1231($config_o;"SessionCookieTimeout")=False:C215)
-				
-			Else 
-				
-		End case 
+		If (OB Is defined:C1231($config_o;"SessionCookieTimeout"))
+			
+			$value_r:=$config_o["SessionCookieTimeout"]
+			WEB SET OPTION:C1210(Web inactive session timeout:K73:3;$value_r)
+			
+		End if 
 		
 		  //###
 		  //# MaxSession
 		  //###
-		$value_r:=$config_o["MaxSession"]
-		Case of 
-			: (OB Is defined:C1231($config_o;"MaxSession")=False:C215)
-				
-			Else 
-				
-		End case 
+		If (OB Is defined:C1231($config_o;"MaxSession"))
+			
+			$value_r:=$config_o["MaxSession"]
+			WEB SET OPTION:C1210(Web max sessions:K73:2;$value_r)
+			
+		End if 
 		
 		  //###
 		  //# SessionCookieName
 		  //###
-		$value_t:=$config_o["SessionCookieName"]
-		Case of 
-			: (OB Is defined:C1231($config_o;"SessionCookieName")=False:C215)
+		If (OB Is defined:C1231($config_o;"SessionCookieName"))
+			
+			$value_t:=$config_o["SessionCookieName"]
+			If ($value_t#"")
 				
-			Else 
+				WEB SET OPTION:C1210(Web session cookie name:K73:4;$value_t)
 				
-		End case 
+			End if 
+			
+		End if 
 		
 		  //###
 		  //# SessionIPAddressValidation
 		  //###
-		$value_t:=$config_o["SessionIPAddressValidation"]
-		Case of 
-			: (OB Is defined:C1231($config_o;"SessionIPAddressValidation")=False:C215)
-			: ($value_t="") | ($value_t="on") | ($value_t="off")
-			Else 
-				
-				$result_t:=$result_t+"SessionIPAddressValidation\tERROR\tThe given value is not supported.\n"
-				
-		End case 
+		If (OB Is defined:C1231($config_o;"SessionIPAddressValidation"))
+			
+			$value_t:=$config_o["SessionIPAddressValidation"]
+			Case of 
+				: ($value_t="on")
+					WEB SET OPTION:C1210(Web Session IP address validation enabled:K73:17;1)
+					
+				: ($value_t="off")
+					WEB SET OPTION:C1210(Web Session IP address validation enabled:K73:17;0)
+					
+			End case 
+			
+		End if 
 		
 		  //###
 		  //# AccessLog
 		  //###
-		$value_t:=$config_o["AccessLog"]
-		Case of 
-			: (OB Is defined:C1231($config_o;"AccessLog")=False:C215)
-			: ($value_t="") | ($value_t="off") | ($value_t="CLF")
-			: ($value_t="DLF") | ($value_t="ELF") | ($value_t="WLF")
-			Else 
-				
-				$result_t:=$result_t+"AccessLog\tERROR\tThe given value is not supported.\n"
-				
-		End case 
+		If (OB Is defined:C1231($config_o;"AccessLog"))
+			
+			$value_t:=$config_o["AccessLog"]
+			WEB SET OPTION:C1210(Web log recording:K73:9;$value_t)
+			
+		End if 
 		
 		  //###
 		  //# DebugLog
 		  //###
-		$value_t:=$config_o["DebugLog"]
-		Case of 
-			: (OB Is defined:C1231($config_o;"DebugLog")=False:C215)
-			: ($value_t="") | ($value_t="Without body") | ($value_t="With response body")
-			: ($value_t="With request body") | ($value_t="With all body")
-			Else 
-				
-				$result_t:=$result_t+"DebugLog\tERROR\tThe given value is not supported.\n"
-				
-		End case 
+		If (OB Is defined:C1231($config_o;"DebugLog"))
+			
+			$value_t:=$config_o["DebugLog"]
+			WEB SET OPTION:C1210(Web debug log:K73:18;$value_t)
+			
+		End if 
 		
 End case 
-
-$0:=Choose:C955($result_t="";"Syntax OK";$result_t)
