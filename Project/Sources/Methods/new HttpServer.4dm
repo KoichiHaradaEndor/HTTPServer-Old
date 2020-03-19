@@ -5,8 +5,8 @@
   //* HTTP server, only one HttpServer object can reside.
   //* That's why Singleton DP is used to create the object.
   //* 
-  //* @return {Object} HttpServer object.
   //* @author: HARADA Koichi
+  //* @return {Object} HttpServer object.
   //*/
 
 C_OBJECT:C1216($0)
@@ -25,11 +25,6 @@ Use (Storage:C1525)
 			Storage:C1525.httpServer.restart:=Formula:C1597(HS_restart )
 			
 			Storage:C1525.httpServer.config:=New shared object:C1526()
-			Use (Storage:C1525.httpServer.config)
-				
-				Storage:C1525.httpServer.config.test:=Formula:C1597(HS_configTest )
-				
-			End use   // Use (Storage.httpServer.config)
 			
 		End use   // Use (Storage.httpServer)
 		
@@ -39,6 +34,8 @@ Use (Storage:C1525)
 		
 		  // When creating the object, always reads config from file.
 		$resultCode_l:=HS_configRead (Storage:C1525.httpServer.config)
+		Storage:C1525.httpServer.config.test:=Formula:C1597(HS_configTest )
+		Storage:C1525.httpServer.config.load:=Formula:C1597(HS_configLoad )
 		
 	End use   // (Storage.httpServer.config)
 	
