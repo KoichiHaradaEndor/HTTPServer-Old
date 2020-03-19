@@ -1,4 +1,11 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
+  //**
+  //* This method is called to stop HTTP server.
+  //* 
+  //* @author: HARADA Koichi
+  //* @return {Longint} Result code
+  //*/
+
 C_LONGINT:C283($0;$resultCode_l)
 
 If (WEB Is server running:C1313)
