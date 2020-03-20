@@ -1,4 +1,15 @@
 ﻿{
+	"HttpServer": {
+		"methods": [
+			"HS_configLoad",
+			"HS_configRead",
+			"HS_configTest",
+			"HS_restart",
+			"HS_start",
+			"HS_stop",
+			"new HttpServer"
+		]
+	},
 	"Request": {
 		"methods": [
 			"new Request"
