@@ -10,7 +10,7 @@ C_OBJECT:C1216($0;$request_o)
 
 C_LONGINT:C283($i)
 C_COLLECTION:C1488($cookie_c;$aCookie_c)
-C_TEXT:C284($aCookie_t)
+C_TEXT:C284($aCookie_t;$dataName_t;$dataValue_t)
 
 $request_o:=New object:C1471()
 
@@ -55,10 +55,21 @@ ARRAY TEXT:C222($dataNames_at;0)
 ARRAY TEXT:C222($dataValues_at;0)
 WEB GET VARIABLES:C683($dataNames_at;$dataValues_at)
 
-$request_o.data:=New collection:C1472()
+$request_o.data:=New object:C1471()
 For ($i;1;Size of array:C274($dataNames_at))
 	
-	$request_o.data.push(New object:C1471($dataNames_at{$i};$dataValues_at{$i}))
+	$dataName_t:=$dataNames_at{$i}
+	$dataValue_t:=$dataValues_at{$i}
+	
+	If (OB Is defined:C1231($request_o.data;$dataName_t))
+		
+		$request_o.data[$dataName_t].push($dataValue_t)
+		
+	Else 
+		
+		$request_o.data[$dataName_t]:=New collection:C1472($dataValue_t)
+		
+	End if 
 	
 End for 
 
