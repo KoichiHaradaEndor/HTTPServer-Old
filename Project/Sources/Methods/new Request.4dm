@@ -9,6 +9,8 @@
 C_OBJECT:C1216($0;$request_o)
 
 C_LONGINT:C283($i)
+C_COLLECTION:C1488($cookie_c;$aCookie_c)
+C_TEXT:C284($aCookie_t)
 
 $request_o:=New object:C1471()
 
@@ -17,10 +19,34 @@ ARRAY TEXT:C222($headerNames_at;0)
 ARRAY TEXT:C222($headerValues_at;0)
 WEB GET HTTP HEADER:C697($headerNames_at;$headerValues_at)
 
-$request_o.headers:=New collection:C1472()
+$request_o.header:=New object:C1471()
 For ($i;1;Size of array:C274($headerNames_at))
 	
-	$request_o.headers.push(New object:C1471($headerNames_at{$i};$headerValues_at{$i}))
+	If ($headerNames_at{$i}="cookie")
+		
+		$cookie_c:=New collection:C1472()
+		$cookie_c:=Split string:C1554($headerValues_at{$i};";";sk ignore empty strings:K86:1+sk trim spaces:K86:2)
+		$request_o.header.cookie:=New object:C1471()
+		For each ($aCookie_t;$cookie_c)
+			
+			$aCookie_c:=New collection:C1472()
+			$aCookie_c:=Split string:C1554($aCookie_t;"=";sk trim spaces:K86:2)
+			Case of 
+				: ($aCookie_c.length=1)
+					$request_o.header.cookie[$aCookie_c[0]]:=""
+					
+				: ($aCookie_c.length=2)
+					$request_o.header.cookie[$aCookie_c[0]]:=$aCookie_c[1]
+					
+			End case 
+			
+		End for each 
+		
+	Else 
+		
+		$request_o.header[$headerNames_at{$i}]:=$headerValues_at{$i}
+		
+	End if 
 	
 End for 
 
