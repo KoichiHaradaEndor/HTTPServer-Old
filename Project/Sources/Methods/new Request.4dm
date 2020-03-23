@@ -55,19 +55,19 @@ ARRAY TEXT:C222($dataNames_at;0)
 ARRAY TEXT:C222($dataValues_at;0)
 WEB GET VARIABLES:C683($dataNames_at;$dataValues_at)
 
-$request_o.data:=New object:C1471()
+$request_o.params:=New object:C1471()
 For ($i;1;Size of array:C274($dataNames_at))
 	
 	$dataName_t:=$dataNames_at{$i}
 	$dataValue_t:=$dataValues_at{$i}
 	
-	If (OB Is defined:C1231($request_o.data;$dataName_t))
+	If (OB Is defined:C1231($request_o.params;$dataName_t))
 		
-		$request_o.data[$dataName_t].push($dataValue_t)
+		$request_o.params[$dataName_t].push($dataValue_t)
 		
 	Else 
 		
-		$request_o.data[$dataName_t]:=New collection:C1472($dataValue_t)
+		$request_o.params[$dataName_t]:=New collection:C1472($dataValue_t)
 		
 	End if 
 	
