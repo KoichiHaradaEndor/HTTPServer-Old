@@ -15,7 +15,11 @@
 			"new Request"
 		]
 	},
-	"RequestHandler": {},
+	"RequestHandler": {
+		"methods": [
+			"new RequestHandler"
+		]
+	},
 	"Response": {},
 	"trash": {}
 }
