@@ -30,19 +30,15 @@ Use (Storage:C1525)
 		
 	End if   // If (Storage.httpServer=Null)
 	
-	Use (Storage:C1525.httpServer)
-		
-		Use (Storage:C1525.httpServer.config)
-			
-			  // When creating the object, always reads config from file.
-			$resultCode_l:=HS_configRead (Storage:C1525.httpServer.config)
-			Storage:C1525.httpServer.config.test:=Formula:C1597(HS_configTest )
-			Storage:C1525.httpServer.config.load:=Formula:C1597(HS_configLoad )
-			
-		End use   // Use (Storage.httpServer.config)
-		
-	End use   // Use (Storage.httpServer)
-	
-	$0:=Storage:C1525.httpServer
-	
 End use   // Use (Storage)
+
+Use (Storage:C1525.httpServer.config)
+	
+	  // When creating the object, always reads config from file.
+	$resultCode_l:=HS_configRead (Storage:C1525.httpServer.config)
+	Storage:C1525.httpServer.config.test:=Formula:C1597(HS_configTest )
+	Storage:C1525.httpServer.config.load:=Formula:C1597(HS_configLoad )
+	
+End use   // Use (Storage.httpServer.config)
+
+$0:=Storage:C1525.httpServer
