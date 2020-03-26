@@ -30,6 +30,8 @@ Use ($requestHandler_o)
 	$requestHandler_o.hostName:=$hostName_t
 	$requestHandler_o.route:=New shared collection:C1527()
 	
+	$requestHandler_o.addRoute:=Formula:C1597(RH_addRoute )
+	
 End use   // Use ($requestHandler_o)
 
 $0:=$requestHandler_o

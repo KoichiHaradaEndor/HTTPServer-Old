@@ -18,7 +18,8 @@
 	},
 	"RequestHandler": {
 		"methods": [
-			"new RequestHandler"
+			"new RequestHandler",
+			"RH_addRoute"
 		]
 	},
 	"Response": {},
