@@ -1,4 +1,4 @@
-//%attributes = {}
+//%attributes = {"invisible":true,"preemptive":"capable"}
   //**
   //* This method creates RequestHandler object and return it.
   //* 
