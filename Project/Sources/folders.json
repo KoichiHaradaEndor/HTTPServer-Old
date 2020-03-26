@@ -1,6 +1,7 @@
 ﻿{
 	"HttpServer": {
 		"methods": [
+			"HS_addRequestHandler",
 			"HS_configLoad",
 			"HS_configRead",
 			"HS_configTest",
