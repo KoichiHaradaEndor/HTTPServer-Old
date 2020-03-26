@@ -3,16 +3,33 @@
   //* This method creates RequestHandler object and return it.
   //* 
   //* @author: HARADA Koichi
+  //* @param {Text} $1 Host name
   //* @return {Object} RequestHandler object.
   //*/
 
-C_OBJECT:C1216($0;$handler_o)
+C_TEXT:C284($1;$hostName_t)
+C_OBJECT:C1216($0;$requestHandler_o)
 
-$handler_o:=New shared object:C1526()
-Use ($handler_o)
-	
-	$handler_o.route:=New shared collection:C1527()
-	
-End use 
+If (Count parameters:C259=0)
+	$hostName_t:=""
+Else 
+	$hostName_t:=$1
+End if 
 
-$0:=$handler_o
+$requestHandler_o:=New shared object:C1526()
+Use ($requestHandler_o)
+	
+	$requestHandler_o.PrimitiveValue:=New shared object:C1526()
+	
+	Use ($requestHandler_o.PrimitiveValue)
+		
+		$requestHandler_o.PrimitiveValue.type:="RequestHandler"
+		
+	End use   // Use ($requestHandler_o.PrimitiveValue)
+	
+	$requestHandler_o.hostName:=$hostName_t
+	$requestHandler_o.route:=New shared collection:C1527()
+	
+End use   // Use ($requestHandler_o)
+
+$0:=$requestHandler_o
