@@ -1,6 +1,6 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
   //**
-  //* This method adds route directive to RequestHandler object.
+  //* This method adds route directive to Router object.
   //* 
   //* @author: HARADA Koichi
   //* @param {Text} $1 Request path to handle

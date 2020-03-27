@@ -16,12 +16,12 @@
 			"new Request"
 		]
 	},
-	"RequestHandler": {
+	"Response": {},
+	"Router": {
 		"methods": [
-			"new RequestHandler",
+			"new Router",
 			"RH_addRoute"
 		]
 	},
-	"Response": {},
 	"trash": {}
 }
