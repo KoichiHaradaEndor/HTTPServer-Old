@@ -21,13 +21,7 @@ Use (Storage:C1525)
 		Storage:C1525.httpServer:=New shared object:C1526()
 		Use (Storage:C1525.httpServer)
 			
-			Storage:C1525.httpServer.PrimitiveValue:=New shared object:C1526()
-			
-			Use (Storage:C1525.httpServer.PrimitiveValue)
-				
-				Storage:C1525.httpServer.PrimitiveValue.type:="HttpServer"
-				
-			End use   // Use (Storage.httpServer.PrimitiveValue)
+			Storage:C1525.httpServer.type:="HttpServer"
 			
 			Storage:C1525.httpServer.start:=Formula:C1597(HS_start )
 			Storage:C1525.httpServer.stop:=Formula:C1597(HS_stop )

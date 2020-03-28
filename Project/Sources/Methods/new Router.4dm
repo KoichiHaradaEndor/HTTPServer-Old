@@ -19,13 +19,7 @@ End if
 $router_o:=New shared object:C1526()
 Use ($router_o)
 	
-	$router_o.PrimitiveValue:=New shared object:C1526()
-	
-	Use ($router_o.PrimitiveValue)
-		
-		$router_o.PrimitiveValue.type:="Router"
-		
-	End use   // Use ($router_o.PrimitiveValue)
+	$router_o.type:="Router"
 	
 	$router_o.hostName:=$hostName_t
 	$router_o.route:=New shared collection:C1527()

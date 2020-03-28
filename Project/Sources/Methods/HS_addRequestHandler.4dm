@@ -11,11 +11,9 @@ C_OBJECT:C1216($1;$requestHandler_o)
 $requestHandler_o:=$1
 
 Case of 
-	: ($requestHandler_o.PrimitiveValue=Null:C1517)
+	: ($requestHandler_o.type=Null:C1517)
 		
-	: ($requestHandler_o.PrimitiveValue.type=Null:C1517)
-		
-	: ($requestHandler_o.PrimitiveValue.type#"RequestHandler")
+	: ($requestHandler_o.type#"RequestHandler")
 		
 	Else 
 		
