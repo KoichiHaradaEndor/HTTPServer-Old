@@ -14,9 +14,8 @@ C_LONGINT:C283($resultCode_l)
 C_REAL:C285($value_r)
 C_BOOLEAN:C305($match_b)
 
-$config_o:=This:C1470
+$config_o:=HS_configRead 
 $result_t:=""
-
 
   //###
   //# DocumentRootStatic

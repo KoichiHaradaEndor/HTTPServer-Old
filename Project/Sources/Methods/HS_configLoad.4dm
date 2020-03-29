@@ -10,7 +10,7 @@ C_LONGINT:C283($platform_l;$value_l)
 C_TEXT:C284($value_t)
 C_REAL:C285($value_r)
 
-$config_o:=This:C1470
+$config_o:=HS_configRead 
 
   //###
   //# DocumentRootStatic
