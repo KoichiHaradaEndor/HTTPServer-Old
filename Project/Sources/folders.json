@@ -1,13 +1,21 @@
 ﻿{
 	"HttpServer": {
 		"methods": [
-			"HS_addRequestHandler",
+			"HS_addRoute",
+			"HS_all",
 			"HS_configLoad",
 			"HS_configRead",
 			"HS_configTest",
+			"HS_delete",
+			"HS_get",
+			"HS_post",
+			"HS_put",
 			"HS_restart",
+			"HS_route",
 			"HS_start",
 			"HS_stop",
+			"HS_use",
+			"HS_vhost",
 			"new HttpServer"
 		]
 	},
