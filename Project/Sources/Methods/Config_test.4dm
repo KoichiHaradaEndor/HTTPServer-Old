@@ -1,10 +1,10 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
-  //**
-  //* This method tests if configuration names and values are valid.
-  //* 
-  //* @author: HARADA Koichi
-  //* @return {Text} The result of the test.
-  //*/
+/**
+This method tests if configuration names and values are valid.
+
+@author: HARADA Koichi
+@return {Text} The result of the test.
+*/
 
 C_TEXT:C284($0;$result_t)
 
@@ -14,7 +14,7 @@ C_LONGINT:C283($resultCode_l)
 C_REAL:C285($value_r)
 C_BOOLEAN:C305($match_b)
 
-$config_o:=HS_configRead 
+$config_o:=Config_read 
 $result_t:=""
 
   //###

@@ -1,10 +1,10 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
-  //**
-  //* This method reads HTTPServer configuration from file and extract it to object.
-  //* 
-  //* @author: HARADA Koichi
-  //* @return {Object} The configuration read from file.
-  //*/
+/**
+This method reads HTTPServer configuration from file and extract it to object.
+
+@author: HARADA Koichi
+@return {Object} The configuration read from file.
+*/
 
 C_OBJECT:C1216($0;$config_o)
 

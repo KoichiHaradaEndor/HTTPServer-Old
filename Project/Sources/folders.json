@@ -1,11 +1,23 @@
 ﻿{
+	"Config": {
+		"methods": [
+			"Config_load",
+			"Config_read",
+			"Config_test"
+		]
+	},
+	"Error": {
+		"methods": [
+			"error_handler",
+			"error_throw",
+			"error_try",
+			"new Error"
+		]
+	},
 	"HttpServer": {
 		"methods": [
 			"HS_addRoute",
 			"HS_all",
-			"HS_configLoad",
-			"HS_configRead",
-			"HS_configTest",
 			"HS_delete",
 			"HS_get",
 			"HS_post",
