@@ -35,7 +35,7 @@ Use (Storage:C1525)
 			  //*****
 			
 			  // web server configuration
-			Storage:C1525.httpServer.configtest:=Formula:C1597(HS_configTest )
+			Storage:C1525.httpServer.configtest:=Formula:C1597(Config_test)
 			
 			  // start or stop web server
 			Storage:C1525.httpServer.restart:=Formula:C1597(HS_restart )

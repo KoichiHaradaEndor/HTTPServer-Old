@@ -20,7 +20,7 @@ Else
 	  // When start the http server, always loads config from file,
 	  // so that modified config will take effect when (re)starting
 	  // the server.
-	HS_configLoad 
+	Config_load
 	WEB START SERVER:C617
 	
 End if 

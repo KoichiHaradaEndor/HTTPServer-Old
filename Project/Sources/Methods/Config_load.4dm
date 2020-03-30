@@ -1,16 +1,16 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
-  //**
-  //* This method loads 4D HTTP server configuration.
-  //* 
-  //* @author: HARADA Koichi
-  //*/
+/**
+* Reads HTTP server configurations from file and set them.
+*
+* @author: HARADA Koichi
+*/
 
 C_OBJECT:C1216($config_o)
 C_LONGINT:C283($platform_l;$value_l)
 C_TEXT:C284($value_t)
 C_REAL:C285($value_r)
 
-$config_o:=HS_configRead 
+$config_o:=Config_read 
 
   //###
   //# DocumentRootStatic

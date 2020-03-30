@@ -1,12 +1,12 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
-  //**
-  //* This is generic method used to add a route to the host object.
-  //* 
-  //* @author: HARADA Koichi
-  //* @param {Text} $1 HTTP method or flag
-  //* @param {Text} $2 The path for which the callback function is invoked
-  //* @param {Variant} ${3} Callback functions
-  //*/
+/**
+This is a generic method used to add a route to the host object.
+ 
+@author: HARADA Koichi
+@param {Text} $1 HTTP method or flag
+@param {Text} $2 The path for which the callback function is invoked
+@param {Variant} ${3} Callback functions
+*/
 
 C_TEXT:C284($1;$method_t)
 C_TEXT:C284($2;$path_t)
