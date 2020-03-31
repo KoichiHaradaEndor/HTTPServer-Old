@@ -8,6 +8,7 @@
 	},
 	"Error": {
 		"methods": [
+			"error_catch",
 			"error_handler",
 			"error_throw",
 			"error_try",

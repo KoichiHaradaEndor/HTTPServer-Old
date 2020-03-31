@@ -7,7 +7,6 @@
 */
 
 C_LONGINT:C283(error)
-C_OBJECT:C1216(error_o)
 
 C_LONGINT:C283($index_l)
 
@@ -24,6 +23,10 @@ $messages_at\
 $index_l:=Find in array:C230($errorCodes_al;error)
 If ($index_l>0)
 	
-	error_o:=new Error ($messages_at{$index_l})
+	error_throw ($messages_at{$index_l})
+	
+Else 
+	
+	error_throw ("Error code: "+String:C10(error))
 	
 End if 
