@@ -1,6 +1,6 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
 /**
-* This method returns true if error occured
+* This method returns true if error was generated
 * after calling error_try method.
 *
 * @return {Boolean} $0 true: error had occured, otherwise false
@@ -13,9 +13,9 @@ C_OBJECT:C1216(error_o)
 
 $result_b:=False:C215
 Case of 
-	: (OB Is defined:C1231(error_o)=False:C215)
+	: (error_o=Null:C1517)
 		
-	: (OB Is defined:C1231(error_o;"message")=False:C215)
+	: (error_o.message=Null:C1517)
 		
 	Else 
 		
