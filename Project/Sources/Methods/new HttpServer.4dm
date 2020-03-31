@@ -4,7 +4,7 @@
 * Since single 4D / 4D Server instance can serve one
 * HTTP server, only one HttpServer object can reside.
 * 
-* @return {Object} HttpServer object.
+* @return {Object} $0 HttpServer object.
 * @author: HARADA Koichi
 */
 
@@ -19,6 +19,19 @@ Use (Storage:C1525)
 		
 		Storage:C1525.constants:=New shared object:C1526(\
 			"defaultHostPattern";".*"\
+			)
+		
+	End if 
+	
+	  //#####
+	  // Messages
+	  //#####
+	If (Storage:C1525.messages=Null:C1517)
+		
+		Storage:C1525.messages:=New shared object:C1526(\
+			"configDoesNotExist";"Configuration file does not exist";\
+			"httpServerIsAlreadyRunning";"HTTP server is already running"\
+			"httpServerIsNotRunning";"HTTP server is not running"\
 			)
 		
 	End if 

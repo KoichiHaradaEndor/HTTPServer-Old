@@ -1,13 +1,13 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
-  //**
-  //* This method mounts specified function at the specified path.
-  //* The funtion is executed when the base of the request path matches the path parameter.
-  //* 
-  //* @author: HARADA Koichi
-  //* @param {Text} $1 The path for which the callback function is invoked
-  //* @param {Variant} ${2} Callback functions
-  //* @return {Object} This object.
-  //*/
+/**
+* This method mounts specified function at the specified path.
+* The funtion is executed when the base of the request path matches the path parameter.
+* 
+* @param {Text} $1 The path for which the callback function is invoked
+* @param {Variant} ${2} Callback functions
+* @return {Object} This object.
+* @author: HARADA Koichi
+*/
 
 C_TEXT:C284($1;$path_t)
 C_VARIANT:C1683(${2})  // callback functions

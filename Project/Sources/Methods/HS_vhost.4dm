@@ -1,11 +1,11 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
-  //**
-  //* This method creates VirtualHost object and return it.
-  //* 
-  //* @author: HARADA Koichi
-  //* @param {Text} Host name.
-  //* @return {Object} VirtualHost object.
-  //*/
+/**
+* This method creates VirtualHost object and return it.
+* 
+* @param {Text} $1 Host name.
+* @return {Object} $0 VirtualHost object.
+* @author: HARADA Koichi
+*/
 
 C_TEXT:C284($1;$hostname_t)
 C_OBJECT:C1216($0;$vhost_o)
