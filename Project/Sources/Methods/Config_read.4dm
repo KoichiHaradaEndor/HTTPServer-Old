@@ -1,9 +1,9 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
 /**
-This method reads HTTPServer configuration from file and extract it to object.
-
-@author: HARADA Koichi
-@return {Object} The configuration read from file.
+* This method reads HTTPServer configuration from file and extract it to object.
+* 
+* @return {Object} $0 The configuration that was read from file
+* @author: HARADA Koichi
 */
 
 C_OBJECT:C1216($0;$config_o)
@@ -17,6 +17,8 @@ C_COLLECTION:C1488($configLines_c)
 $config_o:=New object:C1471()
 $resultCode_l:=0
 
+  // Configuration file must be placed in database folder of the host application
+  // and the file name must be "httpServer.conf".
 $configPath_t:=Get 4D folder:C485(Database folder:K5:14;*)+"httpServer.conf"
 
 If (Test path name:C476($configPath_t)#Is a document:K24:1)
