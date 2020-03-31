@@ -11,8 +11,7 @@
 C_TEXT:C284($0;$result_t)
 
 C_OBJECT:C1216($config_o)
-C_TEXT:C284($value_t;$pattern_t)
-C_LONGINT:C283($resultCode_l)
+C_TEXT:C284($value_t;$pattern_t;$resultCode_t)
 C_REAL:C285($value_r)
 C_BOOLEAN:C305($match_b)
 
@@ -22,12 +21,13 @@ $result_t:=""
   //###
   //# Test the config file existence
   //###
-$resultCode_l:=$config_o.resultCode
+$resultCode_t:=$config_o.resultCode
 Case of 
-	: ($resultCode_l=Config_does_not_exist)
+	: ($resultCode_t=Storage:C1525.messages.configDoesNotExist)
+		
 		$result_t:=$result_t+"ERROR\t\tConfig file does not exist.\n"
 		
-	: ($resultCode_l=0)
+	: ($resultCode_t="")
 		
 		  //###
 		  //# DocumentRootStatic

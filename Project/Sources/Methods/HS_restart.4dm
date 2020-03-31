@@ -1,14 +1,14 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
-  //**
-  //* This method is called to restart HTTP server.
-  //* 
-  //* @author: HARADA Koichi
-  //* @return {Longint} Result code.
-  //*/
+/**
+* This method is called to restart HTTP server.
+* 
+* @return {Text} Result message
+* @author: HARADA Koichi
+*/
 
-C_LONGINT:C283($0;$resultCode_l)
+C_LONGINT:C283($0;$resultMessage_t)
 
-$resultCode_l:=HS_stop ()
-$resultCode_l:=HS_start ()
+$resultMessage_t:=HS_stop ()
+$resultMessage_t:=HS_start ()
 
-$0:=$resultCode_l
+$0:=$resultMessage_t

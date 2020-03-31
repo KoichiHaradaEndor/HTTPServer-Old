@@ -1,14 +1,14 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
-  //**
-  //* This method routes HTTP requests for the caller host
-  //* to the speified path with the specified callbacks.
-  //* It will match all HTTP verbs.
-  //* 
-  //* @author: HARADA Koichi
-  //* @param {Text} $1 The path for which the callback function is invoked
-  //* @param {Variant} ${2} Callback functions
-  //* @return {Object} This object.
-  //*/
+/**
+* This method routes HTTP requests for the caller host
+* to the speified path with the specified callbacks.
+* It will match all HTTP verbs.
+* 
+* @param {Text} $1 The path for which the callback function is invoked
+* @param {Variant} ${2} Callback functions
+* @return {Object} This object.
+* @author: HARADA Koichi
+*/
 
 C_TEXT:C284($1;$path_t)
 C_VARIANT:C1683(${2})  // callback functions

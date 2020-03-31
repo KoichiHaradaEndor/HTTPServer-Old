@@ -15,7 +15,6 @@ C_LONGINT:C283($position_l)
 C_COLLECTION:C1488($configLines_c)
 
 $config_o:=New object:C1471()
-$resultCode_l:=0
 
   // Configuration file must be placed in database folder of the host application
   // and the file name must be "httpServer.conf".
@@ -23,11 +22,11 @@ $configPath_t:=Get 4D folder:C485(Database folder:K5:14;*)+"httpServer.conf"
 
 If (Test path name:C476($configPath_t)#Is a document:K24:1)
 	
-	$config_o.resultCode:=Config_does_not_exist
+	$config_o.resultCode:=Storage:C1525.messages.configDoesNotExist
 	
 Else 
 	
-	$config_o.resultCode:=0
+	$config_o.resultCode:=""
 	
 	$config_t:=Document to text:C1236($configPath_t;"UTF-8";Document with LF:K24:22)
 	$configLines_c:=New collection:C1472()

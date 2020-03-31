@@ -1,38 +1,58 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
-  //**
-  //* This method creates HttpServer object and return it.
-  //* Since single 4D / 4D Server instance can serve one
-  //* HTTP server, only one HttpServer object can reside.
-  //* That's why Singleton design pattern is used 
-  //* to create the object.
-  //* 
-  //* @author: HARADA Koichi
-  //* @return {Object} HttpServer object.
-  //*/
+/**
+* This method creates HttpServer object and return it.
+* Since single 4D / 4D Server instance can serve one
+* HTTP server, only one HttpServer object can reside.
+* 
+* @return {Object} $0 HttpServer object.
+* @author: HARADA Koichi
+*/
 
 C_OBJECT:C1216($0)
 
-C_LONGINT:C283($resultCode_l)
-
 Use (Storage:C1525)
 	
-	  //*****
+	  //#####
+	  // Constants
+	  //#####
+	If (Storage:C1525.constants=Null:C1517)
+		
+		Storage:C1525.constants:=New shared object:C1526(\
+			"defaultHostPattern";".*"\
+			)
+		
+	End if 
+	
+	  //#####
+	  // Messages
+	  //#####
+	If (Storage:C1525.messages=Null:C1517)
+		
+		Storage:C1525.messages:=New shared object:C1526(\
+			"configDoesNotExist";"Configuration file does not exist";\
+			"httpServerIsAlreadyRunning";"HTTP server is already running"\
+			"httpServerIsNotRunning";"HTTP server is not running"\
+			)
+		
+	End if 
+	
+	  //#####
 	  // Declares HttpServer object
-	  //*****
+	  //#####
 	If (Storage:C1525.httpServer=Null:C1517)
 		
 		Storage:C1525.httpServer:=New shared object:C1526()
 		Use (Storage:C1525.httpServer)
 			
-			  //*****
-			  //* Properties
-			  //*****
+			  //#####
+			  // Properties
+			  //#####
 			
 			Storage:C1525.httpServer.type:="HttpServer"
 			
-			  //*****
-			  //* Methods
-			  //*****
+			  //#####
+			  // Methods
+			  //#####
 			
 			  // web server configuration
 			Storage:C1525.httpServer.configtest:=Formula:C1597(Config_test )
@@ -58,13 +78,14 @@ Use (Storage:C1525)
 		
 	End if   // If (Storage.httpServer=Null)
 	
-	  //*****
+	  //#####
 	  // Initialize Hosts
-	  //*****
+	  //#####
 	If (Storage:C1525.hosts=Null:C1517)
 		
+		  // When register hosts object, add default host
 		Storage:C1525.hosts:=New shared collection:C1527(New object:C1471(\
-			"hostname";".*";\
+			"hostname";Storage:C1525.constants.defaultHostPattern;\
 			"routes";New shared collection:C1527()\
 			))
 		

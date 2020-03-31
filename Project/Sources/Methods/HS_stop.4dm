@@ -1,12 +1,12 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
-  //**
-  //* This method is called to stop HTTP server.
-  //* 
-  //* @author: HARADA Koichi
-  //* @return {Longint} Result code
-  //*/
+/**
+* This method is called to stop HTTP server.
+* 
+* @return {Text} Result message
+* @author: HARADA Koichi
+*/
 
-C_LONGINT:C283($0;$resultCode_l)
+C_TEXT:C284($0;$resultMessage_t)
 
 If (WEB Is server running:C1313)
 	
@@ -14,8 +14,8 @@ If (WEB Is server running:C1313)
 	
 Else 
 	
-	$resultCode_l:=HTTPServer_is_not_running
+	$resultMessage_t:=Storage:C1525.messages.httpServerIsNotRunning
 	
 End if 
 
-$0:=$resultCode_l
+$0:=$resultMessage_t
