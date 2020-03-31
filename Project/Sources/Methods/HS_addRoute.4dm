@@ -21,7 +21,7 @@ $method_t:=$1
 Case of 
 	: (This:C1470.type="HttpServer")
 		$path_t:=$2
-		$indices_c:=Storage:C1525.hosts.indices("hostname = :1";".*")
+		$indices_c:=Storage:C1525.hosts.indices("hostname = :1";Storage:C1525.constants.defaultHostPattern)
 		$host_o:=Storage:C1525.hosts[$indices_c[0]]
 		  // This must be present since it is declared when HttpServer
 		  // is created.
@@ -35,7 +35,7 @@ Case of
 		
 		Case of 
 			: (This:C1470.host.type="HttpServer")
-				$indices_c:=Storage:C1525.hosts.indices("hostname = :1";".*")
+				$indices_c:=Storage:C1525.hosts.indices("hostname = :1";Storage:C1525.constants.defaultHostPattern)
 				$host_o:=Storage:C1525.hosts[$indices_c[0]]
 				
 			: (This:C1470.host.type="VirtualHost")
