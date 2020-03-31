@@ -34,6 +34,7 @@
 	},
 	"Request": {
 		"methods": [
+			"About Request Object",
 			"new Request"
 		]
 	},
