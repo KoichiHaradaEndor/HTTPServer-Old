@@ -1,4 +1,4 @@
-//%attributes = {"invisible":true,"shared":true,"preemptive":"capable"}
+//%attributes = {"invisible":true,"preemptive":"capable"}
 /**
 * This method creates Request object and return it.
 *
@@ -29,7 +29,7 @@ WEB GET HTTP HEADER:C697($headerNames_at;$headerValues_at)
 ARRAY TO COLLECTION:C1563($headers_c;$headerNames_at;"name";$headerValues_at;"value")
 
   // Stores header collection into request object for later use
-$request_o.headers:=$headers_c
+$request_o.__headers__:=$headers_c
 
   //#####
   // Request.body

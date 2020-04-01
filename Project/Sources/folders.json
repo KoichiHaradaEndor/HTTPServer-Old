@@ -32,6 +32,12 @@
 			"new HttpServer"
 		]
 	},
+	"MimeTypes": {
+		"methods": [
+			"MT_get",
+			"MT_init"
+		]
+	},
 	"Request": {
 		"methods": [
 			"About Request Object",
@@ -40,7 +46,14 @@
 			"RQ_parseWebVariables"
 		]
 	},
-	"Response": {},
+	"Response": {
+		"methods": [
+			"About Response Object",
+			"new Response",
+			"RS_append",
+			"RS_set"
+		]
+	},
 	"Router": {
 		"methods": [
 			"new Router",

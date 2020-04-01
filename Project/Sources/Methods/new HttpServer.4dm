@@ -72,7 +72,7 @@ Use (Storage:C1525)
 			Storage:C1525.httpServer.use:=Formula:C1597(HS_use )
 			
 			  // virtual host
-			Storage:C1525.httpServer.VHost:=Formula:C1597(HS_vhost )
+			Storage:C1525.httpServer.Virtualhost:=Formula:C1597(HS_vhost )
 			
 		End use   // Use (Storage.httpServer)
 		
@@ -92,5 +92,10 @@ Use (Storage:C1525)
 	End if   // If (Storage.hosts=Null)
 	
 End use   // Use (Storage)
+
+  //#####
+  // Initialize MimeTypes
+  //#####
+MT_init 
 
 $0:=Storage:C1525.httpServer
