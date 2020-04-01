@@ -72,7 +72,7 @@ Use (Storage:C1525)
 			Storage:C1525.httpServer.use:=Formula:C1597(HS_use )
 			
 			  // virtual host
-			Storage:C1525.httpServer.VHost:=Formula:C1597(HS_vhost )
+			Storage:C1525.httpServer.Virtualhost:=Formula:C1597(HS_vhost )
 			
 		End use   // Use (Storage.httpServer)
 		
@@ -90,6 +90,20 @@ Use (Storage:C1525)
 			))
 		
 	End if   // If (Storage.hosts=Null)
+	
+	  //#####
+	  // Initialize MimeTypes
+	  //#####
+	If (Storage:C1525.mimeTypes=Null:C1517)
+		
+		Storage:C1525.mimeTypes:=New collection:C1472()
+		Use (Storage:C1525.mimeTypes)
+			
+			Storage:C1525.mimeTypes:=MT_read 
+			
+		End use 
+		
+	End if 
 	
 End use   // Use (Storage)
 

@@ -32,6 +32,11 @@
 			"new HttpServer"
 		]
 	},
+	"MimeTypes": {
+		"methods": [
+			"MT_read"
+		]
+	},
 	"Request": {
 		"methods": [
 			"About Request Object",
@@ -43,7 +48,6 @@
 	"Response": {
 		"methods": [
 			"About Response Object",
-			"Method31",
 			"new Response",
 			"RS_append",
 			"RS_set"
