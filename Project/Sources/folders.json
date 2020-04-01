@@ -34,7 +34,8 @@
 	},
 	"MimeTypes": {
 		"methods": [
-			"MT_read"
+			"MT_get",
+			"MT_init"
 		]
 	},
 	"Request": {

@@ -91,20 +91,11 @@ Use (Storage:C1525)
 		
 	End if   // If (Storage.hosts=Null)
 	
-	  //#####
-	  // Initialize MimeTypes
-	  //#####
-	If (Storage:C1525.mimeTypes=Null:C1517)
-		
-		Storage:C1525.mimeTypes:=New collection:C1472()
-		Use (Storage:C1525.mimeTypes)
-			
-			Storage:C1525.mimeTypes:=MT_read 
-			
-		End use 
-		
-	End if 
-	
 End use   // Use (Storage)
+
+  //#####
+  // Initialize MimeTypes
+  //#####
+MT_init 
 
 $0:=Storage:C1525.httpServer

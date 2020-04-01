@@ -3,16 +3,23 @@
 * This method reads MimeType list from file and extract it to collection.
 * Using mime.types file distributed by Apache.
 * 
-* @return {Collection} $0 MimeType list that was read from file
 * @author: HARADA Koichi
 */
 
-C_COLLECTION:C1488($0;$mimetypes_c)
-
 C_TEXT:C284($filePath_t;$content_t;$aLine_t;$mimeType_t;$extension_t)
-C_COLLECTION:C1488($configLines_c;$aLine_c;$extensions_c)
+C_COLLECTION:C1488($mimetypes_c;$configLines_c;$aLine_c;$extensions_c)
 
-$mimetypes_c:=New collection:C1472()
+Use (Storage:C1525)
+	
+	If (Storage:C1525.__mimeTypes__=Null:C1517)
+		
+		Storage:C1525.__mimeTypes__:=New shared collection:C1527()
+		
+	End if 
+	
+End use 
+
+$mimetypes_c:=Storage:C1525.__mimeTypes__
 
   // mime.types file must be placed in database folder of the component 
   // and the file name must be "mime.types".
@@ -52,7 +59,7 @@ If (Test path name:C476($filePath_t)=Is a document:K24:1)
 						
 						If ($extension_t#"")
 							
-							$mimetypes_c.push(New object:C1471("extension";$extension_t;"mimetype";$mimeType_t))
+							$mimetypes_c.push(New shared object:C1526("extension";$extension_t;"mimetype";$mimeType_t))
 							
 						End if 
 						
@@ -65,5 +72,3 @@ If (Test path name:C476($filePath_t)=Is a document:K24:1)
 	End for each   // For each ($aLine_t;$configLines_c)
 	
 End if   // If (Test path name($configPath_t)#Is a document)
-
-$0:=$mimetypes_c
