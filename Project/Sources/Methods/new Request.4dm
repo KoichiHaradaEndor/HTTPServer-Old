@@ -2,7 +2,7 @@
 /**
 * This method creates Request object and return it.
 *
-* For more details, please refer to {@link Request#About Request Object}.
+* For more details, please refer to {@link Request.About Request Object}.
 *
 * @return {Object} $0 Request object
 * @author: HARADA Koichi
@@ -11,17 +11,25 @@
 C_OBJECT:C1216($0;$request_o)
 
 C_COLLECTION:C1488($headers_c;$queryResult_c;$cookies_c;$aCookie_c;$splitResult_c)
-C_TEXT:C284($contentType_t;$body_t;$cookie_t;$pattern_t)
+C_TEXT:C284($contentType_t;$body_t;$cookie_t;$pattern_t;$name_t;$value_t)
 C_OBJECT:C1216($eachItem_o)
 C_BOOLEAN:C305($matched_b)
 
 $request_o:=New object:C1471()
+$request_o.__type__:="Request"
+
+  //#####
+  // Properties
+  //#####
 
   // Retrieves request header information
 ARRAY TEXT:C222($headerNames_at;0)
 ARRAY TEXT:C222($headerValues_at;0)
 WEB GET HTTP HEADER:C697($headerNames_at;$headerValues_at)
 ARRAY TO COLLECTION:C1563($headers_c;$headerNames_at;"name";$headerValues_at;"value")
+
+  // Stores header collection into request object for later use
+$request_o.headers:=$headers_c
 
   //#####
   // Request.body
@@ -33,27 +41,7 @@ If ($queryResult_c.length>0)
 	Case of 
 		: ($contentType_t="application/x-www-form-urlencoded")
 			
-			ARRAY TEXT:C222($dataNames_at;0)
-			ARRAY TEXT:C222($dataValues_at;0)
-			WEB GET VARIABLES:C683($dataNames_at;$dataValues_at)
-			ARRAY TO COLLECTION:C1563($postedData_c;$dataNames_at;"name";$dataValues_at;"value")
-			
-			$request_o.body:=New object:C1471()
-			For each ($eachItem_o;$postedData_c)
-				
-				If ($request_o.body[$eachItem_o.name]=Null:C1517)
-					
-					  // If the data name collection has not been created, add it with the value
-					$request_o.body[$eachItem_o.name]:=New collection:C1472($eachItem_o.value)
-					
-				Else 
-					
-					  // If the data name collection had been created, append the value.
-					$request_o.body[$eachItem_o.name].push($eachItem_o.value)
-					
-				End if 
-				
-			End for each 
+			$request_o.body:=RQ_parseWebVariables 
 			
 		: ($contentType_t="application/json")
 			
@@ -106,35 +94,31 @@ End if
   //#####
   // Request.hostname
   //#####
+$request_o.hostname:=""
 $queryResult_c:=$headers_c.query("name = :1";"Host")
 If ($queryResult_c.length>0)
 	
+	  // removes port number part
 	$splitResult_c:=Split string:C1554($queryResult_c[0].value;":";sk ignore empty strings:K86:1+sk trim spaces:K86:2)
 	$request_o.hostname:=$splitResult_c[0]
-	
-Else 
-	
-	$request_o.hostname:=""
 	
 End if 
 
   //#####
   // Request.method
   //#####
+$request_o.method:=""
 $queryResult_c:=$headers_c.query("name = :1";"X-METHOD")
 If ($queryResult_c.length>0)
 	
 	$request_o.method:=$queryResult_c[0].value
-	
-Else 
-	
-	$request_o.method:=""
 	
 End if 
 
   //#####
   // Request.path
   //#####
+$request_o.path:=""
 $queryResult_c:=$headers_c.query("name = :1";"X-URL")
 If ($queryResult_c.length>0)
 	
@@ -146,15 +130,7 @@ If ($queryResult_c.length>0)
 		
 		$request_o.path:=Substring:C12($queryResult_c[0].value;$positions_al{1};$lengths_al{1})
 		
-	Else 
-		
-		$request_o.path:=""
-		
 	End if 
-	
-Else 
-	
-	$request_o.path:=""
 	
 End if 
 
@@ -162,5 +138,44 @@ End if
   // Request.protocol
   //#####
 $request_o.protocol:=Choose:C955(WEB Is secured connection:C698;"https";"http")
+
+  //#####
+  // Request.query
+  //#####
+$request_o.query:=New object:C1471()
+$queryResult_c:=$headers_c.query("name = :1";"X-URL")
+If ($queryResult_c.length>0)
+	
+	$pattern_t:="^(?:.*?)(?:\\?.*)+(?:#.*)?$"  // to find query string part
+	$matched_b:=Match regex:C1019($pattern_t;$queryResult_c[0].value;1)
+	If ($matched_b)
+		
+		$request_o.query:=RQ_parseWebVariables 
+		
+	End if 
+	
+End if 
+
+  //#####
+  // Request.secure
+  //#####
+$request_o.secure:=WEB Is secured connection:C698
+
+  //#####
+  // Request.xhr
+  //#####
+$request_o.xhr:=False:C215
+$queryResult_c:=$headers_c.query("name = :1";"X-Requested-With")
+If ($queryResult_c.length>0)
+	
+	$request_o.xhr:=($queryResult_c[0].value="XMLHttpRequest")
+	
+End if 
+
+  //#####
+  // Methods
+  //#####
+
+$request_o.get:=Formula:C1597(RQ_get )
 
 $0:=$request_o
