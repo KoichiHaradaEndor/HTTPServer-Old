@@ -40,7 +40,15 @@
 			"RQ_parseWebVariables"
 		]
 	},
-	"Response": {},
+	"Response": {
+		"methods": [
+			"About Response Object",
+			"Method31",
+			"new Response",
+			"RS_append",
+			"RS_set"
+		]
+	},
 	"Router": {
 		"methods": [
 			"new Router",

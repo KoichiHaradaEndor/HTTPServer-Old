@@ -15,7 +15,7 @@ C_COLLECTION:C1488($queryResult_c)
 $name_t:=$1
 $value_t:=""
 
-$queryResult_c:=This:C1470.headers.query("name = :1";$name_t)
+$queryResult_c:=This:C1470.__headers__.query("name = :1";$name_t)
 If ($queryResult_c.length>0)
 	
 	$value_t:=$queryResult_c[0].value
