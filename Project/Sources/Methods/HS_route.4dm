@@ -1,6 +1,6 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
 /**
-* This method returns a object of single route, which you can then
+* This method returns an object of single route, which you can then
 * add handlers subsequently.
 * 
 * @param {Text} $1 The path for which the callback function is invoked

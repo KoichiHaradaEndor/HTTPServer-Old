@@ -35,7 +35,9 @@
 	"Request": {
 		"methods": [
 			"About Request Object",
-			"new Request"
+			"new Request",
+			"RQ_get",
+			"RQ_parseWebVariables"
 		]
 	},
 	"Response": {},
