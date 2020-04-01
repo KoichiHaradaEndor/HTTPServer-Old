@@ -32,7 +32,7 @@ End for
 $formula_o:=Formula:C1597(HS_addRoute )
 $formula_o.apply(This:C1470;$params_c)
 
-If (This:C1470.type="SingleRoute")
+If (This:C1470.__type__="SingleRoute")
 	
 	$0:=This:C1470
 	

@@ -19,7 +19,7 @@ $vhost_o:=New object:C1471()
   //* Properties
   //*****
 
-$vhost_o.type:="VirtualHost"
+$vhost_o.__type__:="VirtualHost"
 $vhost_o.hostname:=$hostname_t
 $vhost_o.routes:=New shared collection:C1527()
 

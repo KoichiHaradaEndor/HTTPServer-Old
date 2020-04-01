@@ -48,7 +48,7 @@ Use (Storage:C1525)
 			  // Properties
 			  //#####
 			
-			Storage:C1525.httpServer.type:="HttpServer"
+			Storage:C1525.httpServer.__type__:="HttpServer"
 			
 			  //#####
 			  // Methods

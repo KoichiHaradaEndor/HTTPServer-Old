@@ -18,7 +18,7 @@ $route_o:=New object:C1471()
   //* Properties
   //*****
 
-$route_o.type:="SingleRoute"
+$route_o.__type__:="SingleRoute"
 $route_o.host:=This:C1470  // HttpServer or VirtualHost
 $route_o.path:=$path_t
 

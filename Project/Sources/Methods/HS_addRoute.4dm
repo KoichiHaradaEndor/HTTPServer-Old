@@ -19,26 +19,26 @@ C_LONGINT:C283($i;$valueType_l)
 $method_t:=$1
 
 Case of 
-	: (This:C1470.type="HttpServer")
+	: (This:C1470.__type__="HttpServer")
 		$path_t:=$2
 		$indices_c:=Storage:C1525.hosts.indices("hostname = :1";Storage:C1525.constants.defaultHostPattern)
 		$host_o:=Storage:C1525.hosts[$indices_c[0]]
 		  // This must be present since it is declared when HttpServer
 		  // is created.
 		
-	: (This:C1470.type="VirtualHost")  // created with HS_vhost
+	: (This:C1470.__type__="VirtualHost")  // created with HS_vhost
 		$path_t:=$2
 		$host_o:=This:C1470
 		
-	: (This:C1470.type="SingleRoute")  // created with HS_route
+	: (This:C1470.__type__="SingleRoute")  // created with HS_route
 		$path_t:=This:C1470.path
 		
 		Case of 
-			: (This:C1470.host.type="HttpServer")
+			: (This:C1470.host.__type__="HttpServer")
 				$indices_c:=Storage:C1525.hosts.indices("hostname = :1";Storage:C1525.constants.defaultHostPattern)
 				$host_o:=Storage:C1525.hosts[$indices_c[0]]
 				
-			: (This:C1470.host.type="VirtualHost")
+			: (This:C1470.host.__type__="VirtualHost")
 				$host_o:=This:C1470.host
 				
 		End case 
