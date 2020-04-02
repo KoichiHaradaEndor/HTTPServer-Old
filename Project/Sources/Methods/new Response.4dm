@@ -16,15 +16,15 @@ $response_o.__type__:="Response"
   //#####
   // Properties
   //#####
-$response_o.local:=New object:C1471()
+$response_o.locals:=New object:C1471()
 $response_o.__headers__:=New collection:C1472()
 
   //#####
   // Methods
   //#####
 $response_o.append:=Formula:C1597(RS_append )
-$response_o.attachment:=Formula:C1597()
-$response_o.cookie:=Formula:C1597()
+$response_o.attachment:=Formula:C1597(RS_attachment )
+$response_o.cookie:=Formula:C1597(RS_cookie )
 
 $response_o.set:=Formula:C1597(RS_set )
 

@@ -15,9 +15,9 @@ Use (Storage:C1525)
 	  //#####
 	  // Constants
 	  //#####
-	If (Storage:C1525.constants=Null:C1517)
+	If (Storage:C1525.__constants__=Null:C1517)
 		
-		Storage:C1525.constants:=New shared object:C1526(\
+		Storage:C1525.__constants__:=New shared object:C1526(\
 			"defaultHostPattern";".*"\
 			)
 		
@@ -85,7 +85,7 @@ Use (Storage:C1525)
 		
 		  // When register hosts object, add default host
 		Storage:C1525.hosts:=New shared collection:C1527(New object:C1471(\
-			"hostname";Storage:C1525.constants.defaultHostPattern;\
+			"hostname";Storage:C1525.__constants__.defaultHostPattern;\
 			"routes";New shared collection:C1527()\
 			))
 		

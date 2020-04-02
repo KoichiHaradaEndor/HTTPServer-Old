@@ -51,6 +51,8 @@
 			"About Response Object",
 			"new Response",
 			"RS_append",
+			"RS_attachment",
+			"RS_cookie",
 			"RS_set"
 		]
 	},
