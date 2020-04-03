@@ -10,8 +10,6 @@
 C_TEXT:C284($1;$hostname_t)
 C_OBJECT:C1216($0;$vhost_o)
 
-C_LONGINT:C283($resultCode_l)
-
 $hostname_t:=$1
 $vhost_o:=New object:C1471()
 

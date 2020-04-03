@@ -10,7 +10,7 @@ C_OBJECT:C1216($0;$config_o)
 
 C_OBJECT:C1216($config_o)
 C_TEXT:C284($configPath_t;$config_t;$aLine_t;$configName_t;$configValue_t)
-C_TEXT:C284($databaseFolderPath_t;$propertyName_t)
+C_TEXT:C284($databaseFolderPath_t)
 C_LONGINT:C283($position_l)
 C_COLLECTION:C1488($configLines_c)
 

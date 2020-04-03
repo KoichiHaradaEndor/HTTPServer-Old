@@ -62,5 +62,10 @@
 			"RH_addRoute"
 		]
 	},
+	"Utility": {
+		"methods": [
+			"encodeURIComponent"
+		]
+	},
 	"trash": {}
 }

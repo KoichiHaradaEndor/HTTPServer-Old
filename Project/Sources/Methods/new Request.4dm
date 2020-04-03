@@ -11,8 +11,7 @@
 C_OBJECT:C1216($0;$request_o)
 
 C_COLLECTION:C1488($headers_c;$queryResult_c;$cookies_c;$aCookie_c;$splitResult_c)
-C_TEXT:C284($contentType_t;$body_t;$cookie_t;$pattern_t;$name_t;$value_t)
-C_OBJECT:C1216($eachItem_o)
+C_TEXT:C284($contentType_t;$body_t;$cookie_t;$pattern_t)
 C_BOOLEAN:C305($matched_b)
 
 $request_o:=New object:C1471()

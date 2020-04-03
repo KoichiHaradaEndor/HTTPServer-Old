@@ -8,8 +8,6 @@
 
 C_TEXT:C284($0;$resultMessage_t)
 
-C_OBJECT:C1216($config_o)
-
 $resultMessage_t:=0
 If (WEB Is server running:C1313)
 	
