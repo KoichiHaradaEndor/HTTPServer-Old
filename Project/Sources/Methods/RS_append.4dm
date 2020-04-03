@@ -14,10 +14,13 @@
 *
 * @param {Text} $1 Field name
 * @param {Variant} $2 Field value, text or collection
+* @return {Object} $0 Request object
+* @author HARADA Koichi
 */
 
 C_TEXT:C284($1;$fieldName_t)
 C_VARIANT:C1683($2)
+C_OBJECT:C1216($0)
 
 C_LONGINT:C283($type_l)
 C_TEXT:C284($item_t;$flag_t;$currentValue_t)
@@ -35,7 +38,7 @@ If ($fieldName_t="Set-Cookie")
 Else 
 	
 	  // In case of not set-cookie, check if its already present
-	$queryResult_c:=$response_o.__headers__.query("name = :1";$fieldName_t)
+	$queryResult_c:=This:C1470.__headers__.query("name = :1";$fieldName_t)
 	If ($queryResult_c.length=0)
 		
 		  // If the field is not present, create one
@@ -56,13 +59,13 @@ Case of
 		Case of 
 			: ($type_l=Is text:K8:3)
 				
-				$response_o.__headers__.push(New object:C1471("name";$fieldName_t;"value";$2))
+				This:C1470.__headers__.push(New object:C1471("name";$fieldName_t;"value";$2))
 				
 			: ($type_l=Is collection:K8:32)
 				
 				For each ($item_t;$2)
 					
-					$response_o.__headers__.push(New object:C1471("name";$fieldName_t;"value";$item_t))
+					This:C1470.__headers__.push(New object:C1471("name";$fieldName_t;"value";$item_t))
 					
 				End for each 
 				
@@ -70,6 +73,7 @@ Case of
 		
 	: ($flag_t="append")
 		
+		  // Each $queryResult_c item is the same reference as the one of This.__headers__
 		Case of 
 			: ($type_l=Is text:K8:3)
 				
@@ -91,3 +95,5 @@ Case of
 		End case 
 		
 End case 
+
+$0:=This:C1470

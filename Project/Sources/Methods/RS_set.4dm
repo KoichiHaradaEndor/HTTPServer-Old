@@ -7,10 +7,13 @@
 *
 * @param {Variant} $1 Field name (Text) or name-value pair (Object)
 * @param {Text} $2 Field value when $1 is field name
+* @return {Object} $0 Request object
+* @author HARADA Koichi
 */
 
-C_VARIANT:C1683($1)
+C_VARIANT:C1683($1)  // Text or Object
 C_TEXT:C284($2)
+C_OBJECT:C1216($0)
 
 C_OBJECT:C1216($headersToSet_o)
 C_TEXT:C284($name_t;$value_t)
@@ -33,9 +36,11 @@ For each ($name_t;$headersToSet_o)
 	$value_t:=$headersToSet_o[$name_t]
 	
 	  // Removes current entry
-	$response_o.__headers__:=$response_o.__headers__.query("name != :1";$fieldName_t)
+	This:C1470.__headers__:=This:C1470.__headers__.query("name != :1";$fieldName_t)
 	
 	  // Then add new one
-	$response_o.__headers__.push(New object:C1471("name";$name_t;"value";$value_t))
+	This:C1470.__headers__.push(New object:C1471("name";$name_t;"value";$value_t))
 	
 End for each 
+
+$0:=This:C1470
