@@ -69,6 +69,9 @@ C_OBJECT:C1216($0)
 C_LONGINT:C283($type_l)
 C_TEXT:C284($cookie_t;$cookieValue_t)
 
+$cookieName_t:=$1
+$options_o:=$3
+
   // <cookie-name>=<cookie-value>
 $cookie_t:=$cookieName_t+"="
 

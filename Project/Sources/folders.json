@@ -52,6 +52,7 @@
 			"new Response",
 			"RS_append",
 			"RS_attachment",
+			"RS_clearCookie",
 			"RS_cookie",
 			"RS_set"
 		]
