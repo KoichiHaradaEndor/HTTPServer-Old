@@ -22,6 +22,18 @@ If (Storage:C1525.__mimeTypes__=Null:C1517)
 	
 End if 
 
+Case of 
+	: (Length:C16($extension_t)=0)
+		
+	: ($extension_t[[1]]#".")
+		
+	Else 
+		
+		  // removes the first period.
+		$extension_t:=Substring:C12($extension_t;2)
+		
+End case 
+
 $queryResult_c:=Storage:C1525.__mimeTypes__.query("extension = :1";$extension_t)
 If ($queryResult_c.length=1)
 	

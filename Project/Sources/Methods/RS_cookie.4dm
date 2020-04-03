@@ -57,7 +57,7 @@
 * @param {Text} $1 Name of the cookie
 * @param {Variant} $2 Value of the cookie, Text or Object
 * @param {Object} $3 Options of the cookie (optional)
-* @return {Object} $0 Request object
+* @return {Object} $0 Response object
 * @author HARADA Koichi
 */
 
