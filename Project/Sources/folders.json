@@ -4,8 +4,7 @@
 			"Config_load",
 			"Config_read",
 			"Config_test",
-			"RS_download",
-			"RS_get"
+			"RS_location"
 		]
 	},
 	"Error": {
@@ -57,6 +56,11 @@
 			"RS_attachment",
 			"RS_clearCookie",
 			"RS_cookie",
+			"RS_download",
+			"RS_get",
+			"RS_json",
+			"RS_links",
+			"RS_redirect",
 			"RS_set"
 		]
 	},
