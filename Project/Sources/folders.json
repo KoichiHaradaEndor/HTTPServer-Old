@@ -3,7 +3,9 @@
 		"methods": [
 			"Config_load",
 			"Config_read",
-			"Config_test"
+			"Config_test",
+			"RS_download",
+			"RS_get"
 		]
 	},
 	"Error": {
@@ -49,6 +51,7 @@
 	"Response": {
 		"methods": [
 			"About Response Object",
+			"Method39",
 			"new Response",
 			"RS_append",
 			"RS_attachment",

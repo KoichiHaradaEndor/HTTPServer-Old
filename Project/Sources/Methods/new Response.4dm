@@ -26,7 +26,11 @@ $response_o.append:=Formula:C1597(RS_append )
 $response_o.attachment:=Formula:C1597(RS_attachment )
 $response_o.cookie:=Formula:C1597(RS_cookie )
 $response_o.clearCookie:=Formula:C1597(RS_clearCookie )
+$response_o.download:=Formula:C1597(RS_download )
+$response_o.get:=Formula:C1597(RS_get )
 
 $response_o.set:=Formula:C1597(RS_set )
+
+$response_o.type:=Formula:C1597()
 
 $0:=$response_o

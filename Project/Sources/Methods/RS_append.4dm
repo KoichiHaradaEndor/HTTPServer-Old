@@ -14,7 +14,7 @@
 *
 * @param {Text} $1 Field name
 * @param {Variant} $2 Field value, text or collection
-* @return {Object} $0 Request object
+* @return {Object} $0 Response object
 * @author HARADA Koichi
 */
 

@@ -9,7 +9,7 @@
 * it does not check the validity of the filename.
 *
 * @param {Text} $1 Filename (optional)
-* @return {Object} $0 Request object
+* @return {Object} $0 Response object
 * @author HARADA Koichi
 */
 
