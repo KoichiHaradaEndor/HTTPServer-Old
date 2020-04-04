@@ -1,27 +1,29 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
 /**
 * This method sets "Content-Disposition" header value
-* to "attachment" and "Content-Type" header value
-* according to the file extension specified, then
+* to "attachment" with filename and "Content-Type" header
+* value according to the file extension specified, then
 * send the file.
 *
-* The file name that appears on browser side is set as
-* filename parameter of Content-Disposition. By default
-* actual filename is used for this parameter. However
-* if its unfavorable (ex. filename is "temp-012345.pdf"),
-* it can be overwritten by specifying second filename
-* parameter. If it's empty or omitted, then original name
-* is used.
+* This function internally calls {@Link Response.sendFile}
+* function, by passing path, options and callback parameters.
+* For detail of those parameters, please refer to the
+* description of that function.
+*
+* Addition to the above, please note the following:
+* The file name that appears on browser side is set in
+* filename parameter of Content-Disposition header.
+* By default actual filename is set. However
+* if its unfavorable (ex. when actual filename is 
+* "temp-012345.pdf" but "meaningful-filename.pdf" should
+* appear on client side), it can be overwritten by 
+* specifying second filename parameter.
+* If it's empty or omitted, then original name is used.
 *
 * The options parameter will be passed to Response.sendFile
-* function. So it takes the same parameters. 
+* function. So it takes the same attributes. 
 *
-* After this function is executed with or without error,
-* post process handler function will be called if it is passed.
-* If an error had run out, the function receives an object
-* that contains error message (error.message).
-*
-* It is equivalent to following call:
+* It is equivalent to following calls:
 * {@code
 * Response.attachement() // set headers
 * Response.sendFile() // send file
@@ -32,6 +34,7 @@
 * @param {Object} $3 Options to be passed to Response.sendFile() (optional)
 * @param {Object} $4 Reference to post process handler function (optional)
 * @return {Object} $0 Response object
+* @author HARADA Koichi
 */
 
 C_TEXT:C284($1;$path_t)

@@ -1,14 +1,13 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
 /**
-* This method is used to set Redirect header with
-* specified status code. If status code is omitted,
-* status defaults to 302 ("Found").
+* This method is used to tell user agent to redirect
+* to the specified path with the specified status code.
+* If status code is omitted, it defaults to 302 ("Found").
 *
 * @param {Longint} $1 Status code (optional)
 * @param {Text} $1 or $2 Redirect destination path
 * @return {Object} $0 Response object
 * @author HARADA Koichi
-* 
 */
 
 C_VARIANT:C1683($1)
@@ -35,24 +34,12 @@ Case of
 		
 End case 
 
-Case of 
-	: ($statusCode_l=301)
-		$statusCode_t:="301 Moved Permanently"
-		
-	: ($statusCode_l=302)
-		$statusCode_t:="302 Found"
-		
-	: ($statusCode_l=303)
-		$statusCode_t:="303 See Other"
-		
-	: ($statusCode_l=307)
-		$statusCode_t:="307 Temporary Redirect"
-		
-	: ($statusCode_l=308)
-		$statusCode_t:="308 Permanent Redirect"
-		
-End case 
+This:C1470.status($statusCode_t)
 
-This:C1470.set("X-STATUS";$statusCode_t).location($path_t)
+  // Set http headers
+$formula_o:=Formula:C1597(RS_setHeaders )
+$formula_o.call(This:C1470)
+
+WEB SEND HTTP REDIRECT:C659($path_t)
 
 $0:=This:C1470

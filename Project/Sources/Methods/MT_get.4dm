@@ -34,6 +34,7 @@ Case of
 		
 End case 
 
+  // Do not use USE statement here because don't want to block other web processes
 $queryResult_c:=Storage:C1525.__mimeTypes__.query("extension = :1";$extension_t)
 If ($queryResult_c.length=1)
 	
