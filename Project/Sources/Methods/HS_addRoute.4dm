@@ -1,6 +1,23 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
 /**
 * This is a generic method used to add a route to the host object.
+*
+* Storage.hosts is a collection that consists of the host objects.
+* <pre>
+* Storage.hosts[{host object}]
+* </pre>
+*
+* The sructure of the host object is as follow:
+* <pre>
+* {
+*     hostname : {Text} regular expression pattern used to search by Host request header value
+*     routes : [{
+*         method : {Text} used to search by HTTP method value 
+*         path : {Text} regular expression pattern used to search by request path
+*         callback : {Object} formula reference which is called when above conditions are match
+*     }]
+* }
+* </pre>
 *  
 * @param {Text} $1 HTTP method or flag
 * @param {Text} $2 The path for which the callback function is invoked
@@ -17,44 +34,41 @@ C_OBJECT:C1216($host_o;$formula_o)
 C_LONGINT:C283($i;$valueType_l)
 
 $method_t:=$1
+$path_t:=$2
 
 Case of 
 	: (This:C1470.__type__="HttpServer")
-		$path_t:=$2
+		
+		  // When the caller object is HttpServer, add the route
+		  // directly to Storage.hosts.
+		
 		$indices_c:=Storage:C1525.hosts.indices("hostname = :1";Storage:C1525.__constants__.defaultHostPattern)
 		$host_o:=Storage:C1525.hosts[$indices_c[0]]
 		  // This must be present since it is declared when HttpServer
 		  // is created.
 		
 	: (This:C1470.__type__="VirtualHost")  // created with HS_vhost
-		$path_t:=$2
+		
+		  // When the caller object is VirtualHost, add the route
+		  // to This (thus VirtualHost object) object.
+		
 		$host_o:=This:C1470
-		
-	: (This:C1470.__type__="SingleRoute")  // created with HS_route
-		$path_t:=This:C1470.path
-		
-		Case of 
-			: (This:C1470.host.__type__="HttpServer")
-				$indices_c:=Storage:C1525.hosts.indices("hostname = :1";Storage:C1525.__constants__.defaultHostPattern)
-				$host_o:=Storage:C1525.hosts[$indices_c[0]]
-				
-			: (This:C1470.host.__type__="VirtualHost")
-				$host_o:=This:C1470.host
-				
-		End case 
 		
 End case 
 
   // complete path parameter as Regex
 Case of 
 	: ($method_t="use")
+		
+		  // forward match
 		$path_t:="^"+$path_t+"(?:/[^/]*)*$"
 		
 	Else 
+		
+		  // full match
 		$path_t:="^"+$path_t+"$"
 		
 End case 
-
 
 Use ($host_o.routes)
 	

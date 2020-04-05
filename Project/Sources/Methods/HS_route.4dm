@@ -1,10 +1,10 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
 /**
-* This method returns an object of single route, which you can then
-* add handlers subsequently.
+* This method creates and returns an SingleRoute object,
+* which you can then add handlers subsequently.
 * 
 * @param {Text} $1 The path for which the callback function is invoked
-* @return {Object} Single route object.
+* @return {Object} SingleRoute object.
 * @author: HARADA Koichi
 */
 

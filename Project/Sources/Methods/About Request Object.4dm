@@ -26,6 +26,9 @@
 * <h3>Request.hostname</h3>
 * Contains hostname derived from the Host HTTP header.
 *
+* <h3>Request.ip</h3>
+* Contains the remote IP address of the request.
+*
 * <h3>Request.method</h3>
 * Contains HTTP method of the request.
 *
