@@ -3,17 +3,16 @@
 		"methods": [
 			"Config_load",
 			"Config_read",
-			"Config_test",
-			"RS_location"
+			"Config_test"
 		]
 	},
 	"Error": {
 		"methods": [
 			"error_catch",
+			"error_get",
 			"error_handler",
 			"error_throw",
-			"error_try",
-			"new Error"
+			"error_try"
 		]
 	},
 	"HttpServer": {
@@ -50,18 +49,30 @@
 	"Response": {
 		"methods": [
 			"About Response Object",
-			"Method39",
 			"new Response",
 			"RS_append",
 			"RS_attachment",
 			"RS_clearCookie",
 			"RS_cookie",
 			"RS_download",
+			"RS_end",
+			"RS_format",
 			"RS_get",
+			"RS_getStatusText",
 			"RS_json",
 			"RS_links",
+			"RS_location",
 			"RS_redirect",
-			"RS_set"
+			"RS_remove",
+			"RS_render",
+			"RS_send",
+			"RS_sendFile",
+			"RS_sendStatus",
+			"RS_set",
+			"RS_setHeaders",
+			"RS_status",
+			"RS_type",
+			"RS_vary"
 		]
 	},
 	"Router": {

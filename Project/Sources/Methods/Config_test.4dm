@@ -40,7 +40,7 @@ Case of
 			: ($value_t="")
 				$result_t:=$result_t+"WARNING\tDocumentRootStatic\tDefining root folder is strongly recommended.\n"
 				
-			: (Test path name:C476($value_t)#Is a folder:K24:2)
+			: (Folder:C1567(fk database folder:K87:14;*).folder($value_t).exists=False:C215)
 				$result_t:=$result_t+"WARNING\tDocumentRootStatic\tThe folder does not exist.\n"
 				
 		End case 
@@ -54,7 +54,7 @@ Case of
 				
 			: ($value_t="")
 				
-			: (Test path name:C476($value_t)#Is a folder:K24:2)
+			: (Folder:C1567(fk database folder:K87:14;*).folder($value_t).exists=False:C215)
 				$result_t:=$result_t+"WARNING\tDocumentRootDynamic\tThe folder does not exist.\n"
 				
 		End case 
@@ -268,7 +268,7 @@ Case of
 		Case of 
 			: (OB Is defined:C1231($config_o;"DebugLog")=False:C215)
 			: ($value_t="") | ($value_t="Without body") | ($value_t="With response body")
-			: ($value_t="With request body") | ($value_t="With all body")
+			: ($value_t="With request body") | ($value_t="With all body") | ($value_t="off")
 			Else 
 				
 				$result_t:=$result_t+"ERROR\tDebugLog\tThe given value is not supported.\n"

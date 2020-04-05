@@ -23,6 +23,7 @@
 *
 * @param {Object} $1 Link header content
 * @return {Object} $0 Response object
+* @author HARADA Koichi
 */
 
 C_OBJECT:C1216($1;$links_o)

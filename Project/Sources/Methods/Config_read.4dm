@@ -8,19 +8,15 @@
 
 C_OBJECT:C1216($0;$config_o)
 
-C_OBJECT:C1216($config_o)
-C_TEXT:C284($configPath_t;$config_t;$aLine_t;$configName_t;$configValue_t)
-C_TEXT:C284($databaseFolderPath_t)
-C_LONGINT:C283($position_l)
-C_COLLECTION:C1488($configLines_c)
+C_OBJECT:C1216($configFile_o)
 
 $config_o:=New object:C1471()
 
   // Configuration file must be placed in database folder of the host application
   // and the file name must be "httpServer.conf".
-$configPath_t:=Get 4D folder:C485(Database folder:K5:14;*)+"httpServer.conf"
+$configFile_o:=Folder:C1567(fk database folder:K87:14;*).file("httpServer.conf")
 
-If (Test path name:C476($configPath_t)#Is a document:K24:1)
+If ($configFile_o.exists=False:C215)
 	
 	$config_o.resultCode:=Storage:C1525.messages.configDoesNotExist
 	
@@ -28,7 +24,7 @@ Else
 	
 	$config_o.resultCode:=""
 	
-	$config_t:=Document to text:C1236($configPath_t;"UTF-8";Document with LF:K24:22)
+	$config_t:=$configFile_o.getText("UTF-8";Document with LF:K24:22)
 	$configLines_c:=New collection:C1472()
 	$configLines_c:=Split string:C1554($config_t;"\n";sk ignore empty strings:K86:1+sk trim spaces:K86:2)
 	
@@ -45,7 +41,9 @@ Else
 				
 				$configName_t:=""
 				$configValue_t:=""
-				$position_l:=Position:C15(" ";$aLine_t)
+				
+				$space_t:=Char:C90(Space:K15:42)
+				$position_l:=Position:C15($space_t;$aLine_t)
 				If ($position_l=0)
 					
 					$configName_t:=$aLine_t
@@ -60,26 +58,12 @@ Else
 				Case of 
 					: ($configName_t="DocumentRootStatic") | ($configName_t="DocumentRootDynamic")
 						
-						If (Position:C15("{Database folder}";$configValue_t)>0)
+						  // If configValue starts with "/", remove it.
+						While ($configValue_t="/@")
 							
-							$databaseFolderPath_t:=Get 4D folder:C485(Database folder UNIX syntax:K5:15)
-							If ($databaseFolderPath_t="@/")
-								
-								  // Removes last slash ("/")
-								$databaseFolderPath_t:=Substring:C12($databaseFolderPath_t;1;Length:C16($databaseFolderPath_t)-1)
-								
-							End if 
-							$configValue_t:=Replace string:C233($configValue_t;"{Database folder}";$databaseFolderPath_t)
+							$configValue_t:=Substring:C12($configValue_t;2)
 							
-						End if 
-						
-						If ($configValue_t="\"@\"")
-							
-							  // Removes double quotes
-							$configValue_t:=Substring:C12($configValue_t;2;Length:C16($configValue_t)-2)
-							
-						End if 
-						
+						End while 
 						OB SET:C1220($config_o;$configName_t;$configValue_t)
 						
 					: ($configName_t="ListenPort") | ($configName_t="ListenSSLPort")
@@ -92,7 +76,7 @@ Else
 						
 					: ($configName_t="HSTSMode")
 						
-						OB SET:C1220($config_o;$configName_t;$configValue_t="on")
+						OB SET:C1220($config_o;$configName_t;$configValue_t)
 						
 					: ($configName_t="HSTSMaxAge") | ($configName_t="MaxRequestSize")
 						
@@ -104,7 +88,7 @@ Else
 						
 					: ($configName_t="AutoSessionManagement") | ($configName_t="SessionIPAddressValidation")
 						
-						OB SET:C1220($config_o;$configName_t;$configValue_t="on")
+						OB SET:C1220($config_o;$configName_t;$configValue_t)
 						
 					: ($configName_t="SessionProcessTimeout") | ($configName_t="SessionCookieTimeout") | ($configName_t="MaxSession")
 						
@@ -112,7 +96,7 @@ Else
 						
 					: ($configName_t="AccessLog") | ($configName_t="DebugLog")
 						
-						OB SET:C1220($config_o;$configName_t;$configValue_t="on")
+						OB SET:C1220($config_o;$configName_t;$configValue_t)
 						
 				End case 
 				
