@@ -10,6 +10,8 @@
 C_TEXT:C284($1;$hostname_t)
 C_OBJECT:C1216($0;$vhost_o)
 
+C_LONGINT:C283($numHosts_l;$insertionPosition_l)
+
 $hostname_t:=$1
 $vhost_o:=New object:C1471()
 
@@ -18,7 +20,7 @@ $vhost_o:=New object:C1471()
   //*****
 
 $vhost_o.__type__:="VirtualHost"
-$vhost_o.hostname:=$hostname_t
+$vhost_o.hostname:="^"+$hostname_t+"$"
 $vhost_o.routes:=New shared collection:C1527()
 
   //*****

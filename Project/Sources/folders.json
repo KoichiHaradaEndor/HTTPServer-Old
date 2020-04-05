@@ -6,6 +6,17 @@
 			"Config_test"
 		]
 	},
+	"Constructor": {
+		"methods": [
+			"HS_route",
+			"HS_vhost"
+		]
+	},
+	"DatabaseMethod": {
+		"methods": [
+			"OnWebConnection"
+		]
+	},
 	"Error": {
 		"methods": [
 			"error_catch",
@@ -16,20 +27,20 @@
 		]
 	},
 	"HttpServer": {
+		"groups": [
+			"Constructor",
+			"Launch",
+			"Route Definition"
+		],
 		"methods": [
-			"HS_addRoute",
-			"HS_all",
-			"HS_delete",
-			"HS_get",
-			"HS_post",
-			"HS_put",
-			"HS_restart",
-			"HS_route",
-			"HS_start",
-			"HS_stop",
-			"HS_use",
-			"HS_vhost",
 			"new HttpServer"
+		]
+	},
+	"Launch": {
+		"methods": [
+			"HS_restart",
+			"HS_start",
+			"HS_stop"
 		]
 	},
 	"MimeTypes": {
@@ -73,6 +84,18 @@
 			"RS_status",
 			"RS_type",
 			"RS_vary"
+		]
+	},
+	"Route Definition": {
+		"methods": [
+			"HS_addRoute",
+			"HS_all",
+			"HS_delete",
+			"HS_get",
+			"HS_method",
+			"HS_post",
+			"HS_put",
+			"HS_use"
 		]
 	},
 	"Router": {

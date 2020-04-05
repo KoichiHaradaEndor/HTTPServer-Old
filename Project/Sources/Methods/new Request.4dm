@@ -4,18 +4,27 @@
 *
 * For more details, please refer to {@link Request.About Request Object}.
 *
+* @param {Text} $1 IP address of the request sender
+* @param {Text} $2 IP address of the server that receives the request
 * @return {Object} $0 Request object
 * @author: HARADA Koichi
 */
 
+C_TEXT:C284($1;$ipClient_t)
+C_TEXT:C284($2;$ipServer_t)
 C_OBJECT:C1216($0;$request_o)
 
 C_COLLECTION:C1488($headers_c;$queryResult_c;$cookies_c;$aCookie_c;$splitResult_c)
 C_TEXT:C284($contentType_t;$body_t;$cookie_t;$pattern_t)
 C_BOOLEAN:C305($matched_b)
 
+$ipClient_t:=$1
+$ipServer_t:=$2
+
 $request_o:=New object:C1471()
 $request_o.__type__:="Request"
+$request_o.__ipClient__:=$ipClient_t
+$request_o.__ipServer__:=$ipServer_t
 
   //#####
   // Properties
@@ -102,6 +111,11 @@ If ($queryResult_c.length>0)
 	$request_o.hostname:=$splitResult_c[0]
 	
 End if 
+
+  //#####
+  // Request.ip
+  //#####
+$request_o.ip:=$ipClient_t
 
   //#####
   // Request.method
