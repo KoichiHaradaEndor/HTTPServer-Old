@@ -18,7 +18,7 @@ If ($testResult_t="Syntax OK")
 	  // Store configuration in Storage for later use
 	Use (Storage:C1525)
 		
-		Storage:C1525.__configuration__:=New object:C1471()
+		Storage:C1525.__configuration__:=New shared object:C1526()
 		Storage:C1525.__configuration__:=$config_o
 		
 	End use 

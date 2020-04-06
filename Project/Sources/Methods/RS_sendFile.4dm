@@ -51,7 +51,7 @@ C_OBJECT:C1216($0)
 
 C_TEXT:C284($errorHandler_t;$dynamicFolderPath_t;$systemPath_t;$headerValue_t;$attName_t)
 C_LONGINT:C283($numParam_l)
-C_OBJECT:C1216($callback_o;$filePath_o;$formula_o)
+C_OBJECT:C1216($callback_o;$filePath_o;$formula_o;$file_o;$folder_o)
 C_COLLECTION:C1488($error_c)
 
   //#####

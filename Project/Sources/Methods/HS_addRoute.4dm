@@ -83,7 +83,7 @@ Use ($host_o.routes)
 				
 				$host_o.routes.push(New object:C1471(\
 					"method";$method_t;\
-					"path";$path_t\
+					"path";$path_t;\
 					"callback";${$i}\
 					))
 				
@@ -95,7 +95,7 @@ Use ($host_o.routes)
 					
 					$host_o.routes.push(New object:C1471(\
 						"method";$method_t;\
-						"path";$path_t\
+						"path";$path_t;\
 						"callback";$formula_o\
 						))
 					

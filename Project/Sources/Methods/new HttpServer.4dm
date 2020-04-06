@@ -30,7 +30,7 @@ Use (Storage:C1525)
 		
 		Storage:C1525.messages:=New shared object:C1526(\
 			"configDoesNotExist";"Configuration file does not exist";\
-			"httpServerIsAlreadyRunning";"HTTP server is already running"\
+			"httpServerIsAlreadyRunning";"HTTP server is already running";\
 			"httpServerIsNotRunning";"HTTP server is not running"\
 			)
 		
@@ -84,10 +84,10 @@ Use (Storage:C1525)
 	If (Storage:C1525.hosts=Null:C1517)
 		
 		  // When register hosts object, add default host
-		Storage:C1525.hosts:=New shared collection:C1527(New object:C1471(\
-			"hostname";Storage:C1525.__constants__.defaultHostPattern;\
-			"routes";New shared collection:C1527()\
-			))
+		Storage:C1525.hosts:=New shared collection:C1527(\
+			New shared object:C1526("hostname";Storage:C1525.__constants__.defaultHostPattern);\
+			New shared object:C1526("routes";New shared collection:C1527())\
+			)
 		
 	End if   // If (Storage.hosts=Null)
 	
