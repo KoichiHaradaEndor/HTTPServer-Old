@@ -105,7 +105,12 @@
 			"RH_addRoute"
 		]
 	},
-	"Test": {},
+	"Test": {
+		"methods": [
+			"Test1",
+			"Test2"
+		]
+	},
 	"Utility": {
 		"methods": [
 			"callNextCallback",

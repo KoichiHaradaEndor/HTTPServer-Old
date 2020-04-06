@@ -30,7 +30,7 @@ C_TEXT:C284($2;$path_t)
 C_VARIANT:C1683(${3})  // callback functions
 
 C_COLLECTION:C1488($indices_c)
-C_OBJECT:C1216($host_o;$formula_o)
+C_OBJECT:C1216($host_o;$formula_o;$routeItem_o)
 C_LONGINT:C283($i;$valueType_l)
 
 $method_t:=$1
@@ -41,7 +41,6 @@ Case of
 		
 		  // When the caller object is HttpServer, add the route
 		  // directly to Storage.hosts.
-		
 		$indices_c:=Storage:C1525.hosts.indices("hostname = :1";Storage:C1525.__constants__.defaultHostPattern)
 		$host_o:=Storage:C1525.hosts[$indices_c[0]]
 		  // This must be present since it is declared when HttpServer
@@ -50,8 +49,7 @@ Case of
 	: (This:C1470.__type__="VirtualHost")  // created with HS_vhost
 		
 		  // When the caller object is VirtualHost, add the route
-		  // to This (thus VirtualHost object) object.
-		
+		  // to This (thus the VirtualHost object) object.
 		$host_o:=This:C1470
 		
 End case 
@@ -70,39 +68,92 @@ Case of
 		
 End case 
 
-Use ($host_o.routes)
+If ($host_o.routes=Null:C1517)
 	
-	For ($i;3;Count parameters:C259)
+	If ($host_o.__LockerID=Null:C1517)
 		
-		$valueType_l:=Value type:C1509(${$i})
+		  // If __LockerID is not defined, Use is not necessary
+		$host_o.routes:=New collection:C1472()
 		
-		Case of 
-			: ($valueType_l=Is object:K8:27)
-				  // This must be Formula object.
-				  // Currently there's no way to identify if its a formula.
-				
-				$host_o.routes.push(New object:C1471(\
-					"method";$method_t;\
-					"path";$path_t;\
-					"callback";${$i}\
-					))
-				
-			: ($valueType_l=Is collection:K8:32)
-				  // This must be collection of Formula object.
-				  // Currently there's no way to identify if they're formulas.
-				
-				For each ($formula_o;${$i})
-					
-					$host_o.routes.push(New object:C1471(\
-						"method";$method_t;\
-						"path";$path_t;\
-						"callback";$formula_o\
-						))
-					
-				End for each 
-				
-		End case 
+	Else 
 		
-	End for 
+		Use ($host_o)
+			
+			$host_o.routes:=New shared collection:C1527()
+			
+		End use 
+		
+	End if 
 	
-End use 
+End if 
+
+For ($i;3;Count parameters:C259)
+	
+	$valueType_l:=Value type:C1509(${$i})
+	
+	Case of 
+		: ($valueType_l=Is object:K8:27)
+			  // This must be Formula object.
+			  // Currently there's no way to identify if its a formula.
+			
+			If ($host_o.__LockerID=Null:C1517)
+				
+				  // If __LockerID is not defined, Use is not necessary
+				$host_o.routes.push(New object:C1471())
+				$routeItem_o:=$host_o.routes[$host_o.routes.length-1]
+				$routeItem_o["method"]:=$method_t
+				$routeItem_o["path"]:=$path_t
+				$routeItem_o["callback"]:=${$i}
+				
+			Else 
+				
+				Use ($host_o.routes)
+					
+					  // Note:
+					  // Here I append shared object first, then assign values.
+					  // This way, formula object can be appended.
+					  // If values are assigned directly in New shared object(),
+					  // the newly created shared object and method formula
+					  // becomes group. And group cannot be a member of another
+					  // shared collection (in this case $host_o.routes).
+					$host_o.routes.push(New shared object:C1526())
+					$routeItem_o:=$host_o.routes[$host_o.routes.length-1]
+					$routeItem_o["method"]:=$method_t
+					$routeItem_o["path"]:=$path_t
+					$routeItem_o["callback"]:=${$i}
+					
+				End use 
+				
+			End if 
+			
+		: ($valueType_l=Is collection:K8:32)
+			  // This must be collection of Formula object.
+			  // Currently there's no way to identify if they're formulas.
+			
+			For each ($formula_o;${$i})
+				
+				If ($host_o.__LockerID=Null:C1517)
+					
+					  // If __LockerID is not defined, Use is not necessary
+					$host_o.routes.push(New object:C1471())
+					$routeItem_o:=$host_o.routes[$host_o.routes.length-1]
+					$routeItem_o["method"]:=$method_t
+					$routeItem_o["path"]:=$path_t
+					$routeItem_o["callback"]:=$formula_o
+					
+				Else 
+					
+					  // Please refer to the note above
+					$host_o.routes.push(New shared object:C1526())
+					$routeItem_o:=$host_o.routes[$host_o.routes.length-1]
+					$routeItem_o["method"]:=$method_t
+					$routeItem_o["path"]:=$path_t
+					$routeItem_o["callback"]:=$formula_o
+					
+				End if 
+				
+			End for each 
+			
+	End case 
+	
+End for 

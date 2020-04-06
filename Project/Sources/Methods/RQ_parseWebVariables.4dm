@@ -19,6 +19,7 @@ $parsedVariable_o:=New object:C1471()
 ARRAY TEXT:C222($dataNames_at;0)
 ARRAY TEXT:C222($dataValues_at;0)
 WEB GET VARIABLES:C683($dataNames_at;$dataValues_at)
+$data_c:=New collection:C1472()
 ARRAY TO COLLECTION:C1563($data_c;$dataNames_at;"name";$dataValues_at;"value")
 
 $pattern_t:="^(.+)\\[(.*)\\]$"  // to find pair of brackets

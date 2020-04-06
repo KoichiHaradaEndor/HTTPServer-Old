@@ -84,10 +84,15 @@ Use (Storage:C1525)
 	If (Storage:C1525.hosts=Null:C1517)
 		
 		  // When register hosts object, add default host
-		Storage:C1525.hosts:=New shared collection:C1527(\
-			New shared object:C1526("hostname";Storage:C1525.__constants__.defaultHostPattern);\
-			New shared object:C1526("routes";New shared collection:C1527())\
-			)
+		Storage:C1525.hosts:=New shared collection:C1527()
+		Storage:C1525.hosts.push(New shared object:C1526())
+		
+		Use (Storage:C1525.hosts[0])
+			
+			Storage:C1525.hosts[0]["hostname"]:=Storage:C1525.__constants__.defaultHostPattern
+			Storage:C1525.hosts[0]["routes"]:=New shared collection:C1527()
+			
+		End use 
 		
 	End if   // If (Storage.hosts=Null)
 	

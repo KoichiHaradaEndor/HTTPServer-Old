@@ -21,7 +21,7 @@ $vhost_o:=New object:C1471()
 
 $vhost_o.__type__:="VirtualHost"
 $vhost_o.hostname:="^"+$hostname_t+"$"
-$vhost_o.routes:=New shared collection:C1527()
+$vhost_o.routes:=New collection:C1472()
 
   //*****
   //* Methods
