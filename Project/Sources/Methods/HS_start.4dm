@@ -8,7 +8,7 @@
 
 C_TEXT:C284($0;$resultMessage_t)
 
-$resultMessage_t:=0
+$resultMessage_t:=""
 If (WEB Is server running:C1313)
 	
 	$resultMessage_t:=Storage:C1525.messages.httpServerIsAlreadyRunning

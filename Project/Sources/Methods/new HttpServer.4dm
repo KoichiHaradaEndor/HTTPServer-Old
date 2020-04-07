@@ -30,7 +30,7 @@ Use (Storage:C1525)
 		
 		Storage:C1525.messages:=New shared object:C1526(\
 			"configDoesNotExist";"Configuration file does not exist";\
-			"httpServerIsAlreadyRunning";"HTTP server is already running"\
+			"httpServerIsAlreadyRunning";"HTTP server is already running";\
 			"httpServerIsNotRunning";"HTTP server is not running"\
 			)
 		
@@ -66,10 +66,11 @@ Use (Storage:C1525)
 			Storage:C1525.httpServer.all:=Formula:C1597(HS_all )
 			Storage:C1525.httpServer.delete:=Formula:C1597(HS_delete )
 			Storage:C1525.httpServer.get:=Formula:C1597(HS_get )
+			Storage:C1525.httpServer.method:=Formula:C1597(HS_method )
 			Storage:C1525.httpServer.post:=Formula:C1597(HS_post )
 			Storage:C1525.httpServer.put:=Formula:C1597(HS_put )
-			Storage:C1525.httpServer.route:=Formula:C1597(HS_route )
 			Storage:C1525.httpServer.use:=Formula:C1597(HS_use )
+			Storage:C1525.httpServer.route:=Formula:C1597(HS_route )
 			
 			  // virtual host
 			Storage:C1525.httpServer.Virtualhost:=Formula:C1597(HS_vhost )
@@ -84,10 +85,15 @@ Use (Storage:C1525)
 	If (Storage:C1525.hosts=Null:C1517)
 		
 		  // When register hosts object, add default host
-		Storage:C1525.hosts:=New shared collection:C1527(New object:C1471(\
-			"hostname";Storage:C1525.__constants__.defaultHostPattern;\
-			"routes";New shared collection:C1527()\
-			))
+		Storage:C1525.hosts:=New shared collection:C1527()
+		Storage:C1525.hosts.push(New shared object:C1526())
+		
+		Use (Storage:C1525.hosts[0])
+			
+			Storage:C1525.hosts[0]["hostname"]:=Storage:C1525.__constants__.defaultHostPattern
+			Storage:C1525.hosts[0]["routes"]:=New shared collection:C1527()
+			
+		End use 
 		
 	End if   // If (Storage.hosts=Null)
 	

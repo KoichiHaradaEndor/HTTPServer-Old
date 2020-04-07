@@ -6,7 +6,7 @@
 * @author: HARADA Koichi
 */
 
-C_LONGINT:C283($0;$resultMessage_t)
+C_TEXT:C284($0;$resultMessage_t)
 
 $resultMessage_t:=HS_stop ()
 $resultMessage_t:=HS_start ()

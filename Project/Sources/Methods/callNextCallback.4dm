@@ -17,6 +17,6 @@ $length_l:=$formula_o.formulas.length
 If ($nextIndex_l<$length_l)
 	
 	$formula_o.index:=$nextIndex_l
-	$formula_o.formulas[$formula_o.index].call(Null:C1517;$formula_o.request;$formula_o.response;$formula_o.next)
+	$formula_o.formulas[$formula_o.index].call($formula_o;$formula_o.request;$formula_o.response;$formula_o.next)
 	
 End if 

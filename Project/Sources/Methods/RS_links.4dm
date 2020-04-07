@@ -29,14 +29,14 @@
 C_OBJECT:C1216($1;$links_o)
 C_OBJECT:C1216($0)
 
-C_TEXT:C284($relKey_t;$uri_t)
+C_TEXT:C284($relKey_t;$uri_t;$linkValue_t)
 
 $links_o:=$1
 
 For each ($relKey_t;$links_o)
 	
 	$uri_t:=$links_o[$relKey_t]
-	This:C1470.append("Link";"<"+$uri_t+">; rel=\""+$relKey_t+\"")
+	This:C1470.append("Link";"<"+$uri_t+">; rel=\""+$relKey_t+"\"")
 	
 End for each 
 

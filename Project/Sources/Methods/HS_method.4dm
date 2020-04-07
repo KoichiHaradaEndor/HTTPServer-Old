@@ -1,10 +1,12 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
 /**
-* This is generic method intended to use by CallerObject.METHOD method
+* This is generic method intended to use by CallerObject.METHOD method.
+* Additionally using this method, you can register routes that respond
+* to any method like "mkcol", "purge", "unsubscribe" and so on.
 *
 * This method has two forms:
 *
-* <h3>CallerObj.METHOD(method; path; callback)</h3>
+* <h3>CallerObj.method(method; path; callback)</h3>
 * 
 * In this form, CallerObj can be HttpServer or VirtualHost object.
 * The path parameter is for which the callback function is invoked.
@@ -15,7 +17,7 @@
 * @param {Text} $2 The path for which the callback function is invoked
 * @param {Variant} ${3} Callback functions
 *
-* <h3>CallerObj.METHOD(method; callback)</h3>
+* <h3>CallerObj.method(method; callback)</h3>
 * 
 * In this form, CallerObj can be SingleRoute object.
 * In this case, path parameter is stored in the object,

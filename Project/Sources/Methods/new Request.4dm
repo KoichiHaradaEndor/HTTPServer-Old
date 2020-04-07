@@ -34,9 +34,11 @@ $request_o.__ipServer__:=$ipServer_t
 ARRAY TEXT:C222($headerNames_at;0)
 ARRAY TEXT:C222($headerValues_at;0)
 WEB GET HTTP HEADER:C697($headerNames_at;$headerValues_at)
+$headers_c:=New collection:C1472()
 ARRAY TO COLLECTION:C1563($headers_c;$headerNames_at;"name";$headerValues_at;"value")
 
   // Stores header collection into request object for later use
+$request_o.__headers__:=New collection:C1472()
 $request_o.__headers__:=$headers_c
 
   //#####

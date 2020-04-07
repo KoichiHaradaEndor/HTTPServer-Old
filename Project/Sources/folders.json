@@ -14,6 +14,7 @@
 	},
 	"DatabaseMethod": {
 		"methods": [
+			"OnStartup",
 			"OnWebConnection"
 		]
 	},
@@ -102,6 +103,44 @@
 		"methods": [
 			"new Router",
 			"RH_addRoute"
+		]
+	},
+	"Test": {
+		"groups": [
+			"Test1",
+			"Test2",
+			"Test3",
+			"Test4"
+		]
+	},
+	"Test1": {
+		"methods": [
+			"Test1",
+			"Test1_1",
+			"Test1_2",
+			"Test1_3"
+		]
+	},
+	"Test2": {
+		"methods": [
+			"Test2",
+			"Test2_1",
+			"Test2_2_GET",
+			"Test2_2_POST",
+			"Test2_3"
+		]
+	},
+	"Test3": {
+		"methods": [
+			"Test3",
+			"Test3_1",
+			"Test3_2"
+		]
+	},
+	"Test4": {
+		"methods": [
+			"Test4",
+			"Test4_1"
 		]
 	},
 	"Utility": {

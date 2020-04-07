@@ -88,8 +88,8 @@ For each ($route_o;$routes_c)
 End for each 
 
   // Then call first callback
-If ($formula_o.length>0)
+If ($formula_o.formulas.length>0)
 	
-	$formula_o.formulas[$formula_o.index].call(Null:C1517;$request_o;$response_o;$formula_o.next)
+	$formula_o.formulas[$formula_o.index].call($formula_o;$request_o;$response_o;$formula_o.next)
 	
 End if 
