@@ -54,8 +54,11 @@
 		"methods": [
 			"About Request Object",
 			"new Request",
+			"RQ_accepts",
+			"RQ_findAccept",
 			"RQ_get",
-			"RQ_parseWebVariables"
+			"RQ_parseWebVariables",
+			"RQ_sortAccept"
 		]
 	},
 	"Response": {
