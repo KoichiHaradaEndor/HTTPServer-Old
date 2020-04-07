@@ -191,6 +191,7 @@ End if
   // Methods
   //#####
 
+$request_o.accepts:=Formula:C1597(RQ_accepts )
 $request_o.get:=Formula:C1597(RQ_get )
 
 $0:=$request_o

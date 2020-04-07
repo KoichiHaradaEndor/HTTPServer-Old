@@ -1,7 +1,7 @@
 'use strict';
 
 let test = {
-    makeReq : (method, url) => {
+    makeReq : (method, url, params) => {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.open(method, url, true);
@@ -15,6 +15,9 @@ let test = {
             xhr.onerror = () => {
                 reject(new Error(xhr.statusText));
             };
+            if(params.type) {
+                xhr.setRequestHeader('Accept', params.type)
+            }
             xhr.send(null);
         });
     },
@@ -113,6 +116,36 @@ let test = {
                     this.message = res;
                 }).catch(e => {
                     console.error(e);
+                })
+            }
+        }
+    });
+
+    const test4 = new Vue({
+        el: "#test4",
+        data: {
+            message: 'Test result will be displayed here'
+        },
+        methods: {
+            test4FuncPlain: function() {
+                test.makeReq("GET", "http://127.0.0.1/test4", {type: 'text/plain'}).then((res) => {
+                    this.message = res;
+                }).catch(e => {
+                    console.error(e);
+                })
+            },
+            test4FuncJson: function() {
+                test.makeReq("GET", "http://127.0.0.1/test4", {type: 'application/json'}).then((res) => {
+                    this.message = res;
+                }).catch(e => {
+                    console.error(e);
+                })
+            },
+            test4FuncHtml: function() {
+                test.makeReq("GET", "http://127.0.0.1/test4", {type: 'text/html'}).then((res) => {
+                    this.message = res;
+                }).catch(e => {
+                    this.message = e;
                 })
             }
         }
