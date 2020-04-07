@@ -7,7 +7,7 @@ let test = {
             xhr.open(method, url, true);
             xhr.onload = () => {
                 if(xhr.readyState === 4 && xhr.status === 200) {
-                    resolve(xhr.response);
+                    resolve(xhr);
                 } else {
                     reject(new Error(xhr.statusText));
                 }
@@ -15,7 +15,7 @@ let test = {
             xhr.onerror = () => {
                 reject(new Error(xhr.statusText));
             };
-            if(params.type) {
+            if(params && params.type) {
                 xhr.setRequestHeader('Accept', params.type)
             }
             xhr.send(null);
@@ -74,7 +74,7 @@ let test = {
         methods: {
             test1Func: function() {
                 test.makeReq("GET", "http://127.0.0.1/test1").then((res) => {
-                    this.message = res;
+                    this.message = res.response;
                 }).catch(e => {
                     console.error(e);
                 })
@@ -90,14 +90,14 @@ let test = {
         methods: {
             test2FuncGet: function() {
                 test.makeReq("GET", "http://127.0.0.1/test2").then((res) => {
-                    this.message = res;
+                    this.message = res.response;
                 }).catch(e => {
                     console.error(e);
                 })
             },
             test2FuncPost: function() {
                 test.makeReq("POST", "http://127.0.0.1/test2").then((res) => {
-                    this.message = res;
+                    this.message = res.response;
                 }).catch(e => {
                     console.error(e);
                 })
@@ -113,7 +113,7 @@ let test = {
         methods: {
             test3Func: function() {
                 test.makeReq("GET", "http://127.0.0.1/test3/sub").then((res) => {
-                    this.message = res;
+                    this.message = res.response;
                 }).catch(e => {
                     console.error(e);
                 })
@@ -129,21 +129,21 @@ let test = {
         methods: {
             test4FuncPlain: function() {
                 test.makeReq("GET", "http://127.0.0.1/test4", {type: 'text/plain'}).then((res) => {
-                    this.message = res;
+                    this.message = res.response;
                 }).catch(e => {
                     console.error(e);
                 })
             },
             test4FuncJson: function() {
                 test.makeReq("GET", "http://127.0.0.1/test4", {type: 'application/json'}).then((res) => {
-                    this.message = res;
+                    this.message = res.response;
                 }).catch(e => {
                     console.error(e);
                 })
             },
             test4FuncHtml: function() {
                 test.makeReq("GET", "http://127.0.0.1/test4", {type: 'text/html'}).then((res) => {
-                    this.message = res;
+                    this.message = res.response;
                 }).catch(e => {
                     this.message = e;
                 })
