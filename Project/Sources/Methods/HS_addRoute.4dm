@@ -59,7 +59,7 @@ Case of
 	: ($method_t="use")
 		
 		  // forward match
-		$path_t:="^"+$path_t+"(?:/[^/]*)*$"
+		$path_t:="^"+$path_t+"(?:/[^/]+)*$"
 		
 	Else 
 		
@@ -143,12 +143,16 @@ For ($i;3;Count parameters:C259)
 					
 				Else 
 					
-					  // Please refer to the note above
-					$host_o.routes.push(New shared object:C1526())
-					$routeItem_o:=$host_o.routes[$host_o.routes.length-1]
-					$routeItem_o["method"]:=$method_t
-					$routeItem_o["path"]:=$path_t
-					$routeItem_o["callback"]:=$formula_o
+					Use ($host_o.routes)
+						
+						  // Please refer to the note above
+						$host_o.routes.push(New shared object:C1526())
+						$routeItem_o:=$host_o.routes[$host_o.routes.length-1]
+						$routeItem_o["method"]:=$method_t
+						$routeItem_o["path"]:=$path_t
+						$routeItem_o["callback"]:=$formula_o
+						
+					End use 
 					
 				End if 
 				

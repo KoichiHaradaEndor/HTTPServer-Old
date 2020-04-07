@@ -30,6 +30,7 @@ $route_o.path:=$path_t
 $route_o.all:=Formula:C1597(HS_all )
 $route_o.delete:=Formula:C1597(HS_delete )
 $route_o.get:=Formula:C1597(HS_get )
+$route_o.method:=Formula:C1597(HS_method )
 $route_o.post:=Formula:C1597(HS_post )
 $route_o.put:=Formula:C1597(HS_put )
 $route_o.use:=Formula:C1597(HS_use )

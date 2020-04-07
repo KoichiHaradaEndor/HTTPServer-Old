@@ -1,15 +1,28 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
-C_OBJECT:C1216($app_o)
-C_TEXT:C284($configtest_t)
-
-$app_o:=new HttpServer 
-
-  // Just to make sure the config is valid.
-  // If you know it's valid, this code is not needed.
-$configtest_t:=$app_o.configtest()
-ASSERT:C1129($configtest_t="Syntax OK";"httpServer.conf is not valid")
-
-  // Test1
-$app_o.get("/test1";Formula:C1597(Test1 );Formula:C1597(Test2 ))
-
-$app_o.restart()
+If (Count parameters:C259=0)
+	
+	C_LONGINT:C283($pid_l)
+	
+	$pid_l:=New process:C317(Current method name:C684;0;"Initializing app...";"")
+	
+Else 
+	
+	C_OBJECT:C1216($app_o)
+	
+	  // For testing purpose,
+	  // clear Storage.hosts
+	Use (Storage:C1525)
+		Storage:C1525.hosts:=Null:C1517
+	End use 
+	
+	$app_o:=new HttpServer 
+	
+	Test1 ($app_o)
+	Test2 ($app_o)
+	Test3 ($app_o)
+	
+	  // load http server configuration and
+	  // start web server
+	$app_o.start()
+	
+End if 

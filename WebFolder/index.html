@@ -1,20 +1,170 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>HTTPServer 4D Component</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
 </head>
 <body>
 
 <!-- Side navigation -->
-<div class="sidenav">
-    <a href="#">About</a>
-    <a href="#">Test1</a>
+<div class="sidenav" id="sideNav">
 </div>
 
 <!-- Page content -->
 <div class="main">
-    <div id="about"></div>
-    <div id="test1"></div>
+
+<h1>HTTPServer 4D Component</h1>
+
+<div id="chapter1">
+    <h2>Introduction</h2>
+
+    <div id="about">
+        <h3>About HTTPServer</h3>
+        <p>Here you can verify HTTPServer behavior and see how it works.</p>
+    </div>
+
+    <div id="preparation">
+        <h3>Preparation</h3>
+        <h4>On Web Connection database method</h4>
+        <pre><code>C_TEXT($1;$2;$3;$4;$5;$6)<br>OnWebConnection($3;$4)</code></pre>
+        <h4>On Startup database method</h4>
+        <pre><code>C_OBJECT($app_o)<br>$app_o:=new HttpServer<br>// Write route register code here<br>$app_o.start()</code></pre>
+    </div>
+</div>
+
+<div id="chapter2">
+    <h2>Writing Route Definition</h2>
+
+    <div id="test1">
+        <h3>Test1: Respond to GET request</h3>
+        <p>Wish to respond to resquest whose method is GET and path is &quot;/test1&quot;.</p>
+        <p>Route register code is:
+            <pre><code>$app_o.get("/test1";\
+        Formula(Test1_1 );\
+        Formula(Test1_2 );\
+        Formula(Test1_3 ))</code></pre>
+        This code registers route handlers for method="GET" and path="/test1", then when such request comes, three methods should be invoked in order.</p>
+        <p>Test1_1 method looks like
+            <pre><code>C_OBJECT($1;$req_o)
+    C_OBJECT($2;$res_o)
+    C_OBJECT($3;$next_o)
+
+    $req_o:=$1
+    $res_o:=$2
+    $next_o:=$3
+
+    $res_o.locals.message:=Current method name+" invoked."
+    $next_o.call(This)</code></pre>
+        $1, $2 and $3 arguments are passed automatically.
+            <ul>
+                <li>$1 receives Request object that contains request header contents.</li>
+                <li>$2 receives Response object that contains various functions that wil be used to construct and to send response.</li>
+                <li>$3 receives reference to next function that should be called in order.</li>
+            </ul>
+        $res_o.local is a object that can be used to store intermediate data which you want to pass to subsequent handlers.<br>
+        Then $next_o.call(This) calls next handler method.</p>
+        <p>Test1_3 method looks like
+            <pre><code>C_OBJECT($1;$req_o)
+    C_OBJECT($2;$res_o)
+    C_OBJECT($3;$next_o)
+
+    $req_o:=$1
+    $res_o:=$2
+    $next_o:=$3
+
+    $res_o.send($res_o.locals.message+"\n"+Current method name+" invoked.")</code></pre>
+        $res_o.locals are used to retrieve data previously populated.<br>
+        Then send text content by calling $res_o.send.</p>
+        <p>You can get the same result when you write route register code like bellow:</p>
+        <p>- collection of handlers
+            <pre><code>C_COLLECTION($handlers_c)
+    $handlers_c:=New collection(\
+        Formula(Test1_1 );\
+        Formula(Test1_2 );\
+        Formula(Test1_3 ))
+    $app_o.get(&quot;/test1&quot;;$handlers_c)</code></pre></p>
+        <p>- combination
+            <pre><code>C_COLLECTION($handlers_c)
+    $handlers_c:=New collection(\
+        Formula(Test1_1 );\
+        Formula(Test1_2 ))
+    $app_o.get(&quot;/test1&quot;;$handlers_c;Formula(Test1_3 ))</code></pre></p>
+        <p>- mutiple call for the same route
+            <pre><code>$app_o.get("/test1";Formula(Test1_1 ))
+    $app_o.get("/test1";Formula(Test1_2 ))
+    $app_o.get("/test1";Formula(Test1_3 ))</code></pre></p>
+        <p>- using generic function
+            <pre><code>$app_o.method("get";"/test1";\
+        Formula(Test1_1 );\
+        Formula(Test1_2 );\
+        Formula(Test1_3 ))</code></pre></p>
+
+        <p>For POST, PUT, DELETE HTTP methods, dedicated functions are provided
+            <pre><code>$app_o.post
+    $app_o.put
+    $app_o.delete</code></pre></p>
+
+        <div><button v-on:click="test1Func">Try</button></div>
+        <div><textarea id="test1-result">{{ message }}</textarea></div>
+
+    </div>
+
+    <div id="test2">
+
+        <h3>Test2: Respond to arbitrary method request</h3>
+        <p>Wish to respond to resquest whose path is &quot;/test2&quot;. The request method can be GET or POST whose process are different. But there are the same pre-process and post-process.</p>
+        <p>Route register code can be:
+            <pre><code>$app_o.all("/test2";Formula(Test2_1 ))
+    $app_o.get("/test2";Formula(Test2_2_GET ))
+    $app_o.post("/test2";Formula(Test2_2_POST ))
+    $app_o.all("/test2";Formula(Test2_3 ))</code></pre>
+        Irrespective of the HTTP method, Test2_1 and Test2_3 methods will be invoked because $app_o.all is used. <br>
+        On the other hand, only when the request is made with GET method, Test2_2_GET method will be invoked since it is registered via $app_o.get. </p>
+        <p>To avoid writing the same path multiple times (and thus to avoid typo), the same route can be written like this:
+            <pre><code>$app_o.route("/test2")\
+        .all(Formula(Test2_1 ))\
+        .get(Formula(Test2_2_GET ))\
+        .post(Formula(Test2_2_POST ))\
+        .all(Formula(Test2_3 ))</code></pre>
+        </p>
+
+        <div><button v-on:click="test2FuncGet">Try GET</button><button v-on:click="test2FuncPost">Try POST</button></div>
+        <div><textarea id="test2-result">{{ message }}</textarea></div>
+
+    </div>
+
+    <div id="test3">
+
+        <h3>Test3: Path match</h3>
+        <p>When creating a list of handlers that matches the request path, all route functions uses full match regular expression pattern. In case forward match pattern is appropriate, use $app_o.use function.</p>
+        <p>For instance, when authentication is needed to accese &quot;/test3&quot; and its sub directory (eg. &quot;/test3/sub&quot;), write a route like this:
+            <pre><code>$app_o.use("/test3";Formula(Test3_1 ))
+    $app_o.get("/test3/sub";Formula(Test3_2 ))</code></pre>
+        Irrespective of the HTTP method, Test3_1 method is always invoked if the request path is &quot;/test3&quot; or its sub directory.<br>Then in Test3_1 method, if access to the next handler is granted, call $next_o.call(This) to invoke Test3_2. If access is not granted, you can stop propagating and return error message.</p>
+
+        <div><button v-on:click="test3Func">Try</button></div>
+        <div><textarea id="test3-result">{{ message }}</textarea></div>
+
+    </div>
+
+</div>
+<div id="chapter3">
+    <h2>Creating Response</h2>
+
+    <div id="test4">
+
+        <h3>Test4: Return text response</h3>
+
+        <p>Response object has variety of functions that can be used for response. Here we try to send text response.</p>
+        <p>Bellow is Test4_1 method that respond to &quot;/test4&quot; request. It looks Accept header. If it's &quot;text/plain&quot;, then plain text response will be returned. of if it's &quot;application/json&quot;, then json response will be returned:
+
+
+    </div>
+
+</div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>

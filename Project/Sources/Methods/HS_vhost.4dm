@@ -31,9 +31,10 @@ $vhost_o.routes:=New collection:C1472()
 $vhost_o.all:=Formula:C1597(HS_all )
 $vhost_o.delete:=Formula:C1597(HS_delete )
 $vhost_o.get:=Formula:C1597(HS_get )
+$vhost_o.method:=Formula:C1597(HS_method )
 $vhost_o.post:=Formula:C1597(HS_post )
 $vhost_o.put:=Formula:C1597(HS_put )
-$vhost_o.route:=Formula:C1597(HS_route )
 $vhost_o.use:=Formula:C1597(HS_use )
+$vhost_o.route:=Formula:C1597(HS_route )
 
 $0:=$vhost_o
