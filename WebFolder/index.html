@@ -203,7 +203,7 @@ End case </code></pre></p>
 
     <div id="test5">
 
-        <h3>Test5: Send file on disk</h3>
+        <h3>Test5: Transfer file on disk</h3>
         <p>This time response is made by sending file on disk.</p>
         <p>The code looks like:
 <pre><code>$res_o.sendFile("test5.txt")</code></pre>
@@ -235,7 +235,7 @@ $res_o.render("test6.txt";$message_o)</code></pre>
 
     <div id="test7">
 
-        <h3>Test7: Send file as attachment</h3>
+        <h3>Test7: Transfer file as attachment</h3>
         <p>$res_o.download function sets Content-Disposition and Content-Type headers, then send the specified file.</p>
         <p>The code will be:
 <pre><code>$res_o.download("test7.txt";"realname.txt")</code></pre></p>
