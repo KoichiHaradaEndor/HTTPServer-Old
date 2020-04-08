@@ -1,4 +1,4 @@
-//%attributes = {"invisible":true,"preemptive":"capable"}
+//%attributes = {"invisible":true,"shared":true,"preemptive":"capable"}
 /**
 * This method creates HttpServer object and return it.
 * Since single 4D / 4D Server instance can serve one
