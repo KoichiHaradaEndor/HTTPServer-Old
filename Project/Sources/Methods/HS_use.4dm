@@ -39,6 +39,7 @@ C_OBJECT:C1216($0)
 C_TEXT:C284($method_t)
 C_LONGINT:C283($type_l;$insertionPosition_l)
 C_BOOLEAN:C305($addVhost_b)
+C_OBJECT:C1216($route_o)
 
 ASSERT:C1129(Count parameters:C259>0;Current method name:C684+" : Lack of parameters")
 
@@ -54,7 +55,7 @@ Case of
 		
 	Else 
 		
-		  // Third paramter is VirtualHost object
+		  // The first paramter is VirtualHost object
 		$addVhost_b:=True:C214
 		
 End case 
@@ -66,7 +67,18 @@ If ($addVhost_b)
 		  // To make default host is always the last element,
 		  // insert vhost at second from the last.
 		$insertionPosition_l:=Storage:C1525.hosts.length-1
-		Storage:C1525.hosts.insert($insertionPosition_l;$1)
+		
+		  // $1 vhost object is standard object. So it cannot be inserted directly into Storge.
+		Storage:C1525.hosts.insert($insertionPosition_l;New shared object:C1526())
+		Storage:C1525.hosts[$insertionPosition_l].hostname:=$1.hostname
+		Storage:C1525.hosts[$insertionPosition_l].routes:=New shared collection:C1527()
+		For each ($route_o;$1.routes)
+			
+			Storage:C1525.hosts[$insertionPosition_l].routes.push(New shared object:C1526("method";$route_o.method;"path";$route_o.path))
+			  // Formula object cannot be added to Storage with New shared object because the command creates a group before adding the object. 
+			Storage:C1525.hosts[$insertionPosition_l].routes[Storage:C1525.hosts[$insertionPosition_l].routes.length-1]["callback"]:=$route_o.callback
+			
+		End for each 
 		
 	End use 
 	

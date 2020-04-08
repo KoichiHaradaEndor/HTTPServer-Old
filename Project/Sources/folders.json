@@ -116,7 +116,8 @@
 			"Test4",
 			"Test5",
 			"Test6",
-			"Test7"
+			"Test7",
+			"Test8"
 		]
 	},
 	"Test1": {
@@ -165,6 +166,13 @@
 		"methods": [
 			"Test7",
 			"Test7_1"
+		]
+	},
+	"Test8": {
+		"methods": [
+			"Test8",
+			"Test8_1_main",
+			"Test8_1_vhost"
 		]
 	},
 	"Utility": {

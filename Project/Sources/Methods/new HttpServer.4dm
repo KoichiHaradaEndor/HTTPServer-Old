@@ -73,7 +73,7 @@ Use (Storage:C1525)
 			Storage:C1525.httpServer.route:=Formula:C1597(HS_route )
 			
 			  // virtual host
-			Storage:C1525.httpServer.Virtualhost:=Formula:C1597(HS_vhost )
+			Storage:C1525.httpServer.vhost:=Formula:C1597(HS_vhost )
 			
 		End use   // Use (Storage.httpServer)
 		
