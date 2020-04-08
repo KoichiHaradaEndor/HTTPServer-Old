@@ -206,4 +206,27 @@ let test = {
         }
     });
 
+    const test8 = new Vue({
+        el: "#test8",
+        data: {
+            message: 'Test result will be displayed here'
+        },
+        methods: {
+            test8FuncMain: function() {
+                test.makeReq("GET", "http://127.0.0.1/test8").then((res) => {
+                    this.message = res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            },
+            test8FuncVhost: function() {
+                test.makeReq("GET", "http://test.mycompany.com/test8").then((res) => {
+                    this.message = res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            }
+        }
+    });
+
 })();

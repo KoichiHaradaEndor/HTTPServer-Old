@@ -24,6 +24,7 @@ Else
 	Test5 ($app_o)
 	Test6 ($app_o)
 	Test7 ($app_o)
+	Test8 ($app_o)
 	
 	  // load http server configuration and
 	  // start web server

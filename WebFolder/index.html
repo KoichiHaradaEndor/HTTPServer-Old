@@ -243,9 +243,45 @@ $res_o.render("test6.txt";$message_o)</code></pre>
         <div><button v-on:click="test7Func">Try</button></div>
         <div><textarea id="test7-result">{{ message }}</textarea></div>
 
-    </div><!--//div id="test6"-->
+    </div><!--//div id="test7"-->
 
 </div><!--//div id="chapter3"-->
+
+<div id="chapter4">
+
+    <h2>Virtual Host</h2>
+
+    <div id="test8">
+
+        <h3>Test8: Define virtual host</h3>
+        <p>When you want to publish your server with multiple host names, and each named host has different role, you can use HttpServer.vhost function.</p>
+        <p>The object created with HttpServer.vhost has the same routing functions such as get, post, and so on.</p>
+        <p>The route register code is:
+    <pre><code>C_OBJECT($1;$app_o)
+C_OBJECT($vhost_o)
+        
+$app_o:=$1
+$app_o.get("/test8";Formula(Test8_1_main ))
+        
+$vhost_o:=$app_o.vhost("test.mycompany.com")
+$vhost_o.get("/test8";Formula(Test8_1_vhost ))
+$app_o.use($vhost_o)</code></pre>
+        $vhost_o receives VirtualHost object that is created with $app_o.vhost. It works like HttpServer object except VirtualHost cannot start/stop HTTP server.</p>
+        <p>Both $app_o and $vhost_o registers a route saying &quot;when receives GET request whose path is /test8, then respond&quot;, but different method is called.</p>
+        <p>$vhost_o is finally registed to $app_o with $app_o.use function.</p>
+        <p>Test8_1_main code is:
+            <pre><code>$res_o.send("I am main server.")</code></pre></p>
+        <p>Test8_1_vhost code is:
+            <pre><code>$res_o.set("Access-Control-Allow-Origin";"*")\
+.send("I am vhost server.")</code></pre>
+        Access-Control-Allow-Origin header is added to allow CORS. This header is needed to allow making request to test.mycompany.com using XMLHttpRequest which come from 127.0.0.1.</p>
+        <p>*Assuming test.mycompany.com has already been appended to your hosts file.</p>
+        <div><button v-on:click="test8FuncMain">Try Main</button><button v-on:click="test8FuncVhost">Try Vhost</button></div>
+        <div><textarea id="test8-result">{{ message }}</textarea></div>
+
+    </div><!--//div id="test8"-->
+
+</div><!--// id="chapter4"-->
 
 </div><!--//div class="main"-->
 
