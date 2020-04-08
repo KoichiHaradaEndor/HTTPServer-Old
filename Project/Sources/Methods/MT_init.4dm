@@ -22,7 +22,7 @@ If (Storage:C1525.__mimeTypes__=Null:C1517)
 	
 	  // mime.types file must be placed in database folder of the component 
 	  // and the file name must be "mime.types".
-	$file_o:=Folder:C1567(fk database folder:K87:14).file("mime.types")
+	$file_o:=Folder:C1567(fk resources folder:K87:11).file("mime.types")
 	
 	If ($file_o.exists)
 		
