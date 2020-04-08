@@ -188,4 +188,22 @@ let test = {
         }
     });
 
+    const test7 = new Vue({
+        el: "#test7",
+        data: {
+            message: 'Test result will be displayed here'
+        },
+        methods: {
+            test7Func: function() {
+                test.makeReq("GET", "http://127.0.0.1/test7").then((res) => {
+                    this.message = 'Content-Disposition: ' + res.getResponseHeader('Content-Disposition') + '\n';
+                    this.message += 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
+                    this.message += 'Content: ' + res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            }
+        }
+    });
+
 })();

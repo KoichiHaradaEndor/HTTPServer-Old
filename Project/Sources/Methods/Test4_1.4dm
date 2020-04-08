@@ -22,26 +22,15 @@ Case of
 	: ($accepts_t="application/json")
 		
 		$response_o:=New object:C1471("response";"This is JSON text.")
-		$response_t:=JSON Stringify:C1217($response_o)
-		$status_l:=200
+		$res_o.json($response_o)
 		
 	: ($accepts_t="text/plain")
 		
 		$response_t:="This is plain text."
-		$status_l:=200
+		$res_o.type($accepts_t).send($response_t)
 		
 	Else 
 		
-		$status_l:=406  // Not Acceptable
+		$res_o.sendStatus(406)  // Not Acceptable
 		
 End case 
-
-If ($status_l=200)
-	
-	$res_o.type($accepts_t).send($response_t)
-	
-Else 
-	
-	$res_o.sendStatus($status_l)
-	
-End if 

@@ -185,21 +185,15 @@ $accepts_t:=$req_o.accepts($candidates_c)
 Case of 
 	: ($accepts_t="application/json")
 		$response_o:=New object("response";"This is JSON text.")
-		$response_t:=JSON Stringify($response_o)
-		$status_l:=200
+		$res_o.json($response_o)
 	: ($accepts_t="text/plain")
 		$response_t:="This is plain text."
-		$status_l:=200
+		$res_o.type($accepts_t).send($response_t)
 	Else 
-		$status_l:=406  // Not Acceptable
-End case 
-
-If ($status_l=200)
-	$res_o.type($accepts_t).send($response_t)
-Else 
-	$res_o.sendStatus($status_l)
-End if</code></pre></p>
+        $res_o.sendStatus(406)  // Not Acceptable
+End case </code></pre></p>
         <p>$req_o.accepts function takes list of acceptable mimetypes, compares with content of Accept request header, then returns best match.</p>
+        <p>$res_o.json function converts given text into JSON and send it with setting Content-Type to application/json.</p>
         <p>$res_o.type function sets Content-Type response header.</p>
         <p>Then use $res_o.send function to send constructed response body.</p>
         <div><button v-on:click="test4FuncPlain">Try Plain</button><button v-on:click="test4FuncJson">Try JSON</button><button v-on:click="test4FuncHtml">Try HTML</button></div>
@@ -237,7 +231,19 @@ $res_o.render("test6.txt";$message_o)</code></pre>
         <div><button v-on:click="test6Func">Try</button></div>
         <div><textarea id="test6-result">{{ message }}</textarea></div>
 
-    </div><!--//div id="test5"-->
+    </div><!--//div id="test6"-->
+
+    <div id="test7">
+
+        <h3>Test7: Send file as attachment</h3>
+        <p>$res_o.download function sets Content-Disposition and Content-Type headers, then send the specified file.</p>
+        <p>The code will be:
+<pre><code>$res_o.download("test7.txt";"realname.txt")</code></pre></p>
+        <p>Note that, in this test, file will not be downloaded as attachement. If you open a tab page and access the server with "/test7" path, the file will be downloaded.</p>
+        <div><button v-on:click="test7Func">Try</button></div>
+        <div><textarea id="test7-result">{{ message }}</textarea></div>
+
+    </div><!--//div id="test6"-->
 
 </div><!--//div id="chapter3"-->
 
