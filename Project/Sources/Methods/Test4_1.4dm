@@ -12,7 +12,7 @@ C_TEXT:C284($accepts_t;$response_t)
 C_OBJECT:C1216($response_o)
 C_LONGINT:C283($status_l)
 
-  // This app accepts "application/json" or "text/plain"
+  // This app accepts "application/json" and "text/plain"
 $candidates_c:=New collection:C1472("application/json";"text/plain")
 
   // Determines which mimetype is requested

@@ -32,7 +32,7 @@
         <h4>On Startup database method</h4>
 <pre><code>C_OBJECT($app_o)<br>$app_o:=new HttpServer<br>// Write route register code here<br>$app_o.start()</code></pre>
     </div>
-</div>
+</div><!--//div id="chapter2"-->
 
 <div id="chapter2">
     <h2>Writing Route Definition</h2>
@@ -109,7 +109,7 @@ $app_o.delete</code></pre></p>
         <div><button v-on:click="test1Func">Try</button></div>
         <div><textarea id="test1-result">{{ message }}</textarea></div>
 
-    </div>
+    </div><!--//div id="test1"-->
 
     <div id="test2">
 
@@ -136,7 +136,7 @@ $app_o.all("/test2";Formula(Test2_3 ))</code></pre>
         </div>
         <div><textarea id="test2-result">{{ message }}</textarea></div>
 
-    </div>
+    </div><!--//div id="test2"-->
 
     <div id="test3">
 
@@ -150,17 +150,18 @@ $app_o.get("/test3/sub";Formula(Test3_2 ))</code></pre>
         <div><button v-on:click="test3Func">Try</button></div>
         <div><textarea id="test3-result">{{ message }}</textarea></div>
 
-    </div>
+    </div><!--//div id="test3"-->
 
-</div>
+</div><!--//div id="chapter2"-->
+
 <div id="chapter3">
     <h2>Creating Response</h2>
 
     <div id="test4">
 
-        <h3>Test4: Return text response</h3>
+        <h3>Test4: Return response on memory</h3>
 
-        <p>Response object has variety of functions that can be used for response. Here we try to send text response.</p>
+        <p>Response object has variety of functions that can be used for response. Here we try to send text response that resides on memory.</p>
         <p>Bellow is Test4_1 method that respond to &quot;/test4&quot; request. It looks Accept header. If it's &quot;text/plain&quot;, then plain text response will be returned. If it's &quot;application/json&quot;, then json response will be returned. Otherwise it returns HTTP status code 406 Not Acceptable:
             <pre><code>C_OBJECT($1;$req_o)
 C_OBJECT($2;$res_o)
@@ -175,7 +176,7 @@ C_TEXT($accepts_t;$response_t)
 C_OBJECT($response_o)
 C_LONGINT($status_l)
 
-  // This app accepts "application/json" or "text/plain"
+  // This app accepts "application/json" and "text/plain"
 $candidates_c:=New collection("application/json";"text/plain")
 
   // Determines which mimetype is requested
@@ -198,15 +199,49 @@ If ($status_l=200)
 Else 
 	$res_o.sendStatus($status_l)
 End if</code></pre></p>
-
+        <p>$req_o.accepts function takes list of acceptable mimetypes, compares with content of Accept request header, then returns best match.</p>
+        <p>$res_o.type function sets Content-Type response header.</p>
+        <p>Then use $res_o.send function to send constructed response body.</p>
         <div><button v-on:click="test4FuncPlain">Try Plain</button><button v-on:click="test4FuncJson">Try JSON</button><button v-on:click="test4FuncHtml">Try HTML</button></div>
         <div><textarea id="test4-result">{{ message }}</textarea></div>
 
-    </div>
+    </div><!--//div id="test4"-->
 
-</div>
+    <div id="test5">
 
-</div>
+        <h3>Test5: Send file on disk</h3>
+        <p>This time response is made by sending file on disk.</p>
+        <p>The code looks like:
+<pre><code>$res_o.sendFile("test5.txt")</code></pre>
+        which sends &quot;test5.txt&quot;. The Content-Type response header value is automatically determined by the file extension.</p>
+        <p>For security reason, the file must exists in DocumentRootDynamic path defined in httpServer.conf. $res_o.sendFile function look for the specified file in the folder.</p>
+
+        <div><button v-on:click="test5Func">Try</button></div>
+        <div><textarea id="test5-result">{{ message }}</textarea></div>
+
+    </div><!--//div id="test5"-->
+
+    <div id="test6">
+
+        <h3>Test6: Send rendered rersponse</h3>
+        <p>When embeding data into response is needed, $req_o.send and $req_o.sendFile functions support it when the given content is of type text, since they call internally 4D commands WEB SEND TEXT and WEB SEND FILE respectively.</p>
+        <p>There's another function which is $req_o.render. It calls PROCESS 4D TAGS command that accepts optional data parameter.</p>
+        <p>The code looks like:
+<pre><code>C_OBJECT($message_o)
+$message_o:=new object("message";"This text was passed as optional parameter.")
+$res_o.render("test6.txt";$message_o)</code></pre>
+        and the content of &quot;test6.txt&quot; is
+        <pre><code>&lt;!--#4DTEXT $1.message--&gt;</code></pre></p>
+        <p>For security reason, the file must exists in DocumentRootDynamic path defined in httpServer.conf. $res_o.render function look for the specified file in the folder.</p>
+
+        <div><button v-on:click="test6Func">Try</button></div>
+        <div><textarea id="test6-result">{{ message }}</textarea></div>
+
+    </div><!--//div id="test5"-->
+
+</div><!--//div id="chapter3"-->
+
+</div><!--//div class="main"-->
 
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="app.js"></script>
