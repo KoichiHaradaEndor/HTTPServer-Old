@@ -28,7 +28,7 @@ If (Count parameters:C259>0)
 	$filename_t:=$1
 	
 	$file_o:=File:C1566($filename_t)
-	$headerValue_t:=$headerValue_t+"; filename=\""+$file_o.fullname+"\""
+	$headerValue_t:=$headerValue_t+"; filename=\""+$file_o.fullName+"\""
 	
 	This:C1470.type($file_o.extension)
 	

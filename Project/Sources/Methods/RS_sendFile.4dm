@@ -175,22 +175,28 @@ Else
 	
 	If (error_catch ($errorHandler_t))
 		
-		If ($numParam_l>=3)
-			
-			$callback_o:=$3
-			$error_c:=error_get 
-			$callback_o.call(Null:C1517;$error_c)
-			
-		End if 
+		Case of 
+			: ($numParam_l<3)
+			: ($3=Null:C1517)
+			Else 
+				
+				$callback_o:=$3
+				$error_c:=error_get 
+				$callback_o.call(Null:C1517;$error_c)
+				
+		End case 
 		
 	Else 
 		
-		If ($numParam_l>=3)
-			
-			$callback_o:=$3
-			$callback_o.call(Null:C1517)
-			
-		End if 
+		Case of 
+			: ($numParam_l<3)
+			: ($3=Null:C1517)
+			Else 
+				
+				$callback_o:=$3
+				$callback_o.call(Null:C1517)
+				
+		End case 
 		
 	End if 
 	

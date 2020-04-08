@@ -29,7 +29,7 @@
 * Response.sendFile() // send file
 * }
 * 
-* @param {Text} $1 Absolute file path to send
+* @param {Text} $1 File path to send
 * @param {Text} $2 Filename used to override actual file name (optional)
 * @param {Object} $3 Options to be passed to Response.sendFile() (optional)
 * @param {Object} $4 Reference to post process handler function (optional)
@@ -80,7 +80,7 @@ Else
 End if 
 
   // sets Content-Disposition and Content-Type headers
-This:C1470.attachement(Choose:C955($filename_t="";$path_t;$filename_t))
+This:C1470.attachment(Choose:C955($filename_t="";$path_t;$filename_t))
 This:C1470.sendFile($path_t;$options_o;$callback_o)
 
 $0:=This:C1470

@@ -113,7 +113,10 @@
 			"Test1",
 			"Test2",
 			"Test3",
-			"Test4"
+			"Test4",
+			"Test5",
+			"Test6",
+			"Test7"
 		]
 	},
 	"Test1": {
@@ -144,6 +147,24 @@
 		"methods": [
 			"Test4",
 			"Test4_1"
+		]
+	},
+	"Test5": {
+		"methods": [
+			"Test5",
+			"Test5_1"
+		]
+	},
+	"Test6": {
+		"methods": [
+			"Test6",
+			"Test6_1"
+		]
+	},
+	"Test7": {
+		"methods": [
+			"Test7",
+			"Test7_1"
 		]
 	},
 	"Utility": {
