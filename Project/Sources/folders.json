@@ -11,7 +11,8 @@
 			"Test2-1",
 			"Test2-2",
 			"Test2-3",
-			"Test2-4"
+			"Test2-4",
+			"Test2-5"
 		]
 	},
 	"Chapter4": {
@@ -190,6 +191,15 @@
 		"methods": [
 			"Test2_4",
 			"Test2_4_1"
+		]
+	},
+	"Test2-5": {
+		"methods": [
+			"Test2_5",
+			"Test2_5_1",
+			"Test2_5_1_Default",
+			"Test2_5_1_Json",
+			"Test2_5_1_Plain"
 		]
 	},
 	"Test3-1": {

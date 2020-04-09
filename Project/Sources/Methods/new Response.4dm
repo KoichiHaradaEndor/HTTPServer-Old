@@ -8,7 +8,10 @@
 * @author: HARADA Koichi
 */
 
+C_OBJECT:C1216($1;$request_o)
 C_OBJECT:C1216($0;$response_o)
+
+$request_o:=$1
 
 $response_o:=New object:C1471()
 $response_o.__type__:="Response"
@@ -18,6 +21,7 @@ $response_o.__type__:="Response"
   //#####
 $response_o.locals:=New object:C1471()
 $response_o.__headers__:=New collection:C1472()
+$response_o.__request__:=$request_o
 
   //#####
   // Methods
@@ -28,7 +32,7 @@ $response_o.cookie:=Formula:C1597(RS_cookie )
 $response_o.clearCookie:=Formula:C1597(RS_clearCookie )
 $response_o.download:=Formula:C1597(RS_download )
 $response_o.end:=Formula:C1597(RS_end )
-  //$response_o.format:=Formula(RS_format )
+$response_o.format:=Formula:C1597(RS_format )
 $response_o.get:=Formula:C1597(RS_get )
 $response_o.json:=Formula:C1597(RS_json )
 $response_o.links:=Formula:C1597(RS_links )

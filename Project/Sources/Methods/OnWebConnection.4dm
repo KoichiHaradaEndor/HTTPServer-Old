@@ -36,7 +36,7 @@ $ipClient_t:=$1
 $ipServer_t:=$2
 
 $request_o:=new Request ($ipClient_t;$ipServer_t)
-$response_o:=new Response 
+$response_o:=new Response ($request_o)
 
 $hosts_c:=Storage:C1525.hosts
 
