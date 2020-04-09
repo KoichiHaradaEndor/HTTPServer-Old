@@ -28,8 +28,9 @@ C_TEXT:C284($2;$ipServer_t)
 C_OBJECT:C1216($request_o;$response_o;$host_o;$route_o;$formula_o)
 C_COLLECTION:C1488($hosts_c;$routes_c)
 C_TEXT:C284($requestHost_t;$requestMethod_t;$requestPath_t)
-C_TEXT:C284($routeHost_t;$routeMethod_t;$routePath_t)
+C_TEXT:C284($routeHost_t;$routeMethod_t;$routePath_t;$name_t)
 C_BOOLEAN:C305($match_b)
+C_LONGINT:C283($index_l)
 
 $ipClient_t:=$1
 $ipServer_t:=$2
@@ -76,10 +77,26 @@ For each ($route_o;$routes_c)
 	
 	If ($routeMethod_t="all") | ($routeMethod_t="use") | ($routeMethod_t=$requestMethod_t)
 		
-		$match_b:=Match regex:C1019($routePath_t;$requestPath_t;1)
+		ARRAY LONGINT:C221($positions_al;0)
+		ARRAY LONGINT:C221($lengths_al;0)
+		$match_b:=Match regex:C1019($routePath_t;$requestPath_t;1;$positions_al;$lengths_al)
 		If ($match_b)
 			
 			$formula_o.formulas.push($route_o.callback)
+			
+			  // retrieve path param
+			If ($route_o.params#Null:C1517)
+				
+				$index_l:=0
+				$request_o.params:=New object:C1471()
+				For each ($name_t;$route_o.params)
+					
+					$index_l:=$index_l+1
+					$request_o.params[$name_t]:=Substring:C12($requestPath_t;$positions_al{$index_l};$lengths_al{$index_l})
+					
+				End for each 
+				
+			End if 
 			
 		End if 
 		

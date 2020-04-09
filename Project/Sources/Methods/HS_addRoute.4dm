@@ -15,6 +15,7 @@
 *         method : {Text} used to search by HTTP method value 
 *         path : {Text} regular expression pattern used to search by request path
 *         callback : {Object} formula reference which is called when above conditions are match
+*         params : {Collection} collection of keys used for path parameter
 *     }]
 * }
 * </pre>
@@ -29,9 +30,11 @@ C_TEXT:C284($1;$method_t)
 C_TEXT:C284($2;$path_t)
 C_VARIANT:C1683(${3})  // callback functions
 
-C_COLLECTION:C1488($indices_c)
+C_COLLECTION:C1488($indices_c;$pathParams_c)
 C_OBJECT:C1216($host_o;$formula_o;$routeItem_o)
-C_LONGINT:C283($i;$valueType_l)
+C_LONGINT:C283($i;$valueType_l;$start_l)
+C_TEXT:C284($pattern_t;$param_t;$pathParam_t)
+C_BOOLEAN:C305($matched_b)
 
 $method_t:=$1
 $path_t:=$2
@@ -55,6 +58,37 @@ Case of
 End case 
 
   // complete path parameter as Regex
+If (Position:C15("/:";$path_t)>0)
+	
+	  // convert named path parameter to regex
+	$pathParams_c:=New collection:C1472()
+	$pattern_t:="/:([A-Za-z0-9_]+)(?:/|$)"  // look for /:param
+	$start_l:=1
+	Repeat 
+		
+		ARRAY LONGINT:C221($positions_al;0)
+		ARRAY LONGINT:C221($length_al;0)
+		$matched_b:=Match regex:C1019($pattern_t;$path_t;$start_l;$positions_al;$length_al)
+		Case of 
+			: (Length:C16($path_t)<$start_l)
+				
+			: ($matched_b)
+				
+				$param_t:=Substring:C12($path_t;$positions_al{1};$length_al{1})
+				$pathParams_c.push($param_t)
+				$path_t:=Replace string:C233($path_t;":"+$param_t;"([^/]+)";1;*)
+				$start_l:=$start_l+$positions_al{1}+$length_al{1}
+				
+		End case 
+		
+		If (Length:C16($path_t)<=$start_l)
+			$matched_b:=False:C215
+		End if 
+		
+	Until ($matched_b=False:C215)
+	
+End if 
+
 Case of 
 	: ($method_t="use")
 		
@@ -104,6 +138,9 @@ For ($i;3;Count parameters:C259)
 				$routeItem_o["method"]:=$method_t
 				$routeItem_o["path"]:=$path_t
 				$routeItem_o["callback"]:=${$i}
+				If ($pathParams_c#Null:C1517)
+					$routeItem_o["params"]:=$pathParams_c
+				End if 
 				
 			Else 
 				
@@ -121,6 +158,12 @@ For ($i;3;Count parameters:C259)
 					$routeItem_o["method"]:=$method_t
 					$routeItem_o["path"]:=$path_t
 					$routeItem_o["callback"]:=${$i}
+					If ($pathParams_c#Null:C1517)
+						$routeItem_o["params"]:=New shared collection:C1527()
+						For each ($pathParam_t;$pathParams_c)
+							$routeItem_o["params"].push($pathParam_t)
+						End for each 
+					End if 
 					
 				End use 
 				
@@ -140,6 +183,9 @@ For ($i;3;Count parameters:C259)
 					$routeItem_o["method"]:=$method_t
 					$routeItem_o["path"]:=$path_t
 					$routeItem_o["callback"]:=$formula_o
+					If ($pathParams_c#Null:C1517)
+						$routeItem_o["params"]:=$pathParams_c
+					End if 
 					
 				Else 
 					
@@ -151,6 +197,12 @@ For ($i;3;Count parameters:C259)
 						$routeItem_o["method"]:=$method_t
 						$routeItem_o["path"]:=$path_t
 						$routeItem_o["callback"]:=$formula_o
+						If ($pathParams_c#Null:C1517)
+							$routeItem_o["params"]:=New shared collection:C1527()
+							For each ($pathParam_t;$pathParams_c)
+								$routeItem_o["params"].push($pathParam_t)
+							End for each 
+						End if 
 						
 					End use 
 					
