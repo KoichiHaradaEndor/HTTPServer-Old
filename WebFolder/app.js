@@ -135,28 +135,12 @@ let test = {
             message_2_1: 'Test result will be displayed here'
         },
         methods: {
-            test2_1FuncPlain: function() {
+            test2_1Func: function() {
                 test.makeReq("GET", "http://127.0.0.1/test2-1", {accept: 'text/plain'}).then((res) => {
                     this.message_2_1 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
                     this.message_2_1 += 'Content: ' + res.responseText;
                 }).catch(e => {
                     console.error(e);
-                })
-            },
-            test2_1FuncJson: function() {
-                test.makeReq("GET", "http://127.0.0.1/test2-1", {accept: 'application/json'}).then((res) => {
-                    this.message_2_1 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
-                    this.message_2_1 += 'Content: ' + res.responseText;
-                }).catch(e => {
-                    console.error(e);
-                })
-            },
-            test2_1FuncHtml: function() {
-                test.makeReq("GET", "http://127.0.0.1/test2-1", {accept: 'text/html'}).then((res) => {
-                    this.message_2_1 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
-                    this.message_2_1 += 'Content: ' + res.responseText;
-                }).catch(e => {
-                    this.message_2_1 = e;
                 })
             }
         }
@@ -209,6 +193,39 @@ let test = {
                     this.message_2_4 += 'Content: ' + res.responseText;
                 }).catch(e => {
                     console.error(e);
+                })
+            }
+        }
+    });
+
+    const test2_5 = new Vue({
+        el: "#test2-5",
+        data: {
+            message_2_5: 'Test result will be displayed here'
+        },
+        methods: {
+            test2_5FuncPlain: function() {
+                test.makeReq("GET", "http://127.0.0.1/test2-5", {accept: 'text/plain'}).then((res) => {
+                    this.message_2_5 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
+                    this.message_2_5 += 'Content: ' + res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            },
+            test2_5FuncJson: function() {
+                test.makeReq("GET", "http://127.0.0.1/test2-5", {accept: 'application/json'}).then((res) => {
+                    this.message_2_5 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
+                    this.message_2_5 += 'Content: ' + res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            },
+            test2_5FuncHtml: function() {
+                test.makeReq("GET", "http://127.0.0.1/test2-5", {accept: 'text/html'}).then((res) => {
+                    this.message_2_5 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
+                    this.message_2_5 += 'Content: ' + res.responseText;
+                }).catch(e => {
+                    this.message_2_5 = e;
                 })
             }
         }

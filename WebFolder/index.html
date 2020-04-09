@@ -24,7 +24,7 @@
 
             <div id="about">
                 <h3>About HTTPServer component</h3>
-                <p>HTTPServer is a 4D component which includes methods to help your web developing.</p>
+                <p>HTTPServer is a 4D component, built with 4D v18, which includes methods to help your web developing.</p>
                 <p>Here you can verify HTTPServer behavior and see how it works.</p>
             </div>
 
@@ -193,12 +193,8 @@ $app_o.get("/test1-3/sub";Formula(Test1_3_2 ))</code></pre>
 
                 <h3>Test2-1: Return response on memory</h3>
 
-                <p>Response object has variety of functions that can be used for response. Here we try to send text
-                    response that resides on memory.</p>
-                <p>Bellow is Test2_1_1 method that respond to &quot;/test2-1&quot; request. It looks Accept header. If it's
-                    &quot;text/plain&quot;, then plain text response will be returned. If it's
-                    &quot;application/json&quot;, then json response will be returned. Otherwise it returns HTTP status
-                    code 406 Not Acceptable:
+                <p>Response object has variety of functions that can be used for response. Here we try to send plain text response that resides on memory.</p>
+                <p>Bellow is Test2_1_1 method that respond to &quot;/test2-1&quot; request:
                     <pre><code>C_OBJECT($1;$req_o)
 C_OBJECT($2;$res_o)
 C_OBJECT($3;$next_o)
@@ -207,36 +203,10 @@ $req_o:=$1
 $res_o:=$2
 $next_o:=$3
 
-C_COLLECTION($candidates_c)
-C_TEXT($accepts_t;$response_t)
-C_OBJECT($response_o)
-C_LONGINT($status_l)
-
-  // This app accepts "application/json" and "text/plain"
-$candidates_c:=New collection("application/json";"text/plain")
-
-  // Determines which mimetype is requested
-$accepts_t:=$req_o.accepts($candidates_c)
-
-Case of 
-	: ($accepts_t="application/json")
-		$response_o:=New object("response";"This is JSON text.")
-		$res_o.json($response_o)
-	: ($accepts_t="text/plain")
-		$response_t:="This is plain text."
-		$res_o.type($accepts_t).send($response_t)
-	Else 
-        $res_o.sendStatus(406)  // Not Acceptable
-End case </code></pre>
-                </p>
-                <p>$req_o.accepts function takes list of acceptable mimetypes, compares to content of Accept request
-                    header, then returns best match.</p>
-                <p>$res_o.json function converts given text into JSON and send it with setting Content-Type to
-                    application/json.</p>
+$res_o.type("text/plain").send("This is plain text.")</code></pre></p>
                 <p>$res_o.type function sets Content-Type response header.</p>
                 <p>Then use $res_o.send function to send constructed response body.</p>
-                <div><button v-on:click="test2_1FuncPlain">Try Plain</button><button v-on:click="test2_1FuncJson">Try
-                        JSON</button><button v-on:click="test2_1FuncHtml">Try HTML</button></div>
+                <div><button v-on:click="test2_1Func">Try</button></div>
                 <div><textarea id="test2-1-result">{{ message_2_1 }}</textarea></div>
 
             </div>
@@ -298,6 +268,34 @@ $res_o.render("test2_3.txt";$message_o)</code></pre>
 
             </div>
             <!--//div id="test2-4"-->
+
+            <div id="test2-5">
+
+                <h3>Test2-5: Content negotiation</h3>
+
+                <p><q><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation">content negotiation</a> is the mechanism that is used for serving different representations of a resource at the same URI, so that the user agent can specify which is best suited for the user (for example, which language of a document, which image format, or which content encoding).</q><cite>MDN</cite></p>
+                <p>Bellow is Test2_5_1 method that performs content negotiation. It will accepts &quot;text/plain&quot; or &quot;application/json&quot;. The request will be made to the same URI &quot;/test2-5&quot;, but according to the Accept header, it can return appropriate resouce:
+                    <pre><code>C_OBJECT($1;$req_o)
+C_OBJECT($2;$res_o)
+C_OBJECT($3;$next_o)
+
+$req_o:=$1
+$res_o:=$2
+$next_o:=$3
+
+C_OBJECT($formats_o)
+$formats_o:=New object(\
+    "application/json";Formula(Test2_5_1_Json );\
+    "text/plain";Formula(Test2_5_1_Plain );\
+    "default";Formula(Test2_5_1_Default );\
+    )
+$res_o.format($formats_o)</code></pre></p>
+                <div><button v-on:click="test2_5FuncPlain">Try Plain</button><button v-on:click="test2_5FuncJson">Try
+                        JSON</button><button v-on:click="test2_5FuncHtml">Try HTML</button></div>
+                <div><textarea id="test2-5-result">{{ message_2_5 }}</textarea></div>
+
+            </div>
+            <!--//div id="test2-5"-->
 
         </div>
         <!--//div id="chapter3"-->
@@ -400,7 +398,7 @@ $app_o.use($vhost_o)</code></pre>
 }</code></pre>
                 </p>
                     
-                <div><button v-on:click="test4_3Func">Try Form</button></div>
+                <div><button v-on:click="test4_3Func">Try</button></div>
                 <div><textarea id="test4-3-result">{{ message_4_3 }}</textarea></div>
 
             </div>

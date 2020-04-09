@@ -24,6 +24,7 @@ Else
 	Test2_2 ($app_o)
 	Test2_3 ($app_o)
 	Test2_4 ($app_o)
+	Test2_5 ($app_o)
 	Test3_1 ($app_o)
 	Test4_1 ($app_o)
 	Test4_2 ($app_o)
