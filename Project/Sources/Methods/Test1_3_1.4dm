@@ -7,4 +7,12 @@ $req_o:=$1
 $res_o:=$2
 $next_o:=$3
 
-$res_o.sendFile("test5.txt")
+If (True:C214)
+	
+	  // access granted
+	$res_o.locals.message:=Current method name:C684+" invoked."
+	$next_o.call(This:C1470)
+	
+Else 
+	
+End if 

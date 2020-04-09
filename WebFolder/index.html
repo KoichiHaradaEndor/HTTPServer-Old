@@ -1,53 +1,60 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>HTTPServer 4D Component</title>
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 </head>
+
 <body>
 
-<!-- Side navigation -->
-<div class="sidenav" id="sideNav">
-</div>
-
-<!-- Page content -->
-<div class="main">
-
-<h1>HTTPServer 4D Component</h1>
-
-<div id="chapter1">
-    <h2>Introduction</h2>
-
-    <div id="about">
-        <h3>About HTTPServer</h3>
-        <p>Here you can verify HTTPServer behavior and see how it works.</p>
+    <!-- Side navigation -->
+    <div class="sidenav" id="sideNav">
     </div>
 
-    <div id="preparation">
-        <h3>Preparation</h3>
-        <h4>On Web Connection database method</h4>
-<pre><code>C_TEXT($1;$2;$3;$4;$5;$6)<br>OnWebConnection($3;$4)</code></pre>
-        <h4>On Startup database method</h4>
-<pre><code>C_OBJECT($app_o)<br>$app_o:=new HttpServer<br>// Write route register code here<br>$app_o.start()</code></pre>
-    </div>
-</div><!--//div id="chapter2"-->
+    <!-- Page content -->
+    <div class="main">
 
-<div id="chapter2">
-    <h2>Writing Route Definition</h2>
+        <h1>HTTPServer 4D Component</h1>
 
-    <div id="test1">
-        <h3>Test1: Respond to GET request</h3>
-        <p>Wish to respond to resquest whose method is GET and path is &quot;/test1&quot;.</p>
-        <p>Route register code is:
-<pre><code>$app_o.get("/test1";\
-    Formula(Test1_1 );\
-    Formula(Test1_2 );\
-    Formula(Test1_3 ))</code></pre>
-        This code registers route handlers for method="GET" and path="/test1", then when such request comes, three methods should be invoked in order.</p>
-        <p>Test1_1 method looks like
-<pre><code>C_OBJECT($1;$req_o)
+        <div id="chapter1">
+            <h2>Introduction</h2>
+
+            <div id="about">
+                <h3>About HTTPServer component</h3>
+                <p>HTTPServer is a 4D component which includes methods to help your web developing.</p>
+                <p>Here you can verify HTTPServer behavior and see how it works.</p>
+            </div>
+
+            <div id="installation">
+                <h3>Installation</h3>
+                <p>This is a 4D component, so build it as component and place 4dbase package into your project's &quot;Components&quot; folder.</p>
+                <h4>On Web Connection database method</h4>
+                <p>Write following code in On Web Connection database method. OnWebConnection is a shared component method.</p>
+                <pre><code>C_TEXT($1;$2;$3;$4;$5;$6)<br>OnWebConnection($3;$4)</code></pre>
+                <h4>On Startup database method</h4>
+                <p>Then write following code in On (Server) Startup database method. new HttpServer is also a shared component method which is used to build your web application.</p>
+                <pre><code>C_OBJECT($app_o)<br>$app_o:=new HttpServer<br>// Write route register code here<br>$app_o.start()</code></pre>
+            </div>
+        </div>
+        <!--//div id="chapter1"-->
+
+        <div id="chapter2">
+            <h2>Writing Route Definition</h2>
+
+            <div id="test1-1">
+                <h3>Test1-1: Respond to GET request</h3>
+                <p>Wish to respond to resquest whose method is GET and path is &quot;/test1-1&quot;.</p>
+                <p>Route register code is:
+                    <pre><code>$app_o.get("/test1-1";\
+    Formula(Test1_1_1 );\
+    Formula(Test1_1_2 );\
+    Formula(Test1_1_3 ))</code></pre>
+                    This code registers route handlers for method="GET" and path="/test1-1", then when such request comes, three methods should be invoked in order.</p>
+                <p>Test1_1_1 method looks like
+                    <pre><code>C_OBJECT($1;$req_o)
 C_OBJECT($2;$res_o)
 C_OBJECT($3;$next_o)
 
@@ -57,16 +64,18 @@ $next_o:=$3
 
 $res_o.locals.message:=Current method name+" invoked."
 $next_o.call(This)</code></pre>
-        $1, $2 and $3 arguments are passed automatically.
-        <ul>
-            <li>$1 receives Request object that contains request header contents.</li>
-            <li>$2 receives Response object that contains various functions that wil be used to construct and to send response.</li>
-            <li>$3 receives reference to next function that should be called in order.</li>
-        </ul>
-        $res_o.local is a object that can be used to store intermediate data which you want to pass to subsequent handlers.<br>
-        Then $next_o.call(This) calls next handler method.</p>
-        <p>Test1_3 method looks like
-<pre><code>C_OBJECT($1;$req_o)
+                    $1, $2 and $3 arguments are passed automatically.
+                    <ul>
+                        <li>$1 receives Request object that contains request header contents.</li>
+                        <li>$2 receives Response object that contains various functions that wil be used to construct
+                            and to send response.</li>
+                        <li>$3 receives reference to next function that should be called in order.</li>
+                    </ul>
+                    $res_o.local is an object that can be used to store intermediate data which you want to pass to
+                    subsequent handlers.<br>
+                    Then $next_o.call(This) calls next handler method.</p>
+                <p>Test1_1_3 method looks like
+                    <pre><code>C_OBJECT($1;$req_o)
 C_OBJECT($2;$res_o)
 C_OBJECT($3;$next_o)
 
@@ -75,95 +84,118 @@ $res_o:=$2
 $next_o:=$3
 
 $res_o.send($res_o.locals.message+"\n"+Current method name+" invoked.")</code></pre>
-        $res_o.locals are used to retrieve data previously populated.<br>
-        Then send text content by calling $res_o.send.</p>
-        <p>You can get the same result when you write route register code like bellow:</p>
-        <p>- collection of handlers
-<pre><code>C_COLLECTION($handlers_c)
+                    $res_o.locals are used to retrieve data previously populated.<br>
+                    Then send text content by calling $res_o.send.</p>
+                <p>You can get the same result when you write route register code like bellow:</p>
+                <p>- collection of handlers
+                    <pre><code>C_COLLECTION($handlers_c)
 $handlers_c:=New collection(\
-    Formula(Test1_1 );\
-    Formula(Test1_2 );\
-    Formula(Test1_3 ))
-$app_o.get(&quot;/test1&quot;;$handlers_c)</code></pre></p>
-        <p>- combination
-<pre><code>C_COLLECTION($handlers_c)
+    Formula(Test1_1_1 );\
+    Formula(Test1_1_2 );\
+    Formula(Test1_1_3 ))
+$app_o.get(&quot;/test1-1&quot;;$handlers_c)</code></pre>
+                </p>
+                <p>- combination
+                    <pre><code>C_COLLECTION($handlers_c)
 $handlers_c:=New collection(\
-    Formula(Test1_1 );\
-    Formula(Test1_2 ))
-$app_o.get(&quot;/test1&quot;;$handlers_c;Formula(Test1_3 ))</code></pre></p>
-        <p>- mutiple call for the same route
-<pre><code>$app_o.get("/test1";Formula(Test1_1 ))
-$app_o.get("/test1";Formula(Test1_2 ))
-$app_o.get("/test1";Formula(Test1_3 ))</code></pre></p>
-        <p>- using generic function
-<pre><code>$app_o.method("get";"/test1";\
-    Formula(Test1_1 );\
-    Formula(Test1_2 );\
-    Formula(Test1_3 ))</code></pre></p>
+    Formula(Test1_1_1 );\
+    Formula(Test1_1_2 ))
+$app_o.get(&quot;/test1-1&quot;;$handlers_c;Formula(Test1_1_3 ))</code></pre>
+                </p>
+                <p>- mutiple call for the same route
+                    <pre><code>$app_o.get("/test1-1";Formula(Test1_1_1 ))
+$app_o.get("/test1-1";Formula(Test1_1_2 ))
+$app_o.get("/test1-1";Formula(Test1_1_3 ))</code></pre>
+                </p>
+                <p>- using generic function
+                    <pre><code>$app_o.method("get";"/test1-1";\
+    Formula(Test1_1_1 );\
+    Formula(Test1_1_2 );\
+    Formula(Test1_1_3 ))</code></pre>
+                Using $app_o.method, you can respond to any HTTP methods.</p>
 
-        <p>For POST, PUT, DELETE HTTP methods, dedicated functions are provided
-<pre><code>$app_o.post
+                <p>For POST, PUT, DELETE HTTP methods, dedicated functions are provided
+                    <pre><code>$app_o.post
 $app_o.put
-$app_o.delete</code></pre></p>
+$app_o.delete</code></pre>
+                </p>
 
-        <div><button v-on:click="test1Func">Try</button></div>
-        <div><textarea id="test1-result">{{ message }}</textarea></div>
+                <div><button v-on:click="test1_1Func">Try</button></div>
+                <div><textarea id="test1-1-result">{{ message_1_1 }}</textarea></div>
 
-    </div><!--//div id="test1"-->
+            </div>
+            <!--//div id="test1-1"-->
 
-    <div id="test2">
+            <div id="test1-2">
 
-        <h3>Test2: Respond to arbitrary method request</h3>
-        <p>Wish to respond to resquest whose path is &quot;/test2&quot;. The request method can be GET or POST whose process are different. But there are the same pre-process and post-process.</p>
-        <p>Route register code can be:
-<pre><code>$app_o.all("/test2";Formula(Test2_1 ))
-$app_o.get("/test2";Formula(Test2_2_GET ))
-$app_o.post("/test2";Formula(Test2_2_POST ))
-$app_o.all("/test2";Formula(Test2_3 ))</code></pre>
-        Irrespective of the HTTP method, Test2_1 and Test2_3 methods will be invoked because $app_o.all is used. <br>
-        On the other hand, only when the request is made with GET method, Test2_2_GET method will be invoked since it is registered via $app_o.get. </p>
-        <p>To avoid writing the same path multiple times (and thus to avoid typo), the same route can be written like this:
-<pre><code>$app_o.route("/test2")\
-    .all(Formula(Test2_1 ))\
-    .get(Formula(Test2_2_GET ))\
-    .post(Formula(Test2_2_POST ))\
-    .all(Formula(Test2_3 ))</code></pre>
-        </p>
+                <h3>Test1-2: Respond to arbitrary method request</h3>
+                <p>Wish to respond to resquest whose path is &quot;/test1-2&quot;. The request method can be GET or POST
+                    whose process are different. But there are the same pre-process and post-process.</p>
+                <p>Route register code can be:
+                    <pre><code>$app_o.all("/test1-2";Formula(Test1_2_1 ))
+$app_o.get("/test1-2";Formula(Test1_2_2_GET ))
+$app_o.post("/test1-2";Formula(Test1_2_2_POST ))
+$app_o.all("/test1-2";Formula(Test1_2_3 ))</code></pre>
+                    Irrespective of the HTTP method, Test1_2_1 and Test1_2_3 methods will be invoked because $app_o.all is
+                    used. <br>
+                    On the other hand, only when the request is made with GET method, Test1_2_2_GET method will be invoked
+                    since it is registered via $app_o.get. </p>
+                <p>To avoid writing the same path multiple times (and thus to avoid typo), the same route can be written
+                    like this:
+                    <pre><code>$app_o.route("/test1-2-2")\
+    .all(Formula(Test1_2_1 ))\
+    .get(Formula(Test1_2_2_GET ))\
+    .post(Formula(Test1_2_2_POST ))\
+    .all(Formula(Test1_2_3 ))</code></pre>
+                </p>
 
-        <div>
-            <button v-on:click="test2FuncGet">Try GET</button>
-            <button v-on:click="test2FuncPost">Try POST</button>
+                <div>
+                    <button v-on:click="test1_2FuncGet">Try GET</button>
+                    <button v-on:click="test1_2FuncPost">Try POST</button>
+                </div>
+                <div><textarea id="test1-2-result">{{ message_1_2 }}</textarea></div>
+
+            </div>
+            <!--//div id="test1-2"-->
+
+            <div id="test1-3">
+
+                <h3>Test1-3: Path match</h3>
+                <p>When creating a list of handlers that matches the request path, all route functions uses full match
+                    regular expression pattern. In case forward match pattern is appropriate, use $app_o.use function.
+                </p>
+                <p>For instance, when authentication is needed to accese &quot;/test1-3&quot; and its sub directory (eg.
+                    &quot;/test1-3/sub&quot;), write a route like this:
+                    <pre><code>$app_o.use("/test1-3";Formula(Test1_3_1 ))
+$app_o.get("/test1-3/sub";Formula(Test1_3_2 ))</code></pre>
+                    Irrespective of the HTTP method, Test1_3_1 method is always invoked if the request path is
+                    &quot;/test1-3&quot; or its sub directory.<br>Then in Test1_3_1 method, if access to the next handler is
+                    granted, call $next_o.call(This) to invoke Test1_3_2. If access is not granted, you can stop
+                    propagating and return error message.</p>
+
+                <div><button v-on:click="test1_3Func">Try</button></div>
+                <div><textarea id="test1-3-result">{{ message_1_3 }}</textarea></div>
+
+            </div>
+            <!--//div id="test1-3"-->
+
         </div>
-        <div><textarea id="test2-result">{{ message }}</textarea></div>
+        <!--//div id="chapter2"-->
 
-    </div><!--//div id="test2"-->
+        <div id="chapter3">
+            <h2>Creating Response</h2>
 
-    <div id="test3">
+            <div id="test2-1">
 
-        <h3>Test3: Path match</h3>
-        <p>When creating a list of handlers that matches the request path, all route functions uses full match regular expression pattern. In case forward match pattern is appropriate, use $app_o.use function.</p>
-        <p>For instance, when authentication is needed to accese &quot;/test3&quot; and its sub directory (eg. &quot;/test3/sub&quot;), write a route like this:
-<pre><code>$app_o.use("/test3";Formula(Test3_1 ))
-$app_o.get("/test3/sub";Formula(Test3_2 ))</code></pre>
-        Irrespective of the HTTP method, Test3_1 method is always invoked if the request path is &quot;/test3&quot; or its sub directory.<br>Then in Test3_1 method, if access to the next handler is granted, call $next_o.call(This) to invoke Test3_2. If access is not granted, you can stop propagating and return error message.</p>
+                <h3>Test2-1: Return response on memory</h3>
 
-        <div><button v-on:click="test3Func">Try</button></div>
-        <div><textarea id="test3-result">{{ message }}</textarea></div>
-
-    </div><!--//div id="test3"-->
-
-</div><!--//div id="chapter2"-->
-
-<div id="chapter3">
-    <h2>Creating Response</h2>
-
-    <div id="test4">
-
-        <h3>Test4: Return response on memory</h3>
-
-        <p>Response object has variety of functions that can be used for response. Here we try to send text response that resides on memory.</p>
-        <p>Bellow is Test4_1 method that respond to &quot;/test4&quot; request. It looks Accept header. If it's &quot;text/plain&quot;, then plain text response will be returned. If it's &quot;application/json&quot;, then json response will be returned. Otherwise it returns HTTP status code 406 Not Acceptable:
-            <pre><code>C_OBJECT($1;$req_o)
+                <p>Response object has variety of functions that can be used for response. Here we try to send text
+                    response that resides on memory.</p>
+                <p>Bellow is Test2_1_1 method that respond to &quot;/test2-1&quot; request. It looks Accept header. If it's
+                    &quot;text/plain&quot;, then plain text response will be returned. If it's
+                    &quot;application/json&quot;, then json response will be returned. Otherwise it returns HTTP status
+                    code 406 Not Acceptable:
+                    <pre><code>C_OBJECT($1;$req_o)
 C_OBJECT($2;$res_o)
 C_OBJECT($3;$next_o)
 
@@ -191,101 +223,131 @@ Case of
 		$res_o.type($accepts_t).send($response_t)
 	Else 
         $res_o.sendStatus(406)  // Not Acceptable
-End case </code></pre></p>
-        <p>$req_o.accepts function takes list of acceptable mimetypes, compares with content of Accept request header, then returns best match.</p>
-        <p>$res_o.json function converts given text into JSON and send it with setting Content-Type to application/json.</p>
-        <p>$res_o.type function sets Content-Type response header.</p>
-        <p>Then use $res_o.send function to send constructed response body.</p>
-        <div><button v-on:click="test4FuncPlain">Try Plain</button><button v-on:click="test4FuncJson">Try JSON</button><button v-on:click="test4FuncHtml">Try HTML</button></div>
-        <div><textarea id="test4-result">{{ message }}</textarea></div>
+End case </code></pre>
+                </p>
+                <p>$req_o.accepts function takes list of acceptable mimetypes, compares to content of Accept request
+                    header, then returns best match.</p>
+                <p>$res_o.json function converts given text into JSON and send it with setting Content-Type to
+                    application/json.</p>
+                <p>$res_o.type function sets Content-Type response header.</p>
+                <p>Then use $res_o.send function to send constructed response body.</p>
+                <div><button v-on:click="test2_1FuncPlain">Try Plain</button><button v-on:click="test2_1FuncJson">Try
+                        JSON</button><button v-on:click="test2_1FuncHtml">Try HTML</button></div>
+                <div><textarea id="test2-1-result">{{ message_2_1 }}</textarea></div>
 
-    </div><!--//div id="test4"-->
+            </div>
+            <!--//div id="test2-1"-->
 
-    <div id="test5">
+            <div id="test2-2">
 
-        <h3>Test5: Transfer file on disk</h3>
-        <p>This time response is made by sending file on disk.</p>
-        <p>The code looks like:
-<pre><code>$res_o.sendFile("test5.txt")</code></pre>
-        which sends &quot;test5.txt&quot;. The Content-Type response header value is automatically determined by the file extension.</p>
-        <p>For security reason, the file must exists in DocumentRootDynamic path defined in httpServer.conf. $res_o.sendFile function look for the specified file in the folder.</p>
+                <h3>Test2-2: Transfer file on disk</h3>
+                <p>This time response is made by sending file on disk.</p>
+                <p>The code looks like:
+                    <pre><code>$res_o.sendFile("test2_2.txt")</code></pre>
+                    which sends &quot;test2_2.txt&quot;. The Content-Type response header value is automatically
+                    determined by the file extension.</p>
+                <p>For security reason, the file must exists in DocumentRootDynamic path defined in httpServer.conf.
+                    $res_o.sendFile function look for the specified file in the folder.</p>
 
-        <div><button v-on:click="test5Func">Try</button></div>
-        <div><textarea id="test5-result">{{ message }}</textarea></div>
+                <div><button v-on:click="test2_2Func">Try</button></div>
+                <div><textarea id="test2-2-result">{{ message_2_2 }}</textarea></div>
 
-    </div><!--//div id="test5"-->
+            </div>
+            <!--//div id="test2-2"-->
 
-    <div id="test6">
+            <div id="test2-3">
 
-        <h3>Test6: Send rendered rersponse</h3>
-        <p>When embeding data into response is needed, $req_o.send and $req_o.sendFile functions support it when the given content is of type text, since they call internally 4D commands WEB SEND TEXT and WEB SEND FILE respectively.</p>
-        <p>There's another function which is $req_o.render. It calls PROCESS 4D TAGS command that accepts optional data parameter.</p>
-        <p>The code looks like:
-<pre><code>C_OBJECT($message_o)
+                <h3>Test2-3: Send rendered rersponse</h3>
+                <p>When embeding data into response is needed, $req_o.send and $req_o.sendFile functions support it when
+                    the given content is of type text, since they call internally 4D commands WEB SEND TEXT and WEB SEND
+                    FILE respectively.</p>
+                <p>There's another function which is $req_o.render. It calls PROCESS 4D TAGS command that accepts
+                    optional data parameter.</p>
+                <p>The code looks like:
+                    <pre><code>C_OBJECT($message_o)
 $message_o:=new object("message";"This text was passed as optional parameter.")
-$res_o.render("test6.txt";$message_o)</code></pre>
-        and the content of &quot;test6.txt&quot; is
-        <pre><code>&lt;!--#4DTEXT $1.message--&gt;</code></pre></p>
-        <p>For security reason, the file must exists in DocumentRootDynamic path defined in httpServer.conf. $res_o.render function look for the specified file in the folder.</p>
+$res_o.render("test2_3.txt";$message_o)</code></pre>
+                    and the content of &quot;test2_3.txt&quot; is
+                    <pre><code>&lt;!--#4DTEXT $1.message--&gt;</code></pre>
+                </p>
+                <p>For security reason, the file must exists in DocumentRootDynamic path defined in httpServer.conf.
+                    $res_o.render function look for the specified file in the folder.</p>
 
-        <div><button v-on:click="test6Func">Try</button></div>
-        <div><textarea id="test6-result">{{ message }}</textarea></div>
+                <div><button v-on:click="test2_3Func">Try</button></div>
+                <div><textarea id="test2-3-result">{{ message_2_3 }}</textarea></div>
 
-    </div><!--//div id="test6"-->
+            </div>
+            <!--//div id="test2-3"-->
 
-    <div id="test7">
+            <div id="test2-4">
 
-        <h3>Test7: Transfer file as attachment</h3>
-        <p>$res_o.download function sets Content-Disposition and Content-Type headers, then send the specified file.</p>
-        <p>The code will be:
-<pre><code>$res_o.download("test7.txt";"realname.txt")</code></pre></p>
-        <p>Note that, in this test, file will not be downloaded as attachement. If you open a tab page and access the server with "/test7" path, the file will be downloaded.</p>
-        <div><button v-on:click="test7Func">Try</button></div>
-        <div><textarea id="test7-result">{{ message }}</textarea></div>
+                <h3>Test2-4: Transfer file as attachment</h3>
+                <p>$res_o.download function sets Content-Disposition and Content-Type headers, then send the specified
+                    file.</p>
+                <p>The code will be:
+                    <pre><code>$res_o.download("test2_4.txt";"realname.txt")</code></pre>
+                </p>
+                <p>Note that, in this test, file will not be downloaded as attachement. If you open a tab page and
+                    access the server with "/test2-4" path, the file will be downloaded.</p>
+                <div><button v-on:click="test2_4Func">Try</button></div>
+                <div><textarea id="test2-4-result">{{ message_2_4 }}</textarea></div>
 
-    </div><!--//div id="test7"-->
+            </div>
+            <!--//div id="test2-4"-->
 
-</div><!--//div id="chapter3"-->
+        </div>
+        <!--//div id="chapter3"-->
 
-<div id="chapter4">
+        <div id="chapter4">
 
-    <h2>Virtual Host</h2>
+            <h2>Virtual Host</h2>
 
-    <div id="test8">
+            <div id="test3-1">
 
-        <h3>Test8: Define virtual host</h3>
-        <p>When you want to publish your server with multiple host names, and each named host has different role, you can use HttpServer.vhost function.</p>
-        <p>The object created with HttpServer.vhost has the same routing functions such as get, post, and so on.</p>
-        <p>The route register code is:
-    <pre><code>C_OBJECT($1;$app_o)
+                <h3>Test3-1: Define virtual host</h3>
+                <p>When you want to publish your server with multiple host names, and each named host has different
+                    role, you can use HttpServer.vhost function.</p>
+                <p>The object created with HttpServer.vhost has the same routing functions such as get, post, and so on.
+                </p>
+                <p>The route register code is:
+                    <pre><code>C_OBJECT($1;$app_o)
 C_OBJECT($vhost_o)
         
 $app_o:=$1
-$app_o.get("/test8";Formula(Test8_1_main ))
+$app_o.get("/test3-1";Formula(Test3_1_1_main ))
         
 $vhost_o:=$app_o.vhost("test.mycompany.com")
-$vhost_o.get("/test8";Formula(Test8_1_vhost ))
+$vhost_o.get("/test3-1";Formula(Test3_1_1_vhost ))
 $app_o.use($vhost_o)</code></pre>
-        $vhost_o receives VirtualHost object that is created with $app_o.vhost. It works like HttpServer object except VirtualHost cannot start/stop HTTP server.</p>
-        <p>Both $app_o and $vhost_o registers a route saying &quot;when receives GET request whose path is /test8, then respond&quot;, but different method is called.</p>
-        <p>$vhost_o is finally registed to $app_o with $app_o.use function.</p>
-        <p>Test8_1_main code is:
-            <pre><code>$res_o.send("I am main server.")</code></pre></p>
-        <p>Test8_1_vhost code is:
-            <pre><code>$res_o.set("Access-Control-Allow-Origin";"*")\
+                    $vhost_o receives VirtualHost object that is created with $app_o.vhost. It works like HttpServer
+                    object except VirtualHost cannot start/stop HTTP server.</p>
+                <p>Both $app_o and $vhost_o registers a route saying &quot;when receives GET request whose path is
+                    /test3-1, then respond&quot;, but different method is called.</p>
+                <p>$vhost_o is finally registed to $app_o with $app_o.use function.</p>
+                <p>Test3_1_1_main code is:
+                    <pre><code>$res_o.send("I am main server.")</code></pre>
+                </p>
+                <p>Test3_1_1_vhost code is:
+                    <pre><code>$res_o.set("Access-Control-Allow-Origin";"*")\
 .send("I am vhost server.")</code></pre>
-        Access-Control-Allow-Origin header is added to allow CORS. This header is needed to allow making request to test.mycompany.com using XMLHttpRequest which come from 127.0.0.1.</p>
-        <p>*Assuming test.mycompany.com has already been appended to your hosts file.</p>
-        <div><button v-on:click="test8FuncMain">Try Main</button><button v-on:click="test8FuncVhost">Try Vhost</button></div>
-        <div><textarea id="test8-result">{{ message }}</textarea></div>
+                    Access-Control-Allow-Origin header is added to allow CORS. This header is needed to allow making
+                    request to test.mycompany.com using XMLHttpRequest which come from 127.0.0.1.</p>
+                <p>*Assuming test.mycompany.com has already been appended to your hosts file.</p>
+                <div><button v-on:click="test3_1FuncMain">Try Main</button><button v-on:click="test3_1FuncVhost">Try
+                        Vhost</button></div>
+                <div><textarea id="test3-1-result">{{ message_3_1 }}</textarea></div>
 
-    </div><!--//div id="test8"-->
+            </div>
+            <!--//div id="test8"-->
 
-</div><!--// id="chapter4"-->
+        </div>
+        <!--// id="chapter4"-->
 
-</div><!--//div class="main"-->
+    </div>
+    <!--//div class="main"-->
 
-<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="app.js"></script>
 </body>
+
 </html>
