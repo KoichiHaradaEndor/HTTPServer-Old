@@ -44,6 +44,10 @@
         <div id="chapter2">
             <h2>Writing Route Definition</h2>
 
+            <div>
+                <p>Pleade note that when matching paths, this component uses Match regex command. It means some characters such as period, msut be escaped.</p>
+            </div>
+
             <div id="test1-1">
                 <h3>Test1-1: Respond to GET request</h3>
                 <p>Wish to respond to resquest whose method is GET and path is &quot;/test1-1&quot;.</p>
@@ -307,8 +311,7 @@ $res_o.render("test2_3.txt";$message_o)</code></pre>
                 <h3>Test3-1: Define virtual host</h3>
                 <p>When you want to publish your server with multiple host names, and each named host has different
                     role, you can use HttpServer.vhost function.</p>
-                <p>The object created with HttpServer.vhost has the same routing functions such as get, post, and so on.
-                </p>
+                <p>The object created with HttpServer.vhost has the same routing functions such as get, post, and so on.</p>
                 <p>The route register code is:
                     <pre><code>C_OBJECT($1;$app_o)
 C_OBJECT($vhost_o)
@@ -325,8 +328,7 @@ $app_o.use($vhost_o)</code></pre>
                     /test3-1, then respond&quot;, but different method is called.</p>
                 <p>$vhost_o is finally registed to $app_o with $app_o.use function.</p>
                 <p>Test3_1_1_main code is:
-                    <pre><code>$res_o.send("I am main server.")</code></pre>
-                </p>
+                    <pre><code>$res_o.send("I am main server.")</code></pre></p>
                 <p>Test3_1_1_vhost code is:
                     <pre><code>$res_o.set("Access-Control-Allow-Origin";"*")\
 .send("I am vhost server.")</code></pre>
@@ -338,10 +340,73 @@ $app_o.use($vhost_o)</code></pre>
                 <div><textarea id="test3-1-result">{{ message_3_1 }}</textarea></div>
 
             </div>
-            <!--//div id="test8"-->
+            <!--//div id="test3-1"-->
 
         </div>
         <!--// id="chapter4"-->
+
+        <div id="chapter5">
+
+            <h2>Retrieving data</h2>
+
+            <div id="test4-1">
+
+                <h3>Test4-1: Retrieve query string</h3>
+                <p>When a GET request contains query string in its path, it is stored in $req_o.query.</p>
+                <p>eg1: /test4-1?param=value
+                    <pre><code>$req_o.query
+    =&gt; {&quot;param&quot;:&quot;value&quot;}</code></pre></p>
+                <p>If param name followed by bracket, the value element becomes collection. eg2: /test4-1?param[]=value1&amp;param[]=value2
+                    <pre><code>$req_o.query
+    =&gt; {&quot;param&quot;:[&quot;value1&quot;,&quot;value2&quot;]}</code></pre></p>
+                <p>If param name followed by named bracket, the value element becomes object. eg3: /test4-1?param[sub1]=value1&amp;param[sub2]=value2
+                    <pre><code>$req_o.query
+    =&gt; {&quot;param&quot;:{&quot;sub1&quot;:&quot;value1&quot;,&quot;sub2&quot;:&quot;value2&quot;}}</code></pre></p>
+                    
+                <div><button v-on:click="test4_1_1Func">Try eg1</button><button v-on:click="test4_1_2Func">Try eg2</button><button v-on:click="test4_1_3Func">Try eg3</button></div>
+                <div><textarea id="test4-1-result">{{ message_4_1 }}</textarea></div>
+
+            </div>
+            <!--//div id="test4-1"-->
+
+            <div id="test4-2">
+
+                <h3>Test4-2: Retrieve posted string</h3>
+                <p>When a POST request contains data in its body, it is stored in $req_o.body. The parsing is performed when the request's Content-Type header value is either application/x-www-form-urlencoded or application/json</p>
+                <p>So when the body content is param=value&amp;param1[]=value1&amp;param1[]=value2&amp;param3[sub1]=value4&amp;param3[sub2]=value5, $req_o.body gets:
+                    <pre><code>$req_o.body
+    =&gt; {
+        &quot;param1&quot;:&quot;value&quot;,
+        &quot;param2&quot;:[&quot;value1&quot;,&quot;value2&quot;],
+        &quot;param3&quot;:{&quot;sub1&quot;:&quot;value4&quot;,&quot;sub2&quot;:&quot;value5&quot;}
+    }</code></pre></p>
+                    
+                <div><button v-on:click="test4_2_1FuncForm">Try Form</button></div>
+                <div><textarea id="test4-2-result">{{ message_4_2 }}</textarea></div>
+
+            </div>
+            <!--//div id="test4-3"-->
+
+            <div id="test4-3">
+
+                <h3>Test4-3: Retrieve route parameter</h3>
+                <p>Route parameters are named URL segments that are used to capture the values specified at their position in the URL. The captured values are populated in the $req_o.params object, with the name of the route parameter specified in the path as their respective keys.</p>
+                <p>When a route is defined like follow:
+                    <pre><code>$app_o.get("/users/:userId/books/:bookId"; Formula(Test_4_3_1))</code></pre>
+                    and the request path is /users/1234/books/abc, $req_o.params receives:
+                    <pre><code>{
+    "userId":"1234",
+    "bookId":"abc"
+}</code></pre>
+                </p>
+                    
+                <div><button v-on:click="test4_3Func">Try Form</button></div>
+                <div><textarea id="test4-3-result">{{ message_4_3 }}</textarea></div>
+
+            </div>
+            <!--//div id="test4-2"-->
+
+        </div><!--//id="chapter5"-->
 
     </div>
     <!--//div class="main"-->

@@ -19,6 +19,13 @@
 			"Test3-1"
 		]
 	},
+	"Chapter5": {
+		"groups": [
+			"Test4-1",
+			"Test4-2",
+			"Test4-3"
+		]
+	},
 	"Config": {
 		"methods": [
 			"Config_load",
@@ -115,6 +122,7 @@
 			"HS_addRoute",
 			"HS_all",
 			"HS_delete",
+			"HS_findVhost",
 			"HS_get",
 			"HS_method",
 			"HS_post",
@@ -132,7 +140,8 @@
 		"groups": [
 			"Chapter2",
 			"Chapter3",
-			"Chapter4"
+			"Chapter4",
+			"Chapter5"
 		]
 	},
 	"Test1-1": {
@@ -188,6 +197,24 @@
 			"Test3_1",
 			"Test3_1_1_main",
 			"Test3_1_1_vhost"
+		]
+	},
+	"Test4-1": {
+		"methods": [
+			"Test4_1",
+			"Test4_1_1"
+		]
+	},
+	"Test4-2": {
+		"methods": [
+			"Test4_2",
+			"Test4_2_1"
+		]
+	},
+	"Test4-3": {
+		"methods": [
+			"Test4_3",
+			"Test4_3_1"
 		]
 	},
 	"Utility": {

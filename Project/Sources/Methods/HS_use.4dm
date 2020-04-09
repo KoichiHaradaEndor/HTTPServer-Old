@@ -36,14 +36,15 @@
 C_VARIANT:C1683(${1})
 C_OBJECT:C1216($0)
 
-C_TEXT:C284($method_t)
-C_LONGINT:C283($type_l;$insertionPosition_l)
-C_BOOLEAN:C305($addVhost_b)
+C_TEXT:C284($method_t;$pathParam_t)
+C_LONGINT:C283($type_l;$insertionPosition_l;$index_l)
+C_BOOLEAN:C305($vhost_b)
 C_OBJECT:C1216($route_o)
+C_COLLECTION:C1488($routes_c)
 
 ASSERT:C1129(Count parameters:C259>0;Current method name:C684+" : Lack of parameters")
 
-$addVhost_b:=False:C215
+$vhost_b:=False:C215
 $type_l:=Value type:C1509($1)
 
 Case of 
@@ -56,27 +57,47 @@ Case of
 	Else 
 		
 		  // The first paramter is VirtualHost object
-		$addVhost_b:=True:C214
+		$vhost_b:=True:C214
 		
 End case 
 
-If ($addVhost_b)
+If ($vhost_b)
 	
 	Use (Storage:C1525.hosts)
 		
-		  // To make default host is always the last element,
-		  // insert vhost at second from the last.
-		$insertionPosition_l:=Storage:C1525.hosts.length-1
+		  // Search for hostname inside Storage.hosts to find if it is already registered
+		$index_l:=Storage:C1525.hosts.findIndex("HS_findVhost";$1.hostname)
 		
-		  // $1 vhost object is standard object. So it cannot be inserted directly into Storge.
-		Storage:C1525.hosts.insert($insertionPosition_l;New shared object:C1526())
-		Storage:C1525.hosts[$insertionPosition_l].hostname:=$1.hostname
-		Storage:C1525.hosts[$insertionPosition_l].routes:=New shared collection:C1527()
+		If ($index_l=-1)
+			
+			  // Such hostname was not previously registered, so add one
+			  // To make default host is always the last element,
+			  // insert vhost at second from the last.
+			$insertionPosition_l:=Storage:C1525.hosts.length-1
+			
+			  // $1 vhost object is standard object. So it cannot be inserted directly into Storge.
+			Storage:C1525.hosts.insert($insertionPosition_l;New shared object:C1526())
+			Storage:C1525.hosts[$insertionPosition_l].hostname:=$1.hostname
+			Storage:C1525.hosts[$insertionPosition_l].routes:=New shared collection:C1527()
+			
+		Else 
+			
+			  // match hostname was found
+			$insertionPosition_l:=$index_l
+			
+		End if 
+		
 		For each ($route_o;$1.routes)
 			
 			Storage:C1525.hosts[$insertionPosition_l].routes.push(New shared object:C1526("method";$route_o.method;"path";$route_o.path))
-			  // Formula object cannot be added to Storage with New shared object because the command creates a group before adding the object. 
+			  // Formula object cannot be added to Storage with New shared object because the command creates a group before adding the object.
 			Storage:C1525.hosts[$insertionPosition_l].routes[Storage:C1525.hosts[$insertionPosition_l].routes.length-1]["callback"]:=$route_o.callback
+			If ($route_o.params#Null:C1517)
+				Storage:C1525.hosts[$insertionPosition_l].routes[Storage:C1525.hosts[$insertionPosition_l].routes.length-1]["params"]:=New shared collection:C1527()
+				For each ($pathParam_t;$route_o.params)
+					Storage:C1525.hosts[$insertionPosition_l].routes[Storage:C1525.hosts[$insertionPosition_l].routes.length-1]["params"].push($pathParam_t)
+				End for each 
+			End if 
 			
 		End for each 
 		
