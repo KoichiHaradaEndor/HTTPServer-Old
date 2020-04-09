@@ -17,14 +17,14 @@ Else
 	
 	$app_o:=new HttpServer 
 	
-	Test1 ($app_o)
-	Test2 ($app_o)
-	Test3 ($app_o)
-	Test4 ($app_o)
-	Test5 ($app_o)
-	Test6 ($app_o)
-	Test7 ($app_o)
-	Test8 ($app_o)
+	Test1_1 ($app_o)
+	Test1_2 ($app_o)
+	Test1_3 ($app_o)
+	Test2_1 ($app_o)
+	Test2_2 ($app_o)
+	Test2_3 ($app_o)
+	Test2_4 ($app_o)
+	Test3_1 ($app_o)
 	
 	  // load http server configuration and
 	  // start web server
