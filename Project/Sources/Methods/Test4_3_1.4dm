@@ -10,4 +10,4 @@ $next_o:=$3
 C_OBJECT:C1216($params_o)
 $params_o:=$req_o.params
 
-$res_o.set("Access-Control-Allow-Origin";"*").json($params_o)
+$res_o.json($params_o)
