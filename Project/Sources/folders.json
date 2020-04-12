@@ -232,7 +232,8 @@
 			"callNextCallback",
 			"decodeBase64Url",
 			"encodeBase64Url",
-			"encodeURIComponent"
+			"encodeURIComponent",
+			"findVhost"
 		]
 	},
 	"trash": {}

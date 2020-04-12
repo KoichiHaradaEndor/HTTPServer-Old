@@ -52,12 +52,7 @@ If ($hosts_c.length=1)
 	
 Else 
 	
-	$matchHost_b:=False:C215
-	For each ($host_o;$hosts_c) Until ($match_b)
-		
-		$match_b:=Match regex:C1019($host_o.hostname;$requestHost_t;1)
-		
-	End for each 
+	$host_o:=$hosts_c.find("findVhost";$requestHost_t)
 	
 End if 
 
