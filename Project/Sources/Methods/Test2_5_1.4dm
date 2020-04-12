@@ -12,7 +12,7 @@ C_OBJECT:C1216($formats_o)
 $formats_o:=New object:C1471(\
 "application/json";Formula:C1597(Test2_5_1_Json );\
 "text/plain";Formula:C1597(Test2_5_1_Plain );\
-"default";Formula:C1597(Test2_5_1_Default );\
+"default";Formula:C1597(Test2_5_1_Default )\
 )
 
 $res_o.format($formats_o)
