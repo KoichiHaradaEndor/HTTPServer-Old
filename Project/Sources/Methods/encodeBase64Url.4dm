@@ -15,6 +15,7 @@ C_TEXT:C284($1;$textToEncode_t)
 C_TEXT:C284($0;$encodedText_t)
 
 C_BLOB:C604($blobToEncode_x)
+C_LONGINT:C283($position_l)
 
 $textToEncode_t:=$1
 $encodedText_t:=""
@@ -22,8 +23,16 @@ $encodedText_t:=""
 CONVERT FROM TEXT:C1011($textToEncode_t;"UTF-8";$blobToEncode_x)
 
 BASE64 ENCODE:C895($blobToEncode_x;$encodedText_t)
+
+  // Remove any trailing '='s
+$position_l:=Position:C15("=";$encodedText_t;*)
+If ($position_l>0)
+	
+	$encodedText_t:=Substring:C12($encodedText_t;1;$position_l-1)
+	
+End if 
+
 $encodedText_t:=Replace string:C233($encodedText_t;"+";"-")
 $encodedText_t:=Replace string:C233($encodedText_t;"/";"_")
-$encodedText_t:=Replace string:C233($encodedText_t;"=";"")
 
 $0:=$encodedText_t
