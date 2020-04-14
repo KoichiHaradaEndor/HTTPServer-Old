@@ -14,9 +14,7 @@ By Installing this component into your 4D project, several methods are added to 
 
 ## Install
 
-This is a 4D component, so it should be placed in the "Components" folder of your project root.
-
-The extension of the component must be ".4dbase".
+This is a 4D component, so you should build this source as 4D component and place it in the "Components" folder of your project root.
 
 ## License
 
