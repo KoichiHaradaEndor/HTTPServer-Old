@@ -55,6 +55,17 @@
 			"error_try"
 		]
 	},
+	"Hmac": {
+		"methods": [
+			"HM_algorithm",
+			"HM_hexDigest",
+			"HM_key",
+			"HM_message",
+			"hmac_bad",
+			"Method107",
+			"new Hmac"
+		]
+	},
 	"HttpServer": {
 		"groups": [
 			"Constructor",
