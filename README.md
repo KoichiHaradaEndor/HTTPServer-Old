@@ -1,5 +1,3 @@
-Is is under development.
-
 # HTTPServer
 
 ## Overview
