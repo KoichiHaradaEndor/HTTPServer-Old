@@ -20,7 +20,7 @@ C_TEXT:C284($statusCode_t;$path_t)
 $type_l:=Value type:C1509($1)
 
 Case of 
-	: ($type_l=Is longint:K8:6)
+	: ($type_l=Is longint:K8:6) | ($type_l=Is real:K8:4)
 		
 		  // $1 is status code and $2 is path
 		$statusCode_l:=$1
