@@ -230,8 +230,6 @@
 	"Utility": {
 		"methods": [
 			"callNextCallback",
-			"decodeBase64Url",
-			"encodeBase64Url",
 			"encodeURIComponent",
 			"findVhost"
 		]
