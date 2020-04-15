@@ -23,16 +23,10 @@ $encodedText_t:=""
 CONVERT FROM TEXT:C1011($textToEncode_t;"UTF-8";$blobToEncode_x)
 
 BASE64 ENCODE:C895($blobToEncode_x;$encodedText_t)
-
-  // Remove any trailing '='s
-$position_l:=Position:C15("=";$encodedText_t;*)
-If ($position_l>0)
-	
-	$encodedText_t:=Substring:C12($encodedText_t;1;$position_l-1)
-	
-End if 
-
-$encodedText_t:=Replace string:C233($encodedText_t;"+";"-")
-$encodedText_t:=Replace string:C233($encodedText_t;"/";"_")
+$encodedText_t:=Replace string:C233($encodedText_t;"\n";"";*)
+$encodedText_t:=Replace string:C233($encodedText_t;"\r";"";*)
+$encodedText_t:=Replace string:C233($encodedText_t;"=";"";*)
+$encodedText_t:=Replace string:C233($encodedText_t;"+";"-";*)
+$encodedText_t:=Replace string:C233($encodedText_t;"/";"_";*)
 
 $0:=$encodedText_t
