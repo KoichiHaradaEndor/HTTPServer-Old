@@ -2,31 +2,28 @@
 /**
 * This method has three forms:
 *
-* <h3>CallerObj.use(path; callback)</h3>
+* <h3>CallerObj.use({path;} callback)</h3>
 *
-* In this form, CallerObj can be HttpServer or VirtualHost object.
+* In this form, CallerObj can be HttpServer, VirtualHost or SingleRoute object.
 * The path parameter is for which the callback function is invoked.
-* The callback parameter can be object (single formula),
+*
+* When the path parameter is omitted, the path is defined as follows:
+* 1) When CallerObj is SingleRoute object, path parameter is stored in it.
+* So it is used.
+* 2) When CallerObj is HttpServer or VirtualHost object, the path defaults to
+* "/" which means the callback function will be invoked for any path.
+*
+* The callback parameter can be an object (single formula),
 * collection (list of formula object) or combination of them.
 *
 * @param {Text} $1 The path for which the callback function is invoked (forward match)
 * @param {Variant} ${2} Callback functions
 *
-* <h3>CallerObj.use(callback)</h3>
-* 
-* In this form, CallerObj can be SingleRoute object.
-* In this case, path parameter is stored in the object,
-* so only callback parameter is needed.
-*
-* @param {Variant} ${1} Callback functions
-* @return {Object} This object
-*
 * <h3>CallerObj.use(vhost)</h3>
 *
 * When VirtualHost object is passed to this method,
-* the routes defined in VirtualStore object is added to
+* the routes defined in VirtualHost object is added to
 * HttpServer object.
-* In this case, CallerObj must be HttpServer object.
 *
 * @param {Variant} $1 VirtualHost object
 *
@@ -38,23 +35,23 @@ C_OBJECT:C1216($0)
 
 C_TEXT:C284($method_t;$pathParam_t)
 C_LONGINT:C283($type_l;$insertionPosition_l;$index_l)
-C_BOOLEAN:C305($vhost_b)
+C_BOOLEAN:C305($vhost_b;$insertDefaultPath_b)
 C_OBJECT:C1216($route_o)
 C_COLLECTION:C1488($routes_c)
 
 ASSERT:C1129(Count parameters:C259>0;Current method name:C684+" : Lack of parameters")
 
 $vhost_b:=False:C215
+$insertDefaultPath_b:=False:C215
 $type_l:=Value type:C1509($1)
 
+  // Determines if the first parameter is vhost object
 Case of 
 	: ($type_l#Is object:K8:27)
 		
 	: ($1.__type__=Null:C1517)
 		
-	: ($1.__type__#"VirtualHost")
-		
-	Else 
+	: ($1.__type__="VirtualHost")
 		
 		  // The first paramter is VirtualHost object
 		$vhost_b:=True:C214
@@ -105,10 +102,31 @@ If ($vhost_b)
 	
 Else 
 	
+	  // If the first parameter is of type object
+	  // and it's not vhost object, then
+	  // determines caller object type
+	Case of 
+		: ($type_l#Is object:K8:27)
+			
+		: (This:C1470.__type__=Null:C1517)
+			
+		: (This:C1470.__type__="HttpServer") | (This:C1470.__type__="VirtualHost")
+			
+			  // The path parameter is omitted and the caller
+			  // object is of type HttpServer or VirtualHost
+			$insertDefaultPath_b:=True:C214
+			
+	End case 
+	
 	$method_t:="use"
 	
 	$params_c:=New collection:C1472()
 	$params_c.push($method_t)
+	If ($insertDefaultPath_b)
+		
+		$params_c.push("/")
+		
+	End if 
 	For ($i;1;Count parameters:C259)
 		
 		$params_c.push(${$i})

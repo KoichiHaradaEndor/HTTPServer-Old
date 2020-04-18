@@ -93,6 +93,12 @@ Case of
 	: ($method_t="use")
 		
 		  // forward match
+		While ($path_t="@/")
+			
+			$path_t:=Substring:C12($path_t;1;Length:C16($path_t)-1)
+			
+		End while 
+		
 		$path_t:="^"+$path_t+"(?:/[^/]+)*$"
 		
 	Else 

@@ -326,4 +326,36 @@ let test = {
         }
     });
 
+    const test5_1 = new Vue({
+        el: "#test5-1",
+        data: {
+            message_5_1: 'Test result will be displayed here'
+        },
+        methods: {
+            test5_1FuncBeforeLogin: function() {
+                test.makeReq("GET", "http://127.0.0.1/User/1234").then((res) => {
+                    this.message_5_1 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
+                    this.message_5_1 += 'Content: ' + res.responseText;
+                }).catch(e => {
+                    this.message_5_1 = e;
+                })
+            },
+            test5_1FuncLogin: function() {
+                let params = {
+                    type: 'application/x-www-form-urlencoded',
+                    data: 'username=user&password=Password'
+                }
+                test.makeReq("POST", "http://127.0.0.1/login", params).then((res) => {
+                    this.message_5_1 = res.responseText + '\n' + document.cookie;
+                }).catch(e => {
+                    this.message_5_1 = e;
+                })
+            },
+            test5_1FuncClear: function() {
+                document.cookie = 'SESSID=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+                this.message_5_1 = 'Cookie was cleared.'
+            }
+        }
+    });
+
 })();

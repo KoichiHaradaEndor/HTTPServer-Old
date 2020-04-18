@@ -27,6 +27,11 @@
 			"Test4-3"
 		]
 	},
+	"Chapter6": {
+		"groups": [
+			"Test5-1"
+		]
+	},
 	"Config": {
 		"methods": [
 			"Config_load",
@@ -142,7 +147,8 @@
 			"Chapter2",
 			"Chapter3",
 			"Chapter4",
-			"Chapter5"
+			"Chapter5",
+			"Chapter6"
 		]
 	},
 	"Test1-1": {
@@ -227,9 +233,18 @@
 			"Test4_3_1"
 		]
 	},
+	"Test5-1": {
+		"methods": [
+			"Test5_1",
+			"Test5_1_1",
+			"Test5_1_2",
+			"Test5_1_3"
+		]
+	},
 	"Utility": {
 		"methods": [
 			"callNextCallback",
+			"compareCaseSensitive",
 			"encodeURIComponent",
 			"findVhost"
 		]

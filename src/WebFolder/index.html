@@ -38,8 +38,7 @@
                 <p>Then write following code in On (Server) Startup database method. new HttpServer is also a shared component method which is used to build your web application.</p>
                 <pre><code>C_OBJECT($app_o)<br>$app_o:=new HttpServer<br>// Write route register code here<br>$app_o.start()</code></pre>
             </div>
-        </div>
-        <!--//div id="chapter1"-->
+        </div><!--//div id="chapter1"-->
 
         <div id="chapter2">
             <h2>Writing Route Definition</h2>
@@ -125,10 +124,9 @@ $app_o.delete</code></pre>
                 </p>
 
                 <div><button v-on:click="test1_1Func">Try</button></div>
-                <div><textarea id="test1-1-result">{{ message_1_1 }}</textarea></div>
+                <div><textarea id="test1-1-result" readonly>{{ message_1_1 }}</textarea></div>
 
-            </div>
-            <!--//div id="test1-1"-->
+            </div><!--//div id="test1-1"-->
 
             <div id="test1-2">
 
@@ -159,15 +157,12 @@ $app_o.all("/test1-2";Formula(Test1_2_3 ))</code></pre>
                 </div>
                 <div><textarea id="test1-2-result">{{ message_1_2 }}</textarea></div>
 
-            </div>
-            <!--//div id="test1-2"-->
+            </div><!--//div id="test1-2"-->
 
             <div id="test1-3">
 
                 <h3>Test1-3: Path match</h3>
-                <p>When creating a list of handlers that matches the request path, all route functions uses full match
-                    regular expression pattern. In case forward match pattern is appropriate, use $app_o.use function.
-                </p>
+                <p>When creating a list of handlers that matches the request path, all route functions uses full match regular expression pattern. In case forward match pattern is appropriate, use $app_o.use function.</p>
                 <p>For instance, when authentication is needed to accese &quot;/test1-3&quot; and its sub directory (eg.
                     &quot;/test1-3/sub&quot;), write a route like this:
                     <pre><code>$app_o.use("/test1-3";Formula(Test1_3_1 ))
@@ -176,15 +171,14 @@ $app_o.get("/test1-3/sub";Formula(Test1_3_2 ))</code></pre>
                     &quot;/test1-3&quot; or its sub directory.<br>Then in Test1_3_1 method, if access to the next handler is
                     granted, call $next_o.call(This) to invoke Test1_3_2. If access is not granted, you can stop
                     propagating and return error message.</p>
+                <p>Note that authentication &amp; authorization is detailed in <a href="#chapter6">chapter6</a>.</p>
 
                 <div><button v-on:click="test1_3Func">Try</button></div>
-                <div><textarea id="test1-3-result">{{ message_1_3 }}</textarea></div>
+                <div><textarea id="test1-3-result" readonly>{{ message_1_3 }}</textarea></div>
 
-            </div>
-            <!--//div id="test1-3"-->
+            </div><!--//div id="test1-3"-->
 
-        </div>
-        <!--//div id="chapter2"-->
+        </div><!--//div id="chapter2"-->
 
         <div id="chapter3">
             <h2>Creating Response</h2>
@@ -207,10 +201,9 @@ $res_o.type("text/plain").send("This is plain text.")</code></pre></p>
                 <p>$res_o.type function sets Content-Type response header.</p>
                 <p>Then use $res_o.send function to send constructed response body.</p>
                 <div><button v-on:click="test2_1Func">Try</button></div>
-                <div><textarea id="test2-1-result">{{ message_2_1 }}</textarea></div>
+                <div><textarea id="test2-1-result" readonly>{{ message_2_1 }}</textarea></div>
 
-            </div>
-            <!--//div id="test2-1"-->
+            </div><!--//div id="test2-1"-->
 
             <div id="test2-2">
 
@@ -224,10 +217,9 @@ $res_o.type("text/plain").send("This is plain text.")</code></pre></p>
                     $res_o.sendFile function look for the specified file in the folder.</p>
 
                 <div><button v-on:click="test2_2Func">Try</button></div>
-                <div><textarea id="test2-2-result">{{ message_2_2 }}</textarea></div>
+                <div><textarea id="test2-2-result" readonly>{{ message_2_2 }}</textarea></div>
 
-            </div>
-            <!--//div id="test2-2"-->
+            </div><!--//div id="test2-2"-->
 
             <div id="test2-3">
 
@@ -248,10 +240,9 @@ $res_o.render("test2_3.txt";$message_o)</code></pre>
                     $res_o.render function look for the specified file in the folder.</p>
 
                 <div><button v-on:click="test2_3Func">Try</button></div>
-                <div><textarea id="test2-3-result">{{ message_2_3 }}</textarea></div>
+                <div><textarea id="test2-3-result" readonly>{{ message_2_3 }}</textarea></div>
 
-            </div>
-            <!--//div id="test2-3"-->
+            </div><!--//div id="test2-3"-->
 
             <div id="test2-4">
 
@@ -264,10 +255,9 @@ $res_o.render("test2_3.txt";$message_o)</code></pre>
                 <p>Note that, in this test, file will not be downloaded as attachement. If you open a tab page and
                     access the server with "/test2-4" path, the file will be downloaded.</p>
                 <div><button v-on:click="test2_4Func">Try</button></div>
-                <div><textarea id="test2-4-result">{{ message_2_4 }}</textarea></div>
+                <div><textarea id="test2-4-result" readonly>{{ message_2_4 }}</textarea></div>
 
-            </div>
-            <!--//div id="test2-4"-->
+            </div><!--//div id="test2-4"-->
 
             <div id="test2-5">
 
@@ -292,13 +282,11 @@ $formats_o:=New object(\
 $res_o.format($formats_o)</code></pre></p>
                 <div><button v-on:click="test2_5FuncPlain">Try Plain</button><button v-on:click="test2_5FuncJson">Try
                         JSON</button><button v-on:click="test2_5FuncHtml">Try HTML</button></div>
-                <div><textarea id="test2-5-result">{{ message_2_5 }}</textarea></div>
+                <div><textarea id="test2-5-result" readonly>{{ message_2_5 }}</textarea></div>
 
-            </div>
-            <!--//div id="test2-5"-->
+            </div><!--//div id="test2-5"-->
 
-        </div>
-        <!--//div id="chapter3"-->
+        </div><!--//div id="chapter3"-->
 
         <div id="chapter4">
 
@@ -335,13 +323,11 @@ $app_o.use($vhost_o)</code></pre>
                 <p>*Assuming test.mycompany.com has already been appended to your hosts file.</p>
                 <div><button v-on:click="test3_1FuncMain">Try Main</button><button v-on:click="test3_1FuncVhost">Try
                         Vhost</button></div>
-                <div><textarea id="test3-1-result">{{ message_3_1 }}</textarea></div>
+                <div><textarea id="test3-1-result" readonly>{{ message_3_1 }}</textarea></div>
 
-            </div>
-            <!--//div id="test3-1"-->
+            </div><!--//div id="test3-1"-->
 
-        </div>
-        <!--// id="chapter4"-->
+        </div><!--// id="chapter4"-->
 
         <div id="chapter5">
 
@@ -362,10 +348,9 @@ $app_o.use($vhost_o)</code></pre>
     =&gt; {&quot;param&quot;:{&quot;sub1&quot;:&quot;value1&quot;,&quot;sub2&quot;:&quot;value2&quot;}}</code></pre></p>
                     
                 <div><button v-on:click="test4_1_1Func">Try eg1</button><button v-on:click="test4_1_2Func">Try eg2</button><button v-on:click="test4_1_3Func">Try eg3</button></div>
-                <div><textarea id="test4-1-result">{{ message_4_1 }}</textarea></div>
+                <div><textarea id="test4-1-result" readonly>{{ message_4_1 }}</textarea></div>
 
-            </div>
-            <!--//div id="test4-1"-->
+            </div><!--//div id="test4-1"-->
 
             <div id="test4-2">
 
@@ -380,10 +365,9 @@ $app_o.use($vhost_o)</code></pre>
     }</code></pre></p>
                     
                 <div><button v-on:click="test4_2_1FuncForm">Try Form</button></div>
-                <div><textarea id="test4-2-result">{{ message_4_2 }}</textarea></div>
+                <div><textarea id="test4-2-result" readonly>{{ message_4_2 }}</textarea></div>
 
-            </div>
-            <!--//div id="test4-3"-->
+            </div><!--//div id="test4-3"-->
 
             <div id="test4-3">
 
@@ -399,15 +383,92 @@ $app_o.use($vhost_o)</code></pre>
                 </p>
                     
                 <div><button v-on:click="test4_3Func">Try</button></div>
-                <div><textarea id="test4-3-result">{{ message_4_3 }}</textarea></div>
+                <div><textarea id="test4-3-result" readonly>{{ message_4_3 }}</textarea></div>
 
-            </div>
-            <!--//div id="test4-2"-->
+            </div><!--//div id="test4-2"-->
 
         </div><!--//id="chapter5"-->
 
-    </div>
-    <!--//div class="main"-->
+        <div id="chapter6">
+
+            <h2>Authentication &amp; Authorization</h2>
+
+            <p>Note that examples listed here are conceptional ones and are NOT perfect code. To make the code shorter and simpler, security consideration are not called into account.</p>
+
+            <div id="test5-1">
+
+                <h3>Test5-1: Login case 1</h3>
+
+                <p>When requiring authentication &amp; authorization, it can be done as follows:</p>
+
+                <p>When accessing to &quot;/User&quot; and its sub directory needs authorization, write route definition like bellow:
+                    <pre><code>$app_o.post("/login"; Formula(Test5_1_1))
+$app_o.use(Formula(Test5_1_2))
+$app_o.get("/User/:userId"; Formula(Test5_1_3))</code></pre>
+                with this:</p>
+
+                <ol>
+                    <li>Without authentication, the request to &quot;/User/1234&quot; is denied. This is handled by Test5_1_2 method that was installed by $app_o.use. Since it is called without path parameter, the default path &quot;/&quot; is set which means any path matches.</li>
+                    <li>When request to &quot;/login&quot; with POST method is made, Test5_1_1 method is invoked that processes authentication and returns cookie token if login is made.</li>
+                    <li>When the request to &quot;/User/1234&quot; made again, Test5_1_2 method is invoked first, then authorization is granted, next callback chain is called.</li>
+                </ol>
+
+                <p>Test5_1_1 method seems like this:
+                    <pre><code>C_OBJECT($1;$req_o)
+C_OBJECT($2;$res_o)
+C_OBJECT($3;$next_o)
+                        
+$req_o:=$1
+$res_o:=$2
+$next_o:=$3
+
+If($req_o.body.username="user") & ($req_o.body.password="Password")
+      // Access is granted
+    $res_o\
+        .cookie("SESSID";"REALLY-SECURED-ID")\
+        .type("text/plain")\
+        .send("Login OK")
+Else
+      // Access is denied
+    $res_o.sendStatus(401)
+End if</code></pre>If the combination of the username and the password is valid, it sets cookie header and sends response. Otherwise, it sends error status.</p>
+
+                <p>Then Test5_1_2 method seems like this:
+                    <pre><code>If($req_o.cookies["SESSID"]="REALLY-SECURED-ID")
+        // Assumes database was queried to fetch following information.
+    $res_o.locals["privilege"]:="user"
+    $res_o.locals["userId"]:="1234"
+    $next_o.call(This)
+Else
+    $res_o.sendStatus(401)
+End if</code></pre>If $req_o.cookies contains valid cookie, authentication passed, it stores authorization information into $res_o.locals. Then calls next handler. If no valid cookie was found, access is denied, so it sends 401 (Unauthorized) response and stops method call chain.</p>
+
+                <p>Then Test5_1_3 method seems like this:
+                    <pre><code>If ($req_o.params["userId"]=$res_o.locals["userId"])
+    $res_o.json(New object(\
+        "userId";$res_o.locals["userId"];\
+        "privilege";$res_o.locals["privilege"]))
+Else                   
+    $res_o.sendStatus(403)  // Forbidden
+End if</code></pre>$req_o.params["userId"] is a value that was sent as route parameter in the URI. The code compares it with $res_o.locals["userId"] which is retrieved in authentication phase. If they are match, authorization is granted and the user information will be sent. Otherwise, it means the request sender is not the user whose information is requested. So it sends Forbidden status.</p>
+
+                <p>To test this, follow the step bellow:
+                    <ol>
+                        <li>Click on &quot;Try /User&quot; button. Access is denied with 401 Unauthorized.</li>
+                        <li>Click on &quot;Login&quot; button. Cookie will be issued if authentication is granted.</li>
+                        <li>Click on &quot;Try /User&quot; button again. The user information will be sent.</li>
+                        <li>If you want to try again, click on &quot;Clear Cookie&quot; button.</li>
+                    </ol>
+                </p>
+
+                <div><button v-on:click="test5_1FuncBeforeLogin">Try /User</button><button v-on:click="test5_1FuncLogin">Login</button><button v-on:click="test5_1FuncClear">Clear Cookie</button></div>
+                <div><textarea id="test5-1-result" readonly>{{ message_5_1 }}</textarea></div>
+
+            </div><!--//div id="test5-1"-->
+
+        </div><!--//id="chapter6"-->
+
+    </div><!--//div class="main"-->
 
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="app.js"></script>
