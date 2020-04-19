@@ -7,6 +7,4 @@ $req_o:=$1
 $res_o:=$2
 $next_o:=$3
 
-C_OBJECT:C1216($message_o)
-$message_o:=New object:C1471("message";"This text was passed as optional parameter.")
-$res_o.render("test6.txt";$message_o)
+$res_o.send($res_o.locals.message+"\n"+Current method name:C684+" invoked.")

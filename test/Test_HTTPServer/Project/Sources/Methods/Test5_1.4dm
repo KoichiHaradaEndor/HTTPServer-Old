@@ -1,10 +1,9 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
-C_OBJECT:C1216($1;$req_o)
-C_OBJECT:C1216($2;$res_o)
-C_OBJECT:C1216($3;$next_o)
+C_OBJECT:C1216($1;$app_o)
 
-$req_o:=$1
-$res_o:=$2
-$next_o:=$3
+$app_o:=$1
 
-$res_o.sendFile("test5.txt")
+$app_o.post("/login";Formula:C1597(Test5_1_1 ))
+$app_o.delete("/logout";Formula:C1597(Test5_1_2 ))
+$app_o.use(Formula:C1597(Test5_1_3 ))
+$app_o.get("/User/:userId";Formula:C1597(Test5_1_4 ))

@@ -1,11 +1,11 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
-C_OBJECT:C1216($1;$req_o)
-C_OBJECT:C1216($2;$res_o)
-C_OBJECT:C1216($3;$next_o)
+/*
+* This code registers route handlers.
+*/
 
-$req_o:=$1
-$res_o:=$2
-$next_o:=$3
+C_OBJECT:C1216($1;$app_o)
 
-$res_o.locals.message:=Current method name:C684+" invoked."
-$next_o.call(This:C1470)
+$app_o:=$1
+
+$app_o.get("/test2-1";Formula:C1597(Test2_1_1 ))
+

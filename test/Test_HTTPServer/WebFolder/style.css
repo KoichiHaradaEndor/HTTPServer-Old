@@ -34,11 +34,15 @@ ol.h3list {
 }
 
 button {
-    padding: 10px 40px 10px 40px;
-    margin-right: 20px;
+    padding: 10px 30px 10px 30px;
+    margin-right: 10px;
     font-size: 14px;
     font-weight: bold;
     background-color: #87cefa;
+}
+
+.longTitle {
+    padding: 10px 15px 10px 15px;
 }
 
 button:hover {
@@ -58,12 +62,14 @@ textarea {
 
 .sidenav {
     width: 240px;
+    height: 100%;
     position: fixed;
     z-index: 1;
-    top: 20px;
-    left: 10px;
+    top: 0px;
+    left: 0px;
     background: #eee;
     overflow-x: hidden;
+    overflow-y: scroll;
     padding: 8px 0;
 }
 

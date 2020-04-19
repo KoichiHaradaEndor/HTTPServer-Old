@@ -1,10 +1,12 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
-C_OBJECT:C1216($1;$req_o)
-C_OBJECT:C1216($2;$res_o)
-C_OBJECT:C1216($3;$next_o)
+/*
+* This code registers route handlers.
+* $app_o.use is used to respond "/test1-3" and its sub directory.
+*/
 
-$req_o:=$1
-$res_o:=$2
-$next_o:=$3
+C_OBJECT:C1216($1;$app_o)
 
-$res_o.send($res_o.locals.message+"\n"+Current method name:C684+" invoked.")
+$app_o:=$1
+
+$app_o.use("/test1-3";Formula:C1597(Test1_3_1 ))
+$app_o.get("/test1-3/sub";Formula:C1597(Test1_3_2 ))
