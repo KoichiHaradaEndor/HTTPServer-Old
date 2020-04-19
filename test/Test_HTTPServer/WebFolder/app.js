@@ -15,10 +15,18 @@ let test = {
             xhr.onerror = () => {
                 reject(new Error(xhr.statusText));
             };
-            if(params && params.type) {
-                xhr.setRequestHeader('Accept', params.type)
+            if(params && params.accept) {
+                xhr.setRequestHeader('Accept', params.accept)
             }
-            xhr.send(null);
+            if(params && params.type) {
+                xhr.setRequestHeader('Content-Type', params.type)
+            }
+            if(params && params.data) {
+                xhr.send(params.data);
+            } else {
+                xhr.send(null);
+            }
+            
         });
     },
     makeSideNav : () => {
@@ -66,38 +74,38 @@ let test = {
 
     test.makeSideNav();
 
-    const test1 = new Vue({
-        el: "#test1",
+    const test1_1 = new Vue({
+        el: "#test1-1",
         data: {
-            message: 'Test result will be displayed here'
+            message_1_1: 'Test result will be displayed here'
         },
         methods: {
-            test1Func: function() {
-                test.makeReq("GET", "http://127.0.0.1/test1").then((res) => {
-                    this.message = res.responseText;
+            test1_1Func: function() {
+                test.makeReq("GET", "http://127.0.0.1/test1-1").then((res) => {
+                    this.message_1_1 = res.responseText;
                 }).catch(e => {
                     console.error(e);
                 })
             }
-        }
+        },
     });
-
-    const test2 = new Vue({
-        el: "#test2",
+    
+    const test1_2 = new Vue({
+        el: "#test1-2",
         data: {
-            message: 'Test result will be displayed here'
+            message_1_2: 'Test result will be displayed here'
         },
         methods: {
-            test2FuncGet: function() {
-                test.makeReq("GET", "http://127.0.0.1/test2").then((res) => {
-                    this.message = res.responseText;
+            test1_2FuncGet: function() {
+                test.makeReq("GET", "http://127.0.0.1/test1-2").then((res) => {
+                    this.message_1_2 = res.responseText;
                 }).catch(e => {
                     console.error(e);
                 })
             },
-            test2FuncPost: function() {
-                test.makeReq("POST", "http://127.0.0.1/test2").then((res) => {
-                    this.message = res.responseText;
+            test1_2FuncPost: function() {
+                test.makeReq("POST", "http://127.0.0.1/test1-2").then((res) => {
+                    this.message_1_2 = res.responseText;
                 }).catch(e => {
                     console.error(e);
                 })
@@ -105,15 +113,15 @@ let test = {
         }
     });
 
-    const test3 = new Vue({
-        el: "#test3",
+    const test1_3 = new Vue({
+        el: "#test1-3",
         data: {
-            message: 'Test result will be displayed here'
+            message_1_3: 'Test result will be displayed here'
         },
         methods: {
-            test3Func: function() {
-                test.makeReq("GET", "http://127.0.0.1/test3/sub").then((res) => {
-                    this.message = res.responseText;
+            test1_3Func: function() {
+                test.makeReq("GET", "http://127.0.0.1/test1-3/sub").then((res) => {
+                    this.message_1_3 = res.responseText;
                 }).catch(e => {
                     console.error(e);
                 })
@@ -121,49 +129,124 @@ let test = {
         }
     });
 
-    const test4 = new Vue({
-        el: "#test4",
+    const test2_1 = new Vue({
+        el: "#test2-1",
         data: {
-            message: 'Test result will be displayed here'
+            message_2_1: 'Test result will be displayed here'
         },
         methods: {
-            test4FuncPlain: function() {
-                test.makeReq("GET", "http://127.0.0.1/test4", {type: 'text/plain'}).then((res) => {
-                    this.message = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
-                    this.message += 'Content: ' + res.responseText;
+            test2_1Func: function() {
+                test.makeReq("GET", "http://127.0.0.1/test2-1", {accept: 'text/plain'}).then((res) => {
+                    this.message_2_1 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
+                    this.message_2_1 += 'Content: ' + res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            }
+        }
+    });
+
+    const test2_2 = new Vue({
+        el: "#test2-2",
+        data: {
+            message_2_2: 'Test result will be displayed here'
+        },
+        methods: {
+            test2_2Func: function() {
+                test.makeReq("GET", "http://127.0.0.1/test2-2").then((res) => {
+                    this.message_2_2 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
+                    this.message_2_2 += 'Content: ' + res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            }
+        }
+    });
+
+    const test2_3 = new Vue({
+        el: "#test2-3",
+        data: {
+            message_2_3: 'Test result will be displayed here'
+        },
+        methods: {
+            test2_3Func: function() {
+                test.makeReq("GET", "http://127.0.0.1/test2-3").then((res) => {
+                    this.message_2_3 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
+                    this.message_2_3 += 'Content: ' + res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            }
+        }
+    });
+
+    const test2_4 = new Vue({
+        el: "#test2-4",
+        data: {
+            message_2_4: 'Test result will be displayed here'
+        },
+        methods: {
+            test2_4Func: function() {
+                test.makeReq("GET", "http://127.0.0.1/test2-4").then((res) => {
+                    this.message_2_4 = 'Content-Disposition: ' + res.getResponseHeader('Content-Disposition') + '\n';
+                    this.message_2_4 += 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
+                    this.message_2_4 += 'Content: ' + res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            }
+        }
+    });
+
+    const test2_5 = new Vue({
+        el: "#test2-5",
+        data: {
+            message_2_5: 'Test result will be displayed here'
+        },
+        methods: {
+            test2_5FuncPlain: function() {
+                test.makeReq("GET", "http://127.0.0.1/test2-5", {accept: 'text/plain'}).then((res) => {
+                    this.message_2_5 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
+                    this.message_2_5 += 'Content: ' + res.responseText;
                 }).catch(e => {
                     console.error(e);
                 })
             },
-            test4FuncJson: function() {
-                test.makeReq("GET", "http://127.0.0.1/test4", {type: 'application/json'}).then((res) => {
-                    this.message = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
-                    this.message += 'Content: ' + res.responseText;
+            test2_5FuncJson: function() {
+                test.makeReq("GET", "http://127.0.0.1/test2-5", {accept: 'application/json'}).then((res) => {
+                    this.message_2_5 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
+                    this.message_2_5 += 'Content: ' + res.responseText;
                 }).catch(e => {
                     console.error(e);
                 })
             },
-            test4FuncHtml: function() {
-                test.makeReq("GET", "http://127.0.0.1/test4", {type: 'text/html'}).then((res) => {
-                    this.message = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
-                    this.message += 'Content: ' + res.responseText;
+            test2_5FuncHtml: function() {
+                test.makeReq("GET", "http://127.0.0.1/test2-5", {accept: 'text/html'}).then((res) => {
+                    this.message_2_5 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
+                    this.message_2_5 += 'Content: ' + res.responseText;
                 }).catch(e => {
-                    this.message = e;
+                    this.message_2_5 = e;
                 })
             }
         }
     });
 
-    const test5 = new Vue({
-        el: "#test5",
+    const test3_1 = new Vue({
+        el: "#test3-1",
         data: {
-            message: 'Test result will be displayed here'
+            message_3_1: 'Test result will be displayed here'
         },
         methods: {
-            test5Func: function() {
-                test.makeReq("GET", "http://127.0.0.1/test5").then((res) => {
-                    this.message = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
-                    this.message += 'Content: ' + res.responseText;
+            test3_1FuncMain: function() {
+                test.makeReq("GET", "http://127.0.0.1/test3-1").then((res) => {
+                    this.message_3_1 = res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            },
+            test3_1FuncVhost: function() {
+                test.makeReq("GET", "http://test.mycompany.com/test3-1").then((res) => {
+                    this.message_3_1 = res.responseText;
                 }).catch(e => {
                     console.error(e);
                 })
@@ -171,16 +254,28 @@ let test = {
         }
     });
 
-    const test6 = new Vue({
-        el: "#test6",
+    const test4_1 = new Vue({
+        el: "#test4-1",
         data: {
-            message: 'Test result will be displayed here'
+            message_4_1: 'Test result will be displayed here'
         },
         methods: {
-            test6Func: function() {
-                test.makeReq("GET", "http://127.0.0.1/test6").then((res) => {
-                    this.message = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
-                    this.message += 'Content: ' + res.responseText;
+            test4_1_1Func: function() {
+                test.makeReq("GET", "http://127.0.0.1/test4-1?param=value").then((res) => {
+                    this.message_4_1 = res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            },
+            test4_1_2Func: function() {
+                test.makeReq("GET", "http://127.0.0.1/test4-1?param[]=value1&param[]=value2").then((res) => {
+                    this.message_4_1 = res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            },test4_1_3Func: function() {
+                test.makeReq("GET", "http://127.0.0.1/test4-1?param[sub1]=value1&param[sub2]=value2").then((res) => {
+                    this.message_4_1 = res.responseText;
                 }).catch(e => {
                     console.error(e);
                 })
@@ -188,19 +283,87 @@ let test = {
         }
     });
 
-    const test7 = new Vue({
-        el: "#test7",
+    const test4_2 = new Vue({
+        el: "#test4-2",
         data: {
-            message: 'Test result will be displayed here'
+            message_4_2: 'Test result will be displayed here'
         },
         methods: {
-            test7Func: function() {
-                test.makeReq("GET", "http://127.0.0.1/test7").then((res) => {
-                    this.message = 'Content-Disposition: ' + res.getResponseHeader('Content-Disposition') + '\n';
-                    this.message += 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
-                    this.message += 'Content: ' + res.responseText;
+            test4_2_1FuncForm: function() {
+                let params = {
+                    type: 'application/x-www-form-urlencoded',
+                    data: 'param1=value&param2[]=value1&param2[]=value2&param3[sub1]=value4&param3[sub2]=value5'
+                }
+                test.makeReq("POST", "http://127.0.0.1/test4-2", params).then((res) => {
+                    this.message_4_2 = res.responseText;
                 }).catch(e => {
                     console.error(e);
+                })
+            },
+            test4_2_1FuncJson: function() {
+                test.makeReq("POST", "http://127.0.0.1/test4-2", {type: 'application/json'}).then((res) => {
+                    this.message_4_2 = res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            }
+        }
+    });
+
+    const test4_3 = new Vue({
+        el: "#test4-3",
+        data: {
+            message_4_3: 'Test result will be displayed here'
+        },
+        methods: {
+            test4_3Func: function() {
+                test.makeReq("GET", "http://127.0.0.1/users/1234/books/abc").then((res) => {
+                    this.message_4_3 = res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            }
+        }
+    });
+
+    const test5_1 = new Vue({
+        el: "#test5-1",
+        data: {
+            message_5_1: 'Test result will be displayed here'
+        },
+        methods: {
+            test5_1FuncUser1234: function() {
+                test.makeReq("GET", "http://127.0.0.1/User/1234").then((res) => {
+                    this.message_5_1 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
+                    this.message_5_1 += 'Content: ' + res.responseText;
+                }).catch(e => {
+                    this.message_5_1 = e;
+                })
+            },
+            test5_1FuncUser5678: function() {
+                test.makeReq("GET", "http://127.0.0.1/User/5678").then((res) => {
+                    this.message_5_1 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
+                    this.message_5_1 += 'Content: ' + res.responseText;
+                }).catch(e => {
+                    this.message_5_1 = e;
+                })
+            },
+            test5_1FuncLogin: function() {
+                let params = {
+                    type: 'application/x-www-form-urlencoded',
+                    data: 'username=user&password=Password'
+                }
+                test.makeReq("POST", "http://127.0.0.1/login", params).then((res) => {
+                    this.message_5_1 = res.responseText + '\n' + document.cookie;
+                }).catch(e => {
+                    this.message_5_1 = e;
+                })
+            },
+            test5_1FuncLogout: function() {
+                test.makeReq("DELETE", "http://127.0.0.1/logout").then((res) => {
+                    this.message_5_1 = res.responseText;
+                }).catch(e => {
+                    this.message_5_1 = e;
                 })
             }
         }
