@@ -332,8 +332,16 @@ let test = {
             message_5_1: 'Test result will be displayed here'
         },
         methods: {
-            test5_1FuncBeforeLogin: function() {
+            test5_1FuncUser1234: function() {
                 test.makeReq("GET", "http://127.0.0.1/User/1234").then((res) => {
+                    this.message_5_1 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
+                    this.message_5_1 += 'Content: ' + res.responseText;
+                }).catch(e => {
+                    this.message_5_1 = e;
+                })
+            },
+            test5_1FuncUser5678: function() {
+                test.makeReq("GET", "http://127.0.0.1/User/5678").then((res) => {
                     this.message_5_1 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
                     this.message_5_1 += 'Content: ' + res.responseText;
                 }).catch(e => {
@@ -351,9 +359,12 @@ let test = {
                     this.message_5_1 = e;
                 })
             },
-            test5_1FuncClear: function() {
-                document.cookie = 'SESSID=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-                this.message_5_1 = 'Cookie was cleared.'
+            test5_1FuncLogout: function() {
+                test.makeReq("GET", "http://127.0.0.1/logout").then((res) => {
+                    this.message_5_1 = res.responseText;
+                }).catch(e => {
+                    this.message_5_1 = e;
+                })
             }
         }
     });

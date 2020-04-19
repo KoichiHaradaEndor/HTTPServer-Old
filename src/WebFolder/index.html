@@ -403,17 +403,19 @@ $app_o.use($vhost_o)</code></pre>
 
                 <p>When accessing to &quot;/User&quot; and its sub directory needs authorization, write route definition like bellow:
                     <pre><code>$app_o.post("/login"; Formula(Test5_1_1))
-$app_o.use(Formula(Test5_1_2))
-$app_o.get("/User/:userId"; Formula(Test5_1_3))</code></pre>
+$app_o.get("/logout"; Formula(Test5_1_2))
+$app_o.use(Formula(Test5_1_3))
+$app_o.get("/User/:userId"; Formula(Test5_1_4))</code></pre>
                 with this:</p>
 
                 <ol>
-                    <li>Without authentication, the request to &quot;/User/1234&quot; is denied. This is handled by Test5_1_2 method that was installed by $app_o.use. Since it is called without path parameter, the default path &quot;/&quot; is set which means any path matches.</li>
+                    <li>Without authentication, the request to &quot;/User/1234&quot; is denied. This is handled by Test5_1_3 method that was installed by $app_o.use. Since it is called without path parameter, the default path &quot;/&quot; is set which means any path matches.</li>
                     <li>When request to &quot;/login&quot; with POST method is made, Test5_1_1 method is invoked that processes authentication and returns cookie token if login is made.</li>
-                    <li>When the request to &quot;/User/1234&quot; made again, Test5_1_2 method is invoked first, then authorization is granted, next callback chain is called.</li>
+                    <li>When the request to &quot;/User/1234&quot; made again, Test5_1_3 method is invoked first, then authorization is granted, next callback chain, Test5_1_4 is called.</li>
+                    <li>Requesting to &quot;/logout&quot; will clear the cookie by receiving maxAge = 0 cookie.</li>
                 </ol>
 
-                <p>Test5_1_1 method seems like this:
+                <p>Test5_1_1 (login) method seems like this:
                     <pre><code>C_OBJECT($1;$req_o)
 C_OBJECT($2;$res_o)
 C_OBJECT($3;$next_o)
@@ -433,7 +435,16 @@ Else
     $res_o.sendStatus(401)
 End if</code></pre>If the combination of the username and the password is valid, it sets cookie header and sends response. Otherwise, it sends error status.</p>
 
-                <p>Then Test5_1_2 method seems like this:
+
+                <p>Test5_1_1 (logout) method seems like this:
+                    <pre><code>C_OBJECT($options_o)
+$options_o:=New object("maxAge";0)
+$res_o\
+    .cookie("SESSID";"";$options_o)\
+    .type("text/plain")\
+    .send("Logged out")</code></pre>Set the &quot;SESSID&quot; cookie content empty string and give maxAge = 0 to tell the client this cookie must expire immediately.</p>
+
+                <p>Then Test5_1_3 method seems like this:
                     <pre><code>If($req_o.cookies["SESSID"]="REALLY-SECURED-ID")
         // Assumes database was queried to fetch following information.
     $res_o.locals["privilege"]:="user"
@@ -443,25 +454,25 @@ Else
     $res_o.sendStatus(401)
 End if</code></pre>If $req_o.cookies contains valid cookie, authentication passed, it stores authorization information into $res_o.locals. Then calls next handler. If no valid cookie was found, access is denied, so it sends 401 (Unauthorized) response and stops method call chain.</p>
 
-                <p>Then Test5_1_3 method seems like this:
+                <p>Then Test5_1_4 method seems like this:
                     <pre><code>If ($req_o.params["userId"]=$res_o.locals["userId"])
     $res_o.json(New object(\
         "userId";$res_o.locals["userId"];\
         "privilege";$res_o.locals["privilege"]))
 Else                   
     $res_o.sendStatus(403)  // Forbidden
-End if</code></pre>$req_o.params["userId"] is a value that was sent as route parameter in the URI. The code compares it with $res_o.locals["userId"] which is retrieved in authentication phase. If they are match, authorization is granted and the user information will be sent. Otherwise, it means the request sender is not the user whose information is requested. So it sends Forbidden status.</p>
+End if</code></pre>$req_o.params["userId"] is the value that was sent as route parameter in the URI. The code compares it with $res_o.locals["userId"] which is retrieved from login information in authentication phase. If they are match, authorization is granted and the user information will be sent. Otherwise, it means the request sender does not equal to the user whose information is requested. So it sends Forbidden status.</p>
 
                 <p>To test this, follow the step bellow:
                     <ol>
-                        <li>Click on &quot;Try /User&quot; button. Access is denied with 401 Unauthorized.</li>
+                        <li>Click on &quot;Try /User/1234&quot; button. Access is denied with 401 Unauthorized.</li>
                         <li>Click on &quot;Login&quot; button. Cookie will be issued if authentication is granted.</li>
                         <li>Click on &quot;Try /User&quot; button again. The user information will be sent.</li>
-                        <li>If you want to try again, click on &quot;Clear Cookie&quot; button.</li>
+                        <li>Clicking on &quot;Logout&quot; button will clears cookie.</li>
                     </ol>
                 </p>
 
-                <div><button v-on:click="test5_1FuncBeforeLogin">Try /User</button><button v-on:click="test5_1FuncLogin">Login</button><button v-on:click="test5_1FuncClear">Clear Cookie</button></div>
+                <div><button v-on:click="test5_1FuncUser1234" class="longTitle">Try /User/1234</button><button v-on:click="test5_1FuncUser5678" class="longTitle">Try /User/5678</button><button v-on:click="test5_1FuncLogin" class="longTitle">Login</button><button v-on:click="test5_1FuncLogout" class="longTitle">Logout</button></div>
                 <div><textarea id="test5-1-result" readonly>{{ message_5_1 }}</textarea></div>
 
             </div><!--//div id="test5-1"-->
