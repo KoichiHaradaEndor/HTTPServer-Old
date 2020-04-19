@@ -393,17 +393,17 @@ $app_o.use($vhost_o)</code></pre>
 
             <h2>Authentication &amp; Authorization</h2>
 
-            <p>Note that examples listed here are conceptional ones and are NOT perfect code. To make the code shorter and simpler, security consideration are not called into account.</p>
+            <p>DISCLAIMER : Examples listed here are conceptional ones and are NOT for real environment. To make the code shorter and simpler, security consideration are not called into account.</p>
 
             <div id="test5-1">
 
-                <h3>Test5-1: Login case 1</h3>
+                <h3>Test5-1: Login using cookie</h3>
 
                 <p>When requiring authentication &amp; authorization, it can be done as follows:</p>
 
                 <p>When accessing to &quot;/User&quot; and its sub directory needs authorization, write route definition like bellow:
                     <pre><code>$app_o.post("/login"; Formula(Test5_1_1))
-$app_o.get("/logout"; Formula(Test5_1_2))
+$app_o.delete("/logout"; Formula(Test5_1_2))
 $app_o.use(Formula(Test5_1_3))
 $app_o.get("/User/:userId"; Formula(Test5_1_4))</code></pre>
                 with this:</p>
@@ -424,7 +424,9 @@ $req_o:=$1
 $res_o:=$2
 $next_o:=$3
 
-If($req_o.body.username="user") & ($req_o.body.password="Password")
+// Authentication code here
+
+If($authenticated_b)
       // Access is granted
     $res_o\
         .cookie("SESSID";"REALLY-SECURED-ID")\
@@ -452,7 +454,7 @@ $res_o\
     $next_o.call(This)
 Else
     $res_o.sendStatus(401)
-End if</code></pre>If $req_o.cookies contains valid cookie, authentication passed, it stores authorization information into $res_o.locals. Then calls next handler. If no valid cookie was found, access is denied, so it sends 401 (Unauthorized) response and stops method call chain.</p>
+End if</code></pre>If $req_o.cookies contains valid cookie, authentication passes, it stores authorization information into $res_o.locals. Then calls next handler. If no valid cookie was found, access is denied, so it sends 401 (Unauthorized) response and stops method call chain.</p>
 
                 <p>Then Test5_1_4 method seems like this:
                     <pre><code>If ($req_o.params["userId"]=$res_o.locals["userId"])
@@ -466,8 +468,9 @@ End if</code></pre>$req_o.params["userId"] is the value that was sent as route p
                 <p>To test this, follow the step bellow:
                     <ol>
                         <li>Click on &quot;Try /User/1234&quot; button. Access is denied with 401 Unauthorized.</li>
-                        <li>Click on &quot;Login&quot; button. Cookie will be issued if authentication is granted.</li>
-                        <li>Click on &quot;Try /User&quot; button again. The user information will be sent.</li>
+                        <li>Click on &quot;Login&quot; button. Authentication request will be sent to &quot;/login&quot;. Cookie will be issued if authentication is granted.</li>
+                        <li>Click on &quot;Try /User/1234&quot; button again. The user information will be sent.</li>
+                        <li>Click on &quot;Try /User/5678&quot; button. Error &quot;Forbidden&quot; will be returned because user 5678 is not the loggedin user.</li>
                         <li>Clicking on &quot;Logout&quot; button will clears cookie.</li>
                     </ol>
                 </p>

@@ -360,7 +360,7 @@ let test = {
                 })
             },
             test5_1FuncLogout: function() {
-                test.makeReq("GET", "http://127.0.0.1/logout").then((res) => {
+                test.makeReq("DELETE", "http://127.0.0.1/logout").then((res) => {
                     this.message_5_1 = res.responseText;
                 }).catch(e => {
                     this.message_5_1 = e;
