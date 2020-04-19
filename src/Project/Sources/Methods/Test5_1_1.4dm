@@ -30,16 +30,9 @@ Case of
 		$password_t:=$req_o.body.password
 End case 
 
-Case of 
-	: ($username_t#"user")
-	: (compareCaseSensitive ($password_t;"Password")=False:C215)
-	Else 
-		
-		  // Login suceeded
-		$loginOK_b:=True:C214
-		
-End case 
+  //Authentication code here
 
+$loginOK_b:=True:C214
 If ($loginOK_b)
 	
 	$res_o\
