@@ -34,11 +34,15 @@ ol.h3list {
 }
 
 button {
-    padding: 10px 40px 10px 40px;
-    margin-right: 20px;
+    padding: 10px 30px 10px 30px;
+    margin-right: 10px;
     font-size: 14px;
     font-weight: bold;
     background-color: #87cefa;
+}
+
+.longTitle {
+    padding: 10px 15px 10px 15px;
 }
 
 button:hover {

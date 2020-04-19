@@ -7,32 +7,34 @@ $req_o:=$1
 $res_o:=$2
 $next_o:=$3
 
-  // This method is called when 
-  // path is /User/:userId
-  // method is GET
+  // This method is called for any path and any HTTP method
 
-  // Authentication is granted in Test5_1_2
+C_BOOLEAN:C305($authenticated_b)
 
-C_TEXT:C284($userId_t)
+$authenticated_b:=False:C215
 
 Case of 
-	: ($req_o.params=Null:C1517)
+	: ($req_o.cookies=Null:C1517)
 		
-	: ($req_o.params["userId"]=Null:C1517)
+	: ($req_o.cookies["SESSID"]=Null:C1517)
+		
+	: ($req_o.cookies["SESSID"]#"REALLY-SECURED-ID")
 		
 	Else 
 		
-		$userId_t:=$req_o.params["userId"]
+		$authenticated_b:=True:C214
 		
 End case 
 
-If ($userId_t=$res_o.locals["userId"])
+If ($authenticated_b)
 	
-	$res_o.json(New object:C1471("userId";$res_o.locals["userId"];"privilege";$res_o.locals["privilege"]))
+	  // Assumes database is queried to fetch following information.
+	$res_o.locals["privilege"]:="user"
+	$res_o.locals["userId"]:="1234"
+	$next_o.call(This:C1470)
 	
 Else 
 	
-	$res_o.sendStatus(403)  // Forbidden
+	$res_o.sendStatus(401)  // Unauthorized
 	
 End if 
-
