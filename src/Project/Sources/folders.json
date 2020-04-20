@@ -246,6 +246,7 @@
 		"methods": [
 			"callNextCallback",
 			"compareCaseSensitive",
+			"decodeURIComponent",
 			"encodeURIComponent",
 			"findVhost"
 		]

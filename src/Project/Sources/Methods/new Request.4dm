@@ -93,7 +93,7 @@ If ($queryResult_c.length>0)
 				$request_o.cookies[$aCookie_c[0]]:=""
 				
 			: ($aCookie_c.length=2)
-				$request_o.cookies[$aCookie_c[0]]:=$aCookie_c[1]
+				$request_o.cookies[$aCookie_c[0]]:=decodeURIComponent ($aCookie_c[1])
 				
 		End case 
 		
