@@ -3,8 +3,8 @@
 * This method appends the specified value to the
 * specified HTTP response header field.
 * If the header is not already set, it creates
-* the field. If it is already present, it is appened
-* to the existing value seperated by comma ','.
+* the field. If it is already present, it is appended
+* to the existing value separated by comma ','.
 *
 * Exception to the above is "Set-Cookie". In this case, 
 * another entry will be created. However, to set cookies
@@ -23,7 +23,7 @@ C_VARIANT:C1683($2)
 C_OBJECT:C1216($0)
 
 C_LONGINT:C283($type_l)
-C_TEXT:C284($item_t;$flag_t;$currentValue_t)
+C_TEXT:C284($item_t;$flag_t;$currentValue_t;$appendValue_t)
 C_COLLECTION:C1488($queryResult_c)
 
 $fieldName_t:=$1
@@ -63,11 +63,7 @@ Case of
 				
 			: ($type_l=Is collection:K8:32)
 				
-				For each ($item_t;$2)
-					
-					This:C1470.__headers__.push(New object:C1471("name";$fieldName_t;"value";$item_t))
-					
-				End for each 
+				This:C1470.__headers__.push(New object:C1471("name";$fieldName_t;"value";$2.join(", ")))
 				
 		End case 
 		
@@ -83,14 +79,7 @@ Case of
 			: ($type_l=Is collection:K8:32)
 				
 				$currentValue_t:=$queryResult_c[0].value
-				
-				For each ($item_t;$2)
-					
-					$currentValue_t:=$currentValue_t+", "+$item_t
-					
-				End for each 
-				
-				$queryResult_c[0].value:=$currentValue_t
+				$queryResult_c[0].value:=$currentValue_t+", "+$2.join(", ")
 				
 		End case 
 		

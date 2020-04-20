@@ -2,7 +2,7 @@
 /**
 * This method checks if the specified content types are acceptable,
 * based on the request's Accept HTTP header field. The method
-* returns the best match, or none of the spwcified content types is
+* returns the best match, or none of the specified content types is
 * acceptable, returns empty string. In this case, the app should
 * return 406 Not Acceptable.
 *
