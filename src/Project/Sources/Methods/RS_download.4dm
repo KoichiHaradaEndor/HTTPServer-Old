@@ -25,7 +25,7 @@
 *
 * It is equivalent to following calls:
 * {@code
-* Response.attachement() // set headers
+* Response.attachment() // set headers
 * Response.sendFile() // send file
 * }
 * 
