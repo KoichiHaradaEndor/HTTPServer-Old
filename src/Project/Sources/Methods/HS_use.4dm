@@ -34,19 +34,23 @@ C_VARIANT:C1683(${1})
 C_OBJECT:C1216($0)
 
 C_TEXT:C284($method_t;$pathParam_t)
-C_LONGINT:C283($type_l;$insertionPosition_l;$index_l)
+C_LONGINT:C283($type_l;$insertionPosition_l;$index_l;$numParam_l)
 C_BOOLEAN:C305($vhost_b;$insertDefaultPath_b)
 C_OBJECT:C1216($route_o)
 C_COLLECTION:C1488($routes_c)
 
-ASSERT:C1129(Count parameters:C259>0;Current method name:C684+" : Lack of parameters")
+$numParam_l:=Count parameters:C259
+ASSERT:C1129($numParam_l>0;Current method name:C684+" : Lack of parameters")
 
 $vhost_b:=False:C215
 $insertDefaultPath_b:=False:C215
 $type_l:=Value type:C1509($1)
 
   // Determines if the first parameter is vhost object
+  // and it is the only parameter passed
 Case of 
+	: ($numParam_l>1)
+		
 	: ($type_l#Is object:K8:27)
 		
 	: ($1.__type__=Null:C1517)
