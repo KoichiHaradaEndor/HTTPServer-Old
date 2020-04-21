@@ -81,7 +81,7 @@ let test = {
         },
         methods: {
             test1_1Func: function() {
-                test.makeReq("GET", "http://127.0.0.1/test1-1").then((res) => {
+                test.makeReq("GET", "/test1-1").then((res) => {
                     this.message_1_1 = res.responseText;
                 }).catch(e => {
                     console.error(e);
@@ -97,14 +97,14 @@ let test = {
         },
         methods: {
             test1_2FuncGet: function() {
-                test.makeReq("GET", "http://127.0.0.1/test1-2").then((res) => {
+                test.makeReq("GET", "/test1-2").then((res) => {
                     this.message_1_2 = res.responseText;
                 }).catch(e => {
                     console.error(e);
                 })
             },
             test1_2FuncPost: function() {
-                test.makeReq("POST", "http://127.0.0.1/test1-2").then((res) => {
+                test.makeReq("POST", "/test1-2").then((res) => {
                     this.message_1_2 = res.responseText;
                 }).catch(e => {
                     console.error(e);
@@ -120,7 +120,7 @@ let test = {
         },
         methods: {
             test1_3Func: function() {
-                test.makeReq("GET", "http://127.0.0.1/test1-3/sub").then((res) => {
+                test.makeReq("GET", "/test1-3/sub").then((res) => {
                     this.message_1_3 = res.responseText;
                 }).catch(e => {
                     console.error(e);
@@ -136,7 +136,7 @@ let test = {
         },
         methods: {
             test2_1Func: function() {
-                test.makeReq("GET", "http://127.0.0.1/test2-1", {accept: 'text/plain'}).then((res) => {
+                test.makeReq("GET", "/test2-1", {accept: 'text/plain'}).then((res) => {
                     this.message_2_1 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
                     this.message_2_1 += 'Content: ' + res.responseText;
                 }).catch(e => {
@@ -153,7 +153,7 @@ let test = {
         },
         methods: {
             test2_2Func: function() {
-                test.makeReq("GET", "http://127.0.0.1/test2-2").then((res) => {
+                test.makeReq("GET", "/test2-2").then((res) => {
                     this.message_2_2 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
                     this.message_2_2 += 'Content: ' + res.responseText;
                 }).catch(e => {
@@ -170,7 +170,7 @@ let test = {
         },
         methods: {
             test2_3Func: function() {
-                test.makeReq("GET", "http://127.0.0.1/test2-3").then((res) => {
+                test.makeReq("GET", "/test2-3").then((res) => {
                     this.message_2_3 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
                     this.message_2_3 += 'Content: ' + res.responseText;
                 }).catch(e => {
@@ -187,7 +187,7 @@ let test = {
         },
         methods: {
             test2_4Func: function() {
-                test.makeReq("GET", "http://127.0.0.1/test2-4").then((res) => {
+                test.makeReq("GET", "/test2-4").then((res) => {
                     this.message_2_4 = 'Content-Disposition: ' + res.getResponseHeader('Content-Disposition') + '\n';
                     this.message_2_4 += 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
                     this.message_2_4 += 'Content: ' + res.responseText;
@@ -205,7 +205,7 @@ let test = {
         },
         methods: {
             test2_5FuncPlain: function() {
-                test.makeReq("GET", "http://127.0.0.1/test2-5", {accept: 'text/plain'}).then((res) => {
+                test.makeReq("GET", "/test2-5", {accept: 'text/plain'}).then((res) => {
                     this.message_2_5 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
                     this.message_2_5 += 'Content: ' + res.responseText;
                 }).catch(e => {
@@ -213,7 +213,7 @@ let test = {
                 })
             },
             test2_5FuncJson: function() {
-                test.makeReq("GET", "http://127.0.0.1/test2-5", {accept: 'application/json'}).then((res) => {
+                test.makeReq("GET", "/test2-5", {accept: 'application/json'}).then((res) => {
                     this.message_2_5 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
                     this.message_2_5 += 'Content: ' + res.responseText;
                 }).catch(e => {
@@ -221,7 +221,7 @@ let test = {
                 })
             },
             test2_5FuncHtml: function() {
-                test.makeReq("GET", "http://127.0.0.1/test2-5", {accept: 'text/html'}).then((res) => {
+                test.makeReq("GET", "/test2-5", {accept: 'text/html'}).then((res) => {
                     this.message_2_5 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
                     this.message_2_5 += 'Content: ' + res.responseText;
                 }).catch(e => {
@@ -238,7 +238,7 @@ let test = {
         },
         methods: {
             test3_1FuncMain: function() {
-                test.makeReq("GET", "http://127.0.0.1/test3-1").then((res) => {
+                test.makeReq("GET", "/test3-1").then((res) => {
                     this.message_3_1 = res.responseText;
                 }).catch(e => {
                     console.error(e);
@@ -261,20 +261,20 @@ let test = {
         },
         methods: {
             test4_1_1Func: function() {
-                test.makeReq("GET", "http://127.0.0.1/test4-1?param=value").then((res) => {
+                test.makeReq("GET", "/test4-1?param=value").then((res) => {
                     this.message_4_1 = res.responseText;
                 }).catch(e => {
                     console.error(e);
                 })
             },
             test4_1_2Func: function() {
-                test.makeReq("GET", "http://127.0.0.1/test4-1?param[]=value1&param[]=value2").then((res) => {
+                test.makeReq("GET", "/test4-1?param[]=value1&param[]=value2").then((res) => {
                     this.message_4_1 = res.responseText;
                 }).catch(e => {
                     console.error(e);
                 })
             },test4_1_3Func: function() {
-                test.makeReq("GET", "http://127.0.0.1/test4-1?param[sub1]=value1&param[sub2]=value2").then((res) => {
+                test.makeReq("GET", "/test4-1?param[sub1]=value1&param[sub2]=value2").then((res) => {
                     this.message_4_1 = res.responseText;
                 }).catch(e => {
                     console.error(e);
@@ -294,14 +294,14 @@ let test = {
                     type: 'application/x-www-form-urlencoded',
                     data: 'param1=value&param2[]=value1&param2[]=value2&param3[sub1]=value4&param3[sub2]=value5'
                 }
-                test.makeReq("POST", "http://127.0.0.1/test4-2", params).then((res) => {
+                test.makeReq("POST", "/test4-2", params).then((res) => {
                     this.message_4_2 = res.responseText;
                 }).catch(e => {
                     console.error(e);
                 })
             },
             test4_2_1FuncJson: function() {
-                test.makeReq("POST", "http://127.0.0.1/test4-2", {type: 'application/json'}).then((res) => {
+                test.makeReq("POST", "/test4-2", {type: 'application/json'}).then((res) => {
                     this.message_4_2 = res.responseText;
                 }).catch(e => {
                     console.error(e);
@@ -317,7 +317,7 @@ let test = {
         },
         methods: {
             test4_3Func: function() {
-                test.makeReq("GET", "http://127.0.0.1/users/1234/books/abc").then((res) => {
+                test.makeReq("GET", "/users/1234/books/abc").then((res) => {
                     this.message_4_3 = res.responseText;
                 }).catch(e => {
                     console.error(e);
@@ -333,7 +333,7 @@ let test = {
         },
         methods: {
             test5_1FuncUser1234: function() {
-                test.makeReq("GET", "http://127.0.0.1/User/1234").then((res) => {
+                test.makeReq("GET", "/User/1234").then((res) => {
                     this.message_5_1 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
                     this.message_5_1 += 'Content: ' + res.responseText;
                 }).catch(e => {
@@ -341,7 +341,7 @@ let test = {
                 })
             },
             test5_1FuncUser5678: function() {
-                test.makeReq("GET", "http://127.0.0.1/User/5678").then((res) => {
+                test.makeReq("GET", "/User/5678").then((res) => {
                     this.message_5_1 = 'Content-Type: ' + res.getResponseHeader('Content-Type') + '\n';
                     this.message_5_1 += 'Content: ' + res.responseText;
                 }).catch(e => {
@@ -353,14 +353,14 @@ let test = {
                     type: 'application/x-www-form-urlencoded',
                     data: 'username=user&password=Password'
                 }
-                test.makeReq("POST", "http://127.0.0.1/login", params).then((res) => {
+                test.makeReq("POST", "/login", params).then((res) => {
                     this.message_5_1 = res.responseText + '\n' + document.cookie;
                 }).catch(e => {
                     this.message_5_1 = e;
                 })
             },
             test5_1FuncLogout: function() {
-                test.makeReq("DELETE", "http://127.0.0.1/logout").then((res) => {
+                test.makeReq("DELETE", "/logout").then((res) => {
                     this.message_5_1 = res.responseText;
                 }).catch(e => {
                     this.message_5_1 = e;
