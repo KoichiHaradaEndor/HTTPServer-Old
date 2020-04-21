@@ -6,7 +6,7 @@
 *
 * <h3>Request.body</h3>
 * Contains object type key-value pairs or collection that was
-* submitted in request body. By defualt, it is undefined,
+* submitted in request body. By default, it is undefined,
 * and is populated when the request's Content-Type header
 * value is either application/x-www-form-urlencoded or
 * application/json.
@@ -40,7 +40,7 @@
 *
 * <h3>Request.query</h3>
 * This property is an object that contains query string parameter
-* in the URL. If query string is not included, the defualt is empty object.
+* in the URL. If query string is not included, the default is empty object.
 * {@code
 * // GET /path?param=value
 * $req.query["param"]="value"
@@ -53,7 +53,7 @@
 * $req.query["param"]["sub2"]="value2"
 *
 * // Note:
-* // If dupilicate param name present and bracket pair
+* // If duplicate param name present and bracket pair
 * // is not given, the value is overwritten by the latter
 * // which has the same param name.
 * // GET /path?param=value1&param=value2

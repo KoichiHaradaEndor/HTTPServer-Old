@@ -30,7 +30,7 @@
 * This method assumes the object stores native 4D date type.
 * 
 * httpOnly {Boolean} :
-* Flag that indicates the cookie is not accesible from browser script.
+* Flag that indicates the cookie is not accessible from browser script.
 * When it is not specified, default to true.
 *
 * maxAge {Longint} :
@@ -112,9 +112,9 @@ Else
 	$cookie_t:=$cookie_t+$cookieValue_t
 	
 	  // Expires=<date>
-	If ($options_o.expire#Null:C1517) & ($options_o.maxAge=Null:C1517)
+	If ($options_o.expires#Null:C1517) & ($options_o.maxAge=Null:C1517)
 		
-		$cookie_t:=$cookie_t+"; Expires="+String:C10($options_o.expire.date;Date RFC 1123:K1:11;Time:C179($options_o.expire.time))
+		$cookie_t:=$cookie_t+"; Expires="+String:C10($options_o.expires.date;Date RFC 1123:K1:11;Time:C179($options_o.expires.time))
 		
 	End if 
 	

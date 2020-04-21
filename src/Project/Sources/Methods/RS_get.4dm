@@ -8,7 +8,7 @@
 * Collection, even though only one "Set-Cookie" header
 * resides.
 *
-* If specified header is not found, it returns empty string.
+* If specified header is not found, it returns empty string or collection.
 *
 * @param {Text} $1 Field name
 * @return {Variant} $0 Header field value (Text or Collection)
@@ -26,16 +26,28 @@ $headerName_t:=$1
 $queryResult_c:=This:C1470.__headers__.query("name = :1";$headerName_t)
 
 Case of 
-	: ($queryResult_c.length=0)
-		
-		$0:=""
-		
 	: ($headerName_t="Set-Cookie")
 		
-		$0:=$queryResult_c.extract("value")
+		If ($queryResult_c.length=0)
+			
+			$0:=New collection:C1472()
+			
+		Else 
+			
+			$0:=$queryResult_c.extract("value")
+			
+		End if 
 		
 	Else 
 		
-		$0:=$queryResult_c[0].value
+		If ($queryResult_c.length=0)
+			
+			$0:=""
+			
+		Else 
+			
+			$0:=$queryResult_c[0].value
+			
+		End if 
 		
 End case 
