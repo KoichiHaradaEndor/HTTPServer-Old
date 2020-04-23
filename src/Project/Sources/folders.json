@@ -245,5 +245,10 @@
 			"findVhost"
 		]
 	},
+	"VirtualHost": {
+		"methods": [
+			"new VirtualHost"
+		]
+	},
 	"trash": {}
 }

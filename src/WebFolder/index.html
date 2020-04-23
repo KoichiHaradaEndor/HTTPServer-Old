@@ -298,23 +298,21 @@ $res_o.format($formats_o)</code></pre></p>
 
                 <h3>Test3-1: Define virtual host</h3>
                 <p>When you want to publish your server with multiple host names, and each named host has different
-                    role, you can use HttpServer.vhost function.</p>
-                <p>The object created with HttpServer.vhost has the same routing functions such as get, post, and so on.</p>
+                    role, you can use VirtualHost object which can be generated with new VirutalHost function.</p>
+                <p>The object has the same routing functions such as get, post, and so on.</p>
                 <p>The route register code is:
-                    <pre><code>C_OBJECT($1;$app_o)
-C_OBJECT($vhost_o)
+                    <pre><code>C_OBJECT($app_o;$vhost_o)
         
-$app_o:=$1
+$app_o:=new HttpServer()
 $app_o.get("/test3-1";Formula(Test3_1_1_main ))
         
-$vhost_o:=$app_o.vhost("test.mycompany.com")
+$vhost_o:=new VirtualHost("test.mycompany.com")
 $vhost_o.get("/test3-1";Formula(Test3_1_1_vhost ))
 $app_o.use($vhost_o)</code></pre>
-                    $vhost_o receives VirtualHost object that is created with $app_o.vhost. It works like HttpServer
-                    object except VirtualHost cannot start/stop HTTP server.</p>
+                    $vhost_o receives VirtualHost object that is created with new VirtualHost function. It works like HttpServer object except VirtualHost cannot start/stop HTTP server.</p>
                 <p>Both $app_o and $vhost_o registers a route saying &quot;when receives GET request whose path is
                     /test3-1, then respond&quot;, but different method is called.</p>
-                <p>$vhost_o is finally registed to $app_o with $app_o.use function.</p>
+                <p>$vhost_o is finally registered to $app_o with $app_o.use function.</p>
                 <p>Test3_1_1_main code is:
                     <pre><code>$res_o.send("I am main server.")</code></pre></p>
                 <p>Test3_1_1_vhost code is:
