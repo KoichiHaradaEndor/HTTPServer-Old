@@ -18,10 +18,14 @@ This is a 4D component, so you should build this source as 4D component and plac
 
 ## Usage
 
-Please refer to the [wikis](https://github.com/KoichiHaradaEndor/HTTPServer/wiki).
+Please refer to the [wiki](https://github.com/KoichiHaradaEndor/HTTPServer/wiki).
 
 Also "How-Do-I" demo is in the "test" folder. Just launch it with 4D v18 Standalone and connect to it with your favorite web browser via http://localhost/.
 
 ## License
 
 Please refer to "LICENSE" file.
+
+## Release Note
+
+Moved HttpServer.vost to new Virtualhost (2020-04-23)
