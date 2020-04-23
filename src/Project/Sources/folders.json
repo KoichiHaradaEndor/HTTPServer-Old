@@ -136,6 +136,11 @@
 			"HS_use"
 		]
 	},
+	"Router": {
+		"methods": [
+			"new Router"
+		]
+	},
 	"Test": {
 		"groups": [
 			"Chapter2",
