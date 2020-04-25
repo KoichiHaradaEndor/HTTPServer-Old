@@ -128,7 +128,6 @@ If (This:C1470.__type__="HttpServer")
 	End case 
 	  // /convert path to Regex
 	
-	
 	  // When the caller object is HttpServer, add the route
 	  // directly to Storage.hosts.
 	If ($hostname_t="")

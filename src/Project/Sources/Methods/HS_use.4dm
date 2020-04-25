@@ -118,36 +118,40 @@ For ($i;$startPos_l;$numParam_l)
 			
 	End case 
 	
-	For each ($middleware_o;$middlewares_c)
+	If ($middlewares_c#Null:C1517)
 		
-		  // Loop through middleware collection
-		  // middleware can be VirtualHost, Router or Function
-		If ($middleware_o.__type__#Null:C1517)
+		For each ($middleware_o;$middlewares_c)
 			
-			$middlewareType_t:=$middleware_o.__type__
+			  // Loop through middleware collection
+			  // middleware can be VirtualHost, Router or Function
+			If ($middleware_o.__type__#Null:C1517)
+				
+				$middlewareType_t:=$middleware_o.__type__
+				
+			Else 
+				
+				$middlewareType_t:="Function"
+				
+			End if 
 			
-		Else 
+			Case of 
+				: ($callerObjType_t="HttpServer") & ($middlewareType_t="VirtualHost")
+					
+					HS_addRouteVhost (This:C1470;$middleware_o)
+					
+				: (($callerObjType_t="HttpServer") | ($callerObjType_t="HttpServer")) & ($middlewareType_t="Router")
+					
+					HS_addRouteRouter (This:C1470;$path_t;$middleware_o)
+					
+				: ($middlewareType_t="Function")
+					
+					HS_addRouteFunction (This:C1470;$path_t;$middleware_o)
+					
+			End case 
 			
-			$middlewareType_t:="Function"
-			
-		End if 
+		End for each 
 		
-		Case of 
-			: ($callerObjType_t="HttpServer") & ($middlewareType_t="VirtualHost")
-				
-				HS_addRouteVhost (This:C1470;$middleware_o)
-				
-			: (($callerObjType_t="HttpServer") | ($callerObjType_t="HttpServer")) & ($middlewareType_t="Router")
-				
-				HS_addRouteRouter (This:C1470;$path_t;$middleware_o)
-				
-			: ($middlewareType_t="Function")
-				
-				HS_addRouteFunction (This:C1470;$path_t;$middleware_o)
-				
-		End case 
-		
-	End for each 
+	End if 
 	
 End for 
 
