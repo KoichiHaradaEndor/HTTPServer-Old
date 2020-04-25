@@ -4,7 +4,7 @@
 *
 * Storage.hosts is a collection that consists of the host objects.
 * <pre>
-* Storage.hosts[{host object}]
+* Storage.hosts[{host}]
 * </pre>
 *
 * The sructure of the host object is as follow:
@@ -19,203 +19,224 @@
 *     }]
 * }
 * </pre>
-*  
-* @param {Text} $1 HTTP method or flag
-* @param {Text} $2 The path for which the callback function is invoked
-* @param {Variant} ${3} Callback functions
+* 
+* @param {Object} $1 Parameters whose structure is
+* {
+*     "hostname": {Text} Host name, this is needed when registering VirtualHost to HttpServer
+*     "method": {Text} HTTP method or flag,
+*     "path": {Text} The path for which the callback function is invoked
+*     "callbacks": {Collection} Collection of callback functions
+* }
 * @author: HARADA Koichi
 */
 
-C_TEXT:C284($1;$method_t)
-C_TEXT:C284($2;$path_t)
-C_VARIANT:C1683(${3})  // callback functions
+C_OBJECT:C1216($1;$param_o)
 
-C_COLLECTION:C1488($indices_c;$pathParams_c)
-C_OBJECT:C1216($host_o;$formula_o;$routeItem_o)
-C_LONGINT:C283($i;$valueType_l;$start_l)
-C_TEXT:C284($pattern_t;$param_t;$pathParam_t)
+C_TEXT:C284($hostname_t;$method_t;$path_t;$pattern_t;$param_t;$pathParam_t)
+C_COLLECTION:C1488($callbacks_c;$indices_c;$pathParams_c)
+C_OBJECT:C1216($host_o;$callback_o;$routeItem_o)
+C_LONGINT:C283($start_l;$index_l;$insertionPosition_l)
 C_BOOLEAN:C305($matched_b)
 
-$method_t:=$1
-$path_t:=$2
+$param_o:=$1
 
-Case of 
-	: (This:C1470.__type__="HttpServer")
-		
-		  // When the caller object is HttpServer, add the route
-		  // directly to Storage.hosts.
-		$indices_c:=Storage:C1525.hosts.indices("hostname = :1";Storage:C1525.__constants__.defaultHostPattern)
-		$host_o:=Storage:C1525.hosts[$indices_c[0]]
-		  // This must be present since it is declared when HttpServer
-		  // is created.
-		
-	: (This:C1470.__type__="VirtualHost")  // created with HS_vhost
-		
-		  // When the caller object is VirtualHost, add the route
-		  // to This (thus the VirtualHost object) object.
-		$host_o:=This:C1470
-		
-End case 
-
-  // complete path parameter as Regex
-If (Position:C15("/:";$path_t)>0)
+If ($param_o.hostname#Null:C1517)
 	
-	  // convert named path parameter to regex
-	$pathParams_c:=New collection:C1472()
-	$pattern_t:="/:([A-Za-z0-9_]+)(?:/|$)"  // look for /:param
-	$start_l:=1
-	Repeat 
-		
-		ARRAY LONGINT:C221($positions_al;0)
-		ARRAY LONGINT:C221($length_al;0)
-		$matched_b:=Match regex:C1019($pattern_t;$path_t;$start_l;$positions_al;$length_al)
-		Case of 
-			: (Length:C16($path_t)<$start_l)
-				
-			: ($matched_b)
-				
-				$param_t:=Substring:C12($path_t;$positions_al{1};$length_al{1})
-				$pathParams_c.push($param_t)
-				$path_t:=Replace string:C233($path_t;":"+$param_t;"([^/]+)";1;*)
-				$start_l:=$start_l+$positions_al{1}+$length_al{1}
-				
-		End case 
-		
-		If (Length:C16($path_t)<=$start_l)
-			$matched_b:=False:C215
-		End if 
-		
-	Until ($matched_b=False:C215)
+	$hostname_t:=$param_o.hostname
 	
 End if 
 
-Case of 
-	: ($method_t="use")
-		
-		  // forward match
-		While ($path_t="@/")
-			
-			$path_t:=Substring:C12($path_t;1;Length:C16($path_t)-1)
-			
-		End while 
-		
-		$path_t:="^"+$path_t+"(?:/[^/]+)*$"
-		
-	Else 
-		
-		  // full match
-		$path_t:="^"+$path_t+"$"
-		
-End case 
-
-If ($host_o.routes=Null:C1517)
+If ($param_o.method#Null:C1517)
 	
-	If ($host_o.__LockerID=Null:C1517)
+	$method_t:=$param_o.method
+	
+End if 
+
+If ($param_o.path#Null:C1517)
+	
+	$path_t:=$param_o.path
+	
+End if 
+
+If ($param_o.callbacks#Null:C1517)
+	
+	$callbacks_c:=$param_o.callbacks
+	
+End if 
+
+  //#####
+  // Regiter each path to host
+  //#####
+If (This:C1470.__type__="HttpServer")
+	
+	
+	  //#####
+	  // convert path parameter item to Regex
+	  //#####
+	If (Position:C15("/:";$path_t)>0)
 		
-		  // If __LockerID is not defined, Use is not necessary
-		$host_o.routes:=New collection:C1472()
-		
-	Else 
-		
-		Use ($host_o)
+		  // convert named path parameter to regex
+		$pathParams_c:=New collection:C1472()
+		$pattern_t:="/:([A-Za-z0-9_]+)(?:/|$)"  // look for /:param
+		$start_l:=1
+		Repeat 
 			
-			$host_o.routes:=New shared collection:C1527()
+			ARRAY LONGINT:C221($positions_al;0)
+			ARRAY LONGINT:C221($length_al;0)
+			$matched_b:=Match regex:C1019($pattern_t;$path_t;$start_l;$positions_al;$length_al)
+			Case of 
+				: (Length:C16($path_t)<$start_l)
+					
+				: ($matched_b)
+					
+					$param_t:=Substring:C12($path_t;$positions_al{1};$length_al{1})
+					$pathParams_c.push($param_t)
+					$path_t:=Replace string:C233($path_t;":"+$param_t;"([^/]+)";1;*)
+					$start_l:=$start_l+$positions_al{1}+$length_al{1}
+					
+			End case 
 			
-		End use 
+			If (Length:C16($path_t)<=$start_l)
+				$matched_b:=False:C215
+			End if 
+			
+		Until ($matched_b=False:C215)
+		
+	End if 
+	  // /convert path parameter item to Regex
+	
+	  //#####
+	  // convert path to Regex
+	  //#####
+	Case of 
+		: ($method_t="use")
+			
+			  // forward match
+			While ($path_t="@/")
+				
+				$path_t:=Substring:C12($path_t;1;Length:C16($path_t)-1)
+				
+			End while 
+			
+			$path_t:="^"+$path_t+"(?:/[^/]+)*$"
+			
+		Else 
+			
+			  // full match
+			$path_t:="^"+$path_t+"$"
+			
+	End case 
+	  // /convert path to Regex
+	
+	
+	  // When the caller object is HttpServer, add the route
+	  // directly to Storage.hosts.
+	If ($hostname_t="")
+		
+		$hostname_t:=Storage:C1525.__constants__.defaultHostPattern
 		
 	End if 
 	
-End if 
-
-For ($i;3;Count parameters:C259)
-	
-	$valueType_l:=Value type:C1509(${$i})
-	
-	Case of 
-		: ($valueType_l=Is object:K8:27)
-			  // This must be Formula object.
-			  // Currently there's no way to identify if its a formula.
+	  // Find a host
+	Use (Storage:C1525.hosts)
+		
+		  // Search for hostname inside Storage.hosts to find if it is already registered
+		$index_l:=Storage:C1525.hosts.findIndex("HS_findVhost";$hostname_t)
+		
+		If ($index_l=-1)
 			
-			If ($host_o.__LockerID=Null:C1517)
+			  // Such hostname was not previously registered, so add one.
+			  // To make default host is always the last element,
+			  // insert vhost at second from the last.
+			$insertionPosition_l:=Storage:C1525.hosts.length-1
+			
+			  // vhost object is standard object. So it cannot be inserted directly into Storge.
+			Storage:C1525.hosts.insert($insertionPosition_l;New shared object:C1526())
+			Storage:C1525.hosts[$insertionPosition_l].hostname:=$hostname_t
+			Storage:C1525.hosts[$insertionPosition_l].routes:=New shared collection:C1527()
+			
+		Else 
+			
+			  // match hostname was found
+			$insertionPosition_l:=$index_l
+			
+		End if 
+		
+		$host_o:=Storage:C1525.hosts[$insertionPosition_l]
+		
+		Use ($host_o)
+			
+			  // If route never be added
+			If ($host_o.routes=Null:C1517)
 				
-				  // If __LockerID is not defined, Use is not necessary
-				$host_o.routes.push(New object:C1471())
-				$routeItem_o:=$host_o.routes[$host_o.routes.length-1]
-				$routeItem_o["method"]:=$method_t
-				$routeItem_o["path"]:=$path_t
-				$routeItem_o["callback"]:=${$i}
-				If ($pathParams_c#Null:C1517)
-					$routeItem_o["params"]:=$pathParams_c
-				End if 
+				$host_o.routes:=New shared collection:C1527()
 				
-			Else 
+			End if 
+			
+			Use ($host_o.routes)
 				
-				Use ($host_o.routes)
+				  // Note:
+				  // Here I append shared object first, then assign values.
+				  // This way, formula object can be appended.
+				  // If values are assigned directly in New shared object(),
+				  // the newly created shared object and method formula
+				  // becomes group. And group cannot be a member of another
+				  // shared collection (in this case $host_o.routes).
+				
+				For each ($callback_o;$callbacks_c)
 					
-					  // Note:
-					  // Here I append shared object first, then assign values.
-					  // This way, formula object can be appended.
-					  // If values are assigned directly in New shared object(),
-					  // the newly created shared object and method formula
-					  // becomes group. And group cannot be a member of another
-					  // shared collection (in this case $host_o.routes).
 					$host_o.routes.push(New shared object:C1526())
 					$routeItem_o:=$host_o.routes[$host_o.routes.length-1]
 					$routeItem_o["method"]:=$method_t
 					$routeItem_o["path"]:=$path_t
-					$routeItem_o["callback"]:=${$i}
+					$routeItem_o["callback"]:=$callback_o
+					
 					If ($pathParams_c#Null:C1517)
+						
 						$routeItem_o["params"]:=New shared collection:C1527()
 						For each ($pathParam_t;$pathParams_c)
+							
 							$routeItem_o["params"].push($pathParam_t)
+							
 						End for each 
-					End if 
-					
-				End use 
-				
-			End if 
-			
-		: ($valueType_l=Is collection:K8:32)
-			  // This must be collection of Formula object.
-			  // Currently there's no way to identify if they're formulas.
-			
-			For each ($formula_o;${$i})
-				
-				If ($host_o.__LockerID=Null:C1517)
-					
-					  // If __LockerID is not defined, Use is not necessary
-					$host_o.routes.push(New object:C1471())
-					$routeItem_o:=$host_o.routes[$host_o.routes.length-1]
-					$routeItem_o["method"]:=$method_t
-					$routeItem_o["path"]:=$path_t
-					$routeItem_o["callback"]:=$formula_o
-					If ($pathParams_c#Null:C1517)
-						$routeItem_o["params"]:=$pathParams_c
-					End if 
-					
-				Else 
-					
-					Use ($host_o.routes)
 						
-						  // Please refer to the note above
-						$host_o.routes.push(New shared object:C1526())
-						$routeItem_o:=$host_o.routes[$host_o.routes.length-1]
-						$routeItem_o["method"]:=$method_t
-						$routeItem_o["path"]:=$path_t
-						$routeItem_o["callback"]:=$formula_o
-						If ($pathParams_c#Null:C1517)
-							$routeItem_o["params"]:=New shared collection:C1527()
-							For each ($pathParam_t;$pathParams_c)
-								$routeItem_o["params"].push($pathParam_t)
-							End for each 
-						End if 
-						
-					End use 
+					End if   // If ($pathParams_c#Null)
 					
-				End if 
+				End for each 
 				
-			End for each 
+			End use   // Use ($host_o.routes)
 			
-	End case 
+		End use   // Use ($host_o) 
+		
+	End use   // Use (Storage.hosts)
 	
-End for 
+Else 
+	
+	  // When the caller object is VirtualHost or Router, add the route
+	  // to This object.
+	$host_o:=This:C1470
+	
+	  // If route never be added
+	If ($host_o.routes=Null:C1517)
+		
+		$host_o.routes:=New collection:C1472()
+		
+	End if 
+	
+	For each ($callback_o;$callbacks_c)
+		
+		$host_o.routes.push(New object:C1471())
+		$routeItem_o:=$host_o.routes[$host_o.routes.length-1]
+		$routeItem_o["method"]:=$method_t
+		$routeItem_o["path"]:=$path_t
+		$routeItem_o["callback"]:=$callback_o
+		
+		If ($pathParams_c#Null:C1517)
+			
+			$routeItem_o["params"]:=$pathParams_c
+			
+		End if 
+		
+	End for each 
+	
+End if 
