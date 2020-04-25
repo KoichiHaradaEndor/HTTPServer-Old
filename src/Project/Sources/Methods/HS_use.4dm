@@ -1,31 +1,53 @@
 //%attributes = {"invisible":true,"preemptive":"capable"}
 /**
-* This method has three forms:
+* This function is used to add middleware to the CallerObj.
 *
-* <h3>CallerObj.use({path;} callback)</h3>
+* <h3>CallerObj.use({path;} middleware)</h3>
 *
-* In this form, CallerObj can be HttpServer, VirtualHost or SingleRoute object.
-* The path parameter is for which the callback function is invoked.
+* - path parameter
+* Path parameter can be passed when the middleware is Function or Router object.
+* In this case, if it is ommited, it defaults to "/".
+* When the middleware is VirtualHost, path parameter is ignored even
+* it is present.
 *
-* When the path parameter is omitted, the path is defined as follows:
-* 1) When CallerObj is SingleRoute object, path parameter is stored in it.
-* So it is used.
-* 2) When CallerObj is HttpServer or VirtualHost object, the path defaults to
-* "/" which means the callback function will be invoked for any path.
+* - middleware
+* "middleware" can be Function, VirtualHost or Router object.
+* It can be single middleware, multiple arguments, collection or combination of them.
+*
+* -- VirtualHost
+* When the middleware is VirtulaHost object, the path parameter is ignored
+* and the CallerObj must be of type HttpServer. In this case, this funcion
+* is used to register and activate VirtualHost.
+*
+* -- Router
+* When the middleware is Router object, this function connects it to
+* CallerObj under the path. The path of CallerObj and the path of Router
+* are concatenated. Full match is used when searching routes
+*
+* When the path parameter is omitted, it defaults to "/" which means
+* the Router's paths are connected to CallerObj's root.
+*
+* The CallObj could be HttpServer or VirtualHost.
+*
+* -- Function
+*
+* Any other cases to the above, middleware is considered as Function
+* and it is connected to CallerObj under the path.
+*
+* Unlike in the case of other route functions like method, get and post,
+* the forward path match is used when searching routes.
+*
+* In this form, CallerObj can be HttpServer, VirtualHost, Router or SingleRoute object.
+*
+* When the CallerObj is of type SingleRoute, path parmeter should be omitted
+* since path information is already stored in the object. If path paramter is present
+* it is ignored.
+*
+* When the CallerObj is either HttpServer, VirtualHost or Router object,
+* and the path parameter is omitted, the path defaults to "/".
 *
 * The callback parameter can be an object (single formula),
 * collection (list of formula object) or combination of them.
-*
-* @param {Text} $1 The path for which the callback function is invoked (forward match)
-* @param {Variant} ${2} Callback functions
-*
-* <h3>CallerObj.use(vhost)</h3>
-*
-* When VirtualHost object is passed to this method,
-* the routes defined in VirtualHost object is added to
-* HttpServer object.
-*
-* @param {Variant} $1 VirtualHost object
 *
 * @author: HARADA Koichi
 */
@@ -33,111 +55,104 @@
 C_VARIANT:C1683(${1})
 C_OBJECT:C1216($0)
 
-C_TEXT:C284($method_t;$pathParam_t)
-C_LONGINT:C283($type_l;$insertionPosition_l;$index_l;$numParam_l)
-C_BOOLEAN:C305($vhost_b;$insertDefaultPath_b)
-C_OBJECT:C1216($route_o)
-C_COLLECTION:C1488($routes_c)
+C_LONGINT:C283($numParam_l;$startPos_l;$i;$typeFirstParam_l;$typeMiddleware_l)
+C_BOOLEAN:C305($useParamPath_b)
+C_TEXT:C284($callerObjType_t;$middlewareType_t;$path_t)
+C_COLLECTION:C1488($middlewares_c)
+C_OBJECT:C1216($middleware_o)
 
 $numParam_l:=Count parameters:C259
 ASSERT:C1129($numParam_l>0;Current method name:C684+" : Lack of parameters")
 
-$vhost_b:=False:C215
-$insertDefaultPath_b:=False:C215
-$type_l:=Value type:C1509($1)
+$typeFirstParam_l:=Value type:C1509($1)
 
-  // Determines if the first parameter is vhost object
-  // and it is the only parameter passed
-Case of 
-	: ($numParam_l>1)
-		
-	: ($type_l#Is object:K8:27)
-		
-	: ($1.__type__=Null:C1517)
-		
-	: ($1.__type__="VirtualHost")
-		
-		  // The first paramter is VirtualHost object
-		$vhost_b:=True:C214
-		
-End case 
-
-If ($vhost_b)
+  // Type of caller object
+If (This:C1470.__type__#Null:C1517)
 	
-	Use (Storage:C1525.hosts)
-		
-		  // Search for hostname inside Storage.hosts to find if it is already registered
-		$index_l:=Storage:C1525.hosts.findIndex("HS_findVhost";$1.hostname)
-		
-		If ($index_l=-1)
-			
-			  // Such hostname was not previously registered, so add one
-			  // To make default host is always the last element,
-			  // insert vhost at second from the last.
-			$insertionPosition_l:=Storage:C1525.hosts.length-1
-			
-			  // $1 vhost object is standard object. So it cannot be inserted directly into Storge.
-			Storage:C1525.hosts.insert($insertionPosition_l;New shared object:C1526())
-			Storage:C1525.hosts[$insertionPosition_l].hostname:=$1.hostname
-			Storage:C1525.hosts[$insertionPosition_l].routes:=New shared collection:C1527()
-			
-		Else 
-			
-			  // match hostname was found
-			$insertionPosition_l:=$index_l
-			
-		End if 
-		
-		For each ($route_o;$1.routes)
-			
-			Storage:C1525.hosts[$insertionPosition_l].routes.push(New shared object:C1526("method";$route_o.method;"path";$route_o.path))
-			  // Formula object cannot be added to Storage with New shared object because the command creates a group before adding the object.
-			Storage:C1525.hosts[$insertionPosition_l].routes[Storage:C1525.hosts[$insertionPosition_l].routes.length-1]["callback"]:=$route_o.callback
-			If ($route_o.params#Null:C1517)
-				Storage:C1525.hosts[$insertionPosition_l].routes[Storage:C1525.hosts[$insertionPosition_l].routes.length-1]["params"]:=New shared collection:C1527()
-				For each ($pathParam_t;$route_o.params)
-					Storage:C1525.hosts[$insertionPosition_l].routes[Storage:C1525.hosts[$insertionPosition_l].routes.length-1]["params"].push($pathParam_t)
-				End for each 
-			End if 
-			
-		End for each 
-		
-	End use 
+	$callerObjType_t:=This:C1470.__type__
+	
+End if 
+
+  // If the first parameter is path, middleware starts from 2, else 1
+If ($typeFirstParam_l=Is text:K8:3)
+	
+	$path_t:=$1
+	$startPos_l:=2
 	
 Else 
 	
-	  // If the first parameter is of type object
-	  // and it's not vhost object, then
-	  // determines caller object type
+	$path_t:="/"
+	$startPos_l:=1
+	
+End if 
+
+  // however if callerobj is SingleRoute, use This.path
+If ($callerObjType_t="SingleRoute")
+	
+	$path_t:=This:C1470.path
+	
+End if 
+
+For ($i;$startPos_l;$numParam_l)
+	
+	  // Loop through middleware parameters
+	  // It can be single middle ware (Function or object) or colloction of middlewares.
+	  // So make it collection
+	
+	$typeMiddleware_l:=Value type:C1509(${$i})
+	
 	Case of 
-		: ($type_l#Is object:K8:27)
+		: ($typeMiddleware_l=Is collection:K8:32)
 			
-		: (This:C1470.__type__=Null:C1517)
+			  // the parameter is a collection of middlewares
+			$middlewares_c:=${$i}
 			
-		: (This:C1470.__type__="HttpServer") | (This:C1470.__type__="VirtualHost")
+		: ($typeMiddleware_l=Is object:K8:27)
 			
-			  // The path parameter is omitted and the caller
-			  // object is of type HttpServer or VirtualHost
-			$insertDefaultPath_b:=True:C214
+			  // the parameter is single middleware that is Function object, vhost, or router
+			$middlewares_c:=New collection:C1472(${$i})
+			
+		Else 
+			
+			$middlewares_c:=Null:C1517
 			
 	End case 
 	
-	$method_t:="use"
+	For each ($middleware_o;$middlewares_c)
+		
+		  // Loop through middleware collection
+		  // middleware can be VirtualHost, Router or Function
+		If ($middleware_o.__type__#Null:C1517)
+			
+			$middlewareType_t:=$middleware_o.__type__
+			
+		Else 
+			
+			$middlewareType_t:="Function"
+			
+		End if 
+		
+		Case of 
+			: ($callerObjType_t="HttpServer") & ($middlewareType_t="VirtualHost")
+				
+				HS_addRouteVhost (This:C1470;$middleware_o)
+				
+			: (($callerObjType_t="HttpServer") | ($callerObjType_t="HttpServer")) & ($middlewareType_t="Router")
+				
+				HS_addRouteRouter (This:C1470;$path_t;$middleware_o)
+				
+			: ($middlewareType_t="Function")
+				
+				HS_addRouteFunction (This:C1470;$path_t;$middleware_o)
+				
+		End case 
+		
+	End for each 
 	
-	$params_c:=New collection:C1472()
-	$params_c.push($method_t)
-	If ($insertDefaultPath_b)
-		
-		$params_c.push("/")
-		
-	End if 
-	For ($i;1;Count parameters:C259)
-		
-		$params_c.push(${$i})
-		
-	End for 
+End for 
+
+If ($callerObjType_t="SingleRoute")
 	
-	$formula_o:=Formula:C1597(HS_method )
-	$0:=$formula_o.apply(This:C1470;$params_c)
+	$0:=This:C1470
 	
 End if 

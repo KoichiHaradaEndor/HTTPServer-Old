@@ -8,7 +8,7 @@
 *
 * <h3>CallerObj.method(method; path; callback)</h3>
 * 
-* In this form, CallerObj can be HttpServer or VirtualHost object.
+* In this form, CallerObj can be HttpServer, VirtualHost or Router object.
 * The path parameter is for which the callback function is invoked.
 * The callback parameter can be object (single formula),
 * collection (list of formula object) or combination of them.
@@ -33,51 +33,67 @@ C_TEXT:C284($1;$method_t)
 C_VARIANT:C1683(${2})
 C_OBJECT:C1216($0)
 
-C_LONGINT:C283($i)
-C_TEXT:C284($thisType_t;$path_t)
-C_COLLECTION:C1488($params_c)
-C_OBJECT:C1216($formula_o;$this_o)
+C_TEXT:C284($thisType_t)
+C_OBJECT:C1216($param_o;$callback_o;$formula_o)
+C_COLLECTION:C1488($callbacks_c)
+C_LONGINT:C283($i;$type_l;$start_l)
 
 $method_t:=$1
 $thisType_t:=This:C1470.__type__
 
+  //#####
+  // path and this object to path
+  //#####
 Case of 
-	: ($thisType_t="HttpServer") | ($thisType_t="VirtualHost")
+	: ($thisType_t="HttpServer") | ($thisType_t="VirtualHost") | ($thisType_t="Router")
 		
 		  // CallerObj.METHOD(method; path; callback)
 		$path_t:=$2
-		
-		$params_c:=New collection:C1472()
-		$params_c.push($method_t)
-		$params_c.push($path_t)
-		
-		For ($i;3;Count parameters:C259)
-			
-			$params_c.push(${$i})
-			
-		End for 
-		
 		$this_o:=This:C1470
+		$start_l:=3
 		
 	: ($thisType_t="SingleRoute")
 		
 		  // CallerObj.METHOD(method; callback)
-		$params_c:=New collection:C1472()
-		$params_c.push($method_t)
-		$params_c.push(This:C1470.path)
-		
-		For ($i;2;Count parameters:C259)
-			
-			$params_c.push(${$i})
-			
-		End for 
-		
-		$this_o:=This:C1470.host  // Parent object (HttpServer or VirtualHost)
+		$path_t:=This:C1470.path
+		$this_o:=This:C1470.host  // Parent object (HttpServer, VirtualHost or Router)
+		$start_l:=2
 		
 End case 
 
+  //#####
+  // callback to collection
+  //#####
+$callbacks_c:=New collection:C1472()
+
+For ($i;$start_l;Count parameters:C259)
+	
+	$type_l:=Value type:C1509(${$i})
+	
+	Case of 
+		: ($type_l=Is object:K8:27)
+			
+			$callbacks_c.push(${$i})
+			
+		: ($type_l=Is collection:K8:32)
+			
+			For each ($callback_o;${$i})
+				
+				$callbacks_c.push($callback_o)
+				
+			End for each 
+			
+	End case 
+	
+End for 
+
+$param_o:=New object:C1471()
+$param_o.method:=$method_t
+$param_o.path:=$path_t
+$param_o.callbacks:=$callbacks_c
+
 $formula_o:=Formula:C1597(HS_addRoute )
-$formula_o.apply($this_o;$params_c)
+$formula_o.call($this_o;$param_o)
 
 If ($thisType_t="SingleRoute")
 	

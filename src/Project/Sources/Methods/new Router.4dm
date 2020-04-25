@@ -1,5 +1,4 @@
 //%attributes = {"invisible":true,"shared":true,"preemptive":"capable"}
-  //%attributes = {"invisible":true,"shared":true,"preemptive":"capable"}
 /**
 * This method creates Router object and return it.
 * 

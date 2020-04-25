@@ -1,4 +1,11 @@
 ﻿{
+	"Add Route": {
+		"methods": [
+			"HS_addRouteFunction",
+			"HS_addRouteRouter",
+			"HS_addRouteVhost"
+		]
+	},
 	"Chapter2": {
 		"groups": [
 			"Test1-1",
@@ -124,6 +131,9 @@
 		]
 	},
 	"Route Definition": {
+		"groups": [
+			"Add Route"
+		],
 		"methods": [
 			"HS_addRoute",
 			"HS_all",

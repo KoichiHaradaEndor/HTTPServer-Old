@@ -7,7 +7,7 @@
 *
 * <h3>CallerObj.put(path; callback)</h3>
 * 
-* In this form, CallerObj can be HttpServer or VirtualHost object.
+* In this form, CallerObj can be HttpServer, VirtualHost or Router object.
 * The path parameter is for which the callback function is invoked.
 * The callback parameter can be object (single formula),
 * collection (list of formula object) or combination of them.
