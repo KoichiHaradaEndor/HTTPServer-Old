@@ -5,7 +5,8 @@
 			"Test2",
 			"Test3",
 			"Test4",
-			"Test5"
+			"Test5",
+			"Test6"
 		]
 	},
 	"Test1": {
@@ -130,6 +131,19 @@
 			"Test5_1_2",
 			"Test5_1_3",
 			"Test5_1_4"
+		]
+	},
+	"Test6": {
+		"groups": [
+			"Test6-1"
+		]
+	},
+	"Test6-1": {
+		"methods": [
+			"Test6_1",
+			"Test6_1_Func1",
+			"Test6_1_Func2",
+			"Test6_1_Func2New"
 		]
 	},
 	"trash": {}

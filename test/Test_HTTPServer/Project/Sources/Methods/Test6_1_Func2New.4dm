@@ -7,4 +7,4 @@ $req_o:=$1
 $res_o:=$2
 $next_o:=$3
 
-$res_o.send($res_o.locals.message+"\n"+Current method name:C684+" invoked.")
+$res_o.send(Current method name:C684+" invoked.")

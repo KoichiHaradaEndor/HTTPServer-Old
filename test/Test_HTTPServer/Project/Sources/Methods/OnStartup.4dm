@@ -23,7 +23,8 @@ Else
 	Test4_1 ($app_o)
 	Test4_2 ($app_o)
 	Test4_3 ($app_o)
-	Test5_1 ($app_o)
+	Test6_1 ($app_o)
+	Test5_1 ($app_o)  // Auth Test must be bottom
 	
 	  // load http server configuration and
 	  // start web server

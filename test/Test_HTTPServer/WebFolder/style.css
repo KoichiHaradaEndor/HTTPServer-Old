@@ -86,7 +86,7 @@ textarea {
 }
 
 .main {
-    width: 500px;
+    width: 550px;
     margin-left: 250px; /* Same width as the sidebar + left position in px */
     font-size: 14px; 
     padding: 0px 10px;
