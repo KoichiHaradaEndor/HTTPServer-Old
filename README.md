@@ -1,5 +1,7 @@
 # HTTPServer
 
+## NOTE: This componet will be completely re-written when 4D releases new version that supports Class.
+
 ## Overview
 
 4D Component which includes methods to help your web developing.
