@@ -28,4 +28,5 @@ Please refer to "LICENSE" file.
 
 ## Release Note
 
-Moved HttpServer.vost to new Virtualhost (2020-04-23)
+Added new Router (2020-04-26)
+Moved HttpServer.vhost to new Virtualhost (2020-04-23)
