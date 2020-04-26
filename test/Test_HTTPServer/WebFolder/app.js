@@ -369,4 +369,41 @@ let test = {
         }
     });
 
+    const test6_1 = new Vue({
+        el: "#test6-1",
+        data: {
+            message_6_1: 'Test result will be displayed here'
+        },
+        methods: {
+            test6_1v1Func1: function() {
+                test.makeReq("GET", "/v1/func1").then((res) => {
+                    this.message_6_1 = res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            },
+            test6_1v1Func2: function() {
+                test.makeReq("GET", "/v1/func2").then((res) => {
+                    this.message_6_1 = res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            },
+            test6_1v2Func1: function() {
+                test.makeReq("GET", "/v2/func1").then((res) => {
+                    this.message_6_1 = res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            },
+            test6_1v2Func2: function() {
+                test.makeReq("GET", "/v2/func2").then((res) => {
+                    this.message_6_1 = res.responseText;
+                }).catch(e => {
+                    console.error(e);
+                })
+            }
+        }
+    });
+
 })();
