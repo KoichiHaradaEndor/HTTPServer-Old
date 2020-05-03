@@ -139,7 +139,7 @@ For ($i;$startPos_l;$numParam_l)
 					
 					HS_addRouteVhost (This:C1470;$middleware_o)
 					
-				: (($callerObjType_t="HttpServer") | ($callerObjType_t="HttpServer")) & ($middlewareType_t="Router")
+				: (($callerObjType_t="HttpServer") | ($callerObjType_t="VirtualHost")) & ($middlewareType_t="Router")
 					
 					HS_addRouteRouter (This:C1470;$path_t;$middleware_o)
 					
