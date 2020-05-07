@@ -1,5 +1,7 @@
 # HTTPServer
 
+## NOTE: This repository was archived. Please use latest version that was re-written using 4D v18R3 feature.
+
 ## NOTE: This componet will be completely re-written when 4D releases new version that supports Class.
 
 ## Overview
