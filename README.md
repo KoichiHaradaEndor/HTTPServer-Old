@@ -32,5 +32,6 @@ Please refer to "LICENSE" file.
 
 ## Release Note
 
+Archived (2020-05-07)
 Added new Router (2020-04-26)
 Moved HttpServer.vhost to new Virtualhost (2020-04-23)
